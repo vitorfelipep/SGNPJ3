@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-fluid">
+		<p:panelGrid columns="4" style="width:100%; margin-top:20px;"
+			columnClasses="rotulo, campo, rotulo, campo">
+
+			<p:outputLabel value="Número processo:"/>
+			<h:outputText value="Sem processo" style="color: red;"/>
+
+			<p:outputLabel value="Data de atendimento:"/>
+			<h:outputText value="05/02/2016" >
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:outputText>
+
+			<p:outputLabel value="Status:" />
+			<h:outputText value="Em atendimento" style="color: red;"/>
+
+			<p:outputLabel value="Tipo de pessoa: " for="tipoPessoa" />
+			<p:selectOneMenu id="tipoPessoa" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Fisíca" itemValue="FISICA"/>
+				<f:selectItem itemLabel="Júridica" itemValue="JURIDICA"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Área de atendimento: " for="atendente"  />
+			<p:selectOneMenu id="atendente" style="width: 200px;" rendered="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Cívil" itemValue="Cívil"/>
+				<f:selectItem itemLabel="Penal" itemValue="Penal"/>
+				<f:selectItem itemLabel="Trabalhista" itemValue="Trabalhista"/>
+				<f:selectItem itemLabel="Familiar" itemValue="Familiar"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Advogado: " for="cliente" />
+			<p:autoComplete id="cliente" size="40" dropdown="true" rendered="true" />
+					
+		</p:panelGrid>
+	</div>
+</ui:composition>

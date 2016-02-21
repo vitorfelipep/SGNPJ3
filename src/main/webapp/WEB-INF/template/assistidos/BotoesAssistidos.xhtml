@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+
+		<p:toolbar style="margin-top:20px;">
+    		<p:toolbarGroup styleClass="toobarStyle">
+    			<p:button value="Novo" outcome="/assistido/CadastroAssistido"/>
+    			<p:commandButton value="Salvar" 
+    				update="@form" />
+    		</p:toolbarGroup>
+    			
+    		<p:toolbarGroup align="right" styleClass="toobarStyle">
+    			<p:button value="Finalizar Atendimento" disabled="true"/>
+    			<p:separator />
+    			<p:button value="Pesquisa" outcome="/assistido/PesquisaAssistidos"/>
+    		</p:toolbarGroup>
+    	</p:toolbar>
+    	
+    	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+	        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+    	
+ </ui:composition>

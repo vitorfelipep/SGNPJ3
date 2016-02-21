@@ -1,0 +1,94 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="titulo">Pesquisa de Advogados</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmPesquisa">
+			<h1>Pesquisa de Advogados</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top:20px;">
+				<p:toolbarGroup styleClass="toobarStyle">
+					<p:commandButton value="Pesquisar" id="pesquisar"
+						 update="@form" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right" styleClass="toobarStyle">
+					<p:button value="Novo" outcome="/Advogado/CadastroAdvogado" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%;margin-top:20px;" columnClasses="rotulo, campo">
+
+				<p:outputLabel value="Número OAB: " for="numOAB" />
+				<p:inputText id="numOAB" size="20"
+					value="" />
+
+				<p:outputLabel value="Nome do advogado: " for="nome" />
+				<p:inputText id="nome" size="60"
+					value="" />
+
+			</p:panelGrid>
+
+			<p:dataTable id="produtosTable"
+				 var="produto"
+				style="margin-top:20px;" emptyMessage="Nenhum produto encontrado"
+				rows="20" paginator="true" paginatorAlwaysVisible="false">
+
+				<p:column headerText="Numero OAB" style="text-align:center; width: 100px;">
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Advogado">
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Area de atuação" style="width:250px;">
+					<h:outputText
+						value="" />
+				</p:column>
+
+				<p:column headerText="Situação"
+					style="text-align:rigth; width:120px;">
+					<h:outputText value="">
+						
+					</h:outputText>
+				</p:column>
+
+				<p:column style="width:80px; text-align: center;">
+					<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil"
+						title="Editar">
+						<f:param name="produto" value="" />
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":frmPesquisa:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener
+							target=""
+							value="" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog header="Exclusão de produto"
+				message="Tem certeza que deseja excluir o produto #{pesquisaProdutosBean.produtoSelecionado.sku}?"
+				showEffect="fade" hideEffect="fade"
+				widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog">
+				<p:button value="Não"
+					onclick="PF('confirmacaoExclusao').hide(); return false;" />
+				<p:commandButton value="Sim"
+					oncomplete="PF('confirmacaoExclusao').hide();"
+					process="@this"
+					update=":frmPesquisa:produtosTable" id="yesButton" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

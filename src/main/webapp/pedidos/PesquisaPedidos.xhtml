@@ -1,0 +1,89 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Pesquisa de pedidos</ui:define>
+    
+    <ui:define name="corpo">
+    	<h:form>
+	    	<h1>Pesquisa de Assistido</h1>
+	    	
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:commandButton value="Pesquisar" 
+	    				update="@form" />
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Novo" outcome="/pedidos/CadastroPedidos" />
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+	    	
+	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, campo">
+	    		<p:outputLabel value="Número" />
+	    		<h:panelGroup>
+	    			<p:inputText size="10" value="" />
+	    			a
+	    			<p:inputText size="10" value=" " />
+	    		</h:panelGroup>
+	    		
+	    		<p:outputLabel value="Data de criação" />
+	    		<h:panelGroup>
+	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
+	    				value="" />
+	    			a
+	    			<p:calendar size="10" pattern="dd/MM/yyyy"
+	    				value="" />
+	    		</h:panelGroup>
+	    		
+	    		<p:outputLabel value="Vendedor" />
+	    		<p:inputText size="40" value="" />
+	    		
+	    		<p:outputLabel value="Cliente" />
+	    		<p:inputText size="40" value="" />
+	    		
+	    		<p:outputLabel value="Status" />
+	    		<p:selectManyCheckbox value="">
+	    			<f:selectItem 
+	    				itemValue="Teste" itemLabel="Teste" />
+	    		</p:selectManyCheckbox>
+	    	</p:panelGrid>
+	    	
+	    	<p:dataTable id="pedidosTable"  var="pedido"
+		    		style="margin-top: 20px" emptyMessage="Nenhum pedido encontrado."
+		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+	    		<p:column headerText="Número" style="text-align: center; width: 100px">
+	    			<h:outputText value="#{pedido.id}"/>
+	    		</p:column>
+	    		<p:column headerText="Cliente">
+	    			<h:outputText value="gfgsfg"/>
+	    		</p:column>
+	    		<p:column headerText="Vendedor">
+	    			<h:outputText value="sdfgdfg"/>
+	    		</p:column>
+	    		<p:column headerText="Data de criação" style="text-align: center; width: 140px">
+	    			<h:outputText value="05/02/1988">
+	    				<f:convertDateTime pattern="dd/MM/yyyy" />
+	    			</h:outputText>
+	    		</p:column>
+	    		<p:column headerText="Valor total" style="text-align: right; width: 120px">
+	    			<h:outputText value="25,00">
+	    				<f:convertNumber type="currency"/>
+	    			</h:outputText>
+	    		</p:column>
+	    		<p:column headerText="Status" style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column style="text-align: center; width: 50px">
+	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/pedidos/CadastroPedidos">
+	    				<f:param name="pedido" value="12"/>
+	    			</p:button>
+	    		</p:column>
+	    	</p:dataTable>
+	    	
+    	</h:form>
+    </ui:define>
+</ui:composition>

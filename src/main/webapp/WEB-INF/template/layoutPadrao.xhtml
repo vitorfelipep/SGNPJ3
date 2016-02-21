@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>
+		<ui:insert name="titulo">Sistema Gerenciador de núcleo de práticas jurídicas (SGNPJ)</ui:insert>
+	</title>
+	<h:outputStylesheet library="css" name="sistema.css" />
+	<h:outputScript library="js" name="jquery.maskMoney.js" />
+</h:head>
+<h:body>
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide(), configurarMoeda()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage library="imagens" name="carregando.gif" />
+	</p:dialog>
+
+	<header>
+	<div style="float: left">
+		<h:link outcome="/Home">
+			<h:graphicImage library="imagens" name="logo_uniabeu.png" style="width: 142px;"/>
+		</h:link>
+	</div>
+	<div style="float: left; margin-right: 110px;" >
+		<h:outputText value="Sistema Gerenciador de núcleo de Práticas jurídicas (SGNPJ)" style="float: left; height: 30px;font-size:20px; margin-left: 20px; line-height: 30px; margin-right: 60px" />
+	</div>
+	<div style="float: right; margin-right: 40px">
+		<span
+			style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
+			Olá ! </span>
+
+		<h:form style="display: inline-block">
+			<p:menubar styleClass="menu-sistema">
+				<p:submenu label="Cadastros">
+					<p:menuitem value="Assistidos (Autor e réu)" outcome="/assistido/CadastroAssistido" />
+					<p:menuitem value="Usuários" outcome="/Usuario/CadastroUsuario"/>
+					<p:separator />
+					<p:menuitem value="Advogados" outcome="/Advogado/CadastroAdvogado"/>
+					<p:menuitem value="Estagiários" outcome="/produtos/PesquisaProdutos" />
+					<p:separator />
+					<p:menuitem value="Atividade estagiário"/>
+				</p:submenu>
+				<p:submenu label="Processo">
+					<p:menuitem value="Novo Processo"  />
+					<p:menuitem value="Pesquisar processos"  />
+				</p:submenu>
+				<p:submenu label="Relatórios">
+					<p:menuitem value="Hipossuificiência"  />
+					<p:menuitem value="Procuração"  />
+					<p:menuitem value="Ativ. Estagiário"  />
+					<p:menuitem value="Processos"  />
+					<p:menuitem value="Audiências"  />
+				</p:submenu>
+				
+				<p:menuitem value="Sair" style="margin-left: 20px;" />
+			</p:menubar>
+		</h:form>
+	</div>
+	<div style="clear: both"></div>
+	</header>
+
+	<div id="conteudo">
+		<ui:insert name="corpo" />
+	</div>
+
+	<p:separator style="margin-top:20px;" />
+
+	<footer> Sistema Gerenciador de núcleo de práticas jurídicas (SGNPJ) - <a href="http://www.google.com" target="_blank">SGNPJ</a>
+	</footer>
+
+	<script>
+		function configurarMoeda() {
+			$(".moeda").maskMoney({
+				decimal : ",",
+				thousands : ".",
+				allowZero : true
+			});
+		}
+
+		$(document).ready(function() {
+			configurarMoeda();
+		});
+	</script>
+
+</h:body>
+</html>

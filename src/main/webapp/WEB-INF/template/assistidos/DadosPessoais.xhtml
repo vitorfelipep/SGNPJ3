@@ -1,0 +1,119 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panel id="panelDadosPessoais" header="Dados Pessoais" toggleable="true" toggleSpeed="500" closeSpeed="500"  >
+	<p:panelGrid columns="4" style="width: 100%"
+		columnClasses="rotulo, campo, rotulo, campo">
+		
+		<p:outputLabel value="Nome:" for="nomeAssistido" />
+		<p:inputText id="nomeAssistido" size="50"
+			value="" required="true"/>
+
+		<p:outputLabel value="Nome do Pai" for="pai" />
+		<p:inputText id="pai" size="50"
+			value="" required="true" />
+
+		<p:outputLabel value="Nome da mãe:" for="mae" />
+		<p:inputText id="mae" size="50"
+			value="" required="true"/>
+			
+		<p:outputLabel value="Profissão:" for="profissao" />
+		<p:inputText id="profissao" size="50"
+			value="" required="true"/>
+
+		<p:outputLabel value="Data de Nasc.:" for="nascimento" />
+		<p:calendar id="nascimento" pattern="dd/MM/yyyy" size="10" required="true"
+			 />
+
+		<p:outputLabel value="CPF:" for="cpf" />
+		<p:inputMask id="cpf" size="20"  mask="999.999.999-99" title="Digite seu CPF" 
+			value="" required="true" />
+
+		<p:outputLabel value="CNPJ" for="cnpj" />
+		<p:inputMask id="cnpj" mask=" 99.999.999/9999-99" size="20"
+			value="" required="true"/>
+		
+		<p:outputLabel value="RG:" for="rg" />
+		<p:inputText id="rg" size="20"
+			value="" required="true"/>
+			
+		<p:outputLabel value="Orgão Expedidor:" for="org" />
+		<p:inputText id="org" size="10"
+			value="" required="true" />
+		
+		<p:outputLabel value="Naturalidade:" for="naturalidade" />
+		<p:inputText id="naturalidade" size="30"
+			value="" required="true" />
+			
+		<p:outputLabel value="Estado Cívil:" for="estadoCivil" />
+		<p:selectOneMenu id="estadoCivil" style="width: 200px;"	required="true" >
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Casado" itemValue="Casado"/>
+				<f:selectItem itemLabel="Solteiro" itemValue="Solteiro"/>
+				<f:selectItem itemLabel="Viúvo" itemValue="viuvo"/>
+		</p:selectOneMenu>	
+		
+			
+	</p:panelGrid>
+</p:panel>
+<p:panel id="panelContato" header="Dados para contato" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel"  >	
+	<p:panelGrid columns="4"  style="width: 100%"
+		columnClasses="rotulo, campo, rotulo, campo">
+		
+		<p:outputLabel value="Logradouro:" for="entregaLogradouro" />
+		<p:inputText id="entregaLogradouro" size="50"
+			value="" required="true" />
+
+		<p:outputLabel value="Número:" for="numero" />
+		<p:inputText id="numero" size="5" value="" maxlength="15" required="true"/>
+		
+		
+		<p:outputLabel value="Complemento:" for="entregaComplemento" />
+		<p:inputText id="entregaComplemento" size="50"
+			value="" />
+
+		<p:outputLabel value="Cidade:" for="cidade" />
+		<p:selectOneMenu id="cidade" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
+				<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
+				<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+		</p:selectOneMenu>
+
+		<p:outputLabel value="Estado:" for="estado" />
+		<p:selectOneMenu id="estado" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="RJ" itemValue="RJ"/>
+				<f:selectItem itemLabel="MG" itemValue="MG"/>
+				<f:selectItem itemLabel="SP" itemValue="SP"/>
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="Cep:" for="entregaCep" required="true"/>
+		<p:inputMask id="entregaCep" mask="99999-999" size="10"
+			value="" required="true"/>
+		
+		<p:outputLabel value="Telefone: " for="telefone" />
+		<p:inputText id="telefone" size="50"
+			value="" required="true" />
+		
+		<p:outputLabel value="Telefone Trab: " for="telefoneTrab" />
+		<p:inputText id="telefoneTrab" size="50"
+			value="" />
+		
+		<p:outputLabel value="Celular: " for="celular" />
+		<p:inputText id="celular" size="50"
+			value="" required="true"/>
+		
+		<p:outputLabel value="Celular trab.: " for="celularTrab" />
+		<p:inputText id="celularTrab" size="50"
+			value="" />
+			
+		<p:outputLabel value="E-mail: " for="email" />
+		<p:inputText id="email" size="50"
+			value="" />					
+	</p:panelGrid>
+</p:panel>
+</ui:composition>

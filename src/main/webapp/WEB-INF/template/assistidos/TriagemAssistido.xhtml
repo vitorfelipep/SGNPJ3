@@ -1,0 +1,46 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:panelGrid columns="4" style="width: 100%"
+		columnClasses="rotulo, campo, rotulo, campo">
+		<p:outputLabel value="Qtd de filhos: " for="numFilhos" />
+		<p:inputText id="numFilhos" size="50" value="" required="true"/>
+		
+		<p:outputLabel value="Qtd maior de 13 anos: " for="maior13anos" />
+		<p:inputText id="maior13anos" size="50" value="" required="true" />
+		
+		<p:outputLabel value="Qtd menor de 13 anos: " for="menor13anos" />
+		<p:inputText id="menor13anos" size="50" value="" required="true"/>
+		
+		<p:outputLabel value="Renda pessoal:" for="rendaPessoal" />
+		<p:inputText id="rendaPessoal" size="50" value="" required="true"/>
+		
+		<p:outputLabel value="Renda Familiar:" for="rendaFamiliar" />
+		<p:inputText id="rendaFamiliar" size="50" value="" required="true"/>
+		
+		<p:outputLabel value="Primeiro atendimento?" for="primeiroAtend" />
+		<p:selectOneMenu id="primeiroAtend" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Sim" itemValue="Sim"/>
+				<f:selectItem itemLabel="Não" itemValue="Não"/>
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="Já foi atendido por esta serviço judiciário?" for="verificacaAtend" />
+		<p:selectOneRadio id="verificacaAtend" value="" required="true">
+			<f:selectItem itemLabel="Sim" itemValue="Sim" />
+			<f:selectItem itemLabel="Não" itemValue="Não" />
+		</p:selectOneRadio>
+		
+		<p:outputLabel value="Sobre que problema?" for="problemaTriagem" />
+		<p:inputText id="problemaTriagem" size="50" maxlength="150" value="" />
+		
+		<p:outputLabel value="Observações:" for="obsTriagem" />
+		<p:inputTextarea rows="5" id="obsTriagem" style="width: 100%"
+			value=""/>
+			
+	</p:panelGrid>
+</ui:composition>

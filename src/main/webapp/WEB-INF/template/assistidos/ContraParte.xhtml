@@ -1,0 +1,81 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<p:panelGrid columns="4" style="width: 100%"
+		columnClasses="rotulo, campo, rotulo, campo">
+		<p:outputLabel value="Nome: " for="nomePtContraria" />
+		<p:inputText id="nomePtContraria" size="50" value="" required="true"/>
+		
+		<p:outputLabel value="Profissão: " for="profPtCont" />
+		<p:inputText id="profPtCont" size="50" value="" required="true"/>
+		
+		<p:outputLabel value="Estado Cívil:" for="estadoCivilPtContraria" />
+		<p:selectOneMenu id="estadoCivilPtContraria" style="width: 200px;" required="true"	>
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Casado" itemValue="Casado"/>
+				<f:selectItem itemLabel="Solteiro" itemValue="Solteiro"/>
+				<f:selectItem itemLabel="Viúvo" itemValue="viuvo"/>
+		</p:selectOneMenu>	
+		
+		<p:outputLabel value="Naturalidade:" for="naturalPtContraria" />
+		<p:inputText id="naturalPtContraria" size="50" value="" required="true" />
+		
+		<p:outputLabel value="Logradouro:" for="endPt" />
+		<p:inputText id="endPt" size="50"
+			value="" required="true"/>
+
+		<p:outputLabel value="Número:" for="numeroPt" />
+		<p:inputText id="numeroPt" size="5" value="" maxlength="15" required="true"/>
+		
+		
+		<p:outputLabel value="Complemento:" for="complementoPt" />
+		<p:inputText id="complementoPt" size="50"
+			value="" required="true"/>
+
+		<p:outputLabel value="Cidade:" for="cidadePt" />
+		<p:selectOneMenu id="cidadePt" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
+				<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
+				<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+		</p:selectOneMenu>
+
+		<p:outputLabel value="Estado:" for="estadoPt" />
+		<p:selectOneMenu id="estadoPt" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="RJ" itemValue="RJ"/>
+				<f:selectItem itemLabel="MG" itemValue="MG"/>
+				<f:selectItem itemLabel="SP" itemValue="SP"/>
+		</p:selectOneMenu>
+		
+		<p:outputLabel value="Cep:" for="entregaCepPt" />
+		<p:inputMask id="entregaCepPt" mask="99999-999" size="10"
+			value="" />
+		
+		<p:outputLabel value="Telefone: " for="telefonePt" />
+		<p:inputText id="telefonePt" size="50"
+			value="" />
+		
+		<p:outputLabel value="Telefone Trab: " for="telefoneTrabPt" />
+		<p:inputText id="telefoneTrabPt" size="50"
+			value="" />
+		
+		<p:outputLabel value="Celular: " for="celularPt" />
+		<p:inputText id="celularPt" size="50"
+			value="" />
+		
+		<p:outputLabel value="Telefone: " for="celularTrabPt" />
+		<p:inputText id="celularTrabPt" size="50"
+			value="" />
+			
+		<p:outputLabel value="E-mail: " for="emailPt" />
+		<p:inputText id="emailPt" size="50"
+			value="" />	
+			
+	</p:panelGrid>
+</ui:composition>

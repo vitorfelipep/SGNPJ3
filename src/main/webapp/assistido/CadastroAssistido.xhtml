@@ -1,0 +1,37 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:define name="titulo">Cadastro de Assistidos</ui:define>
+    
+    <ui:define name="corpo">
+    	<h:form id="frmCadastro">
+	    	<h1></h1>
+	    	
+	    	<p:messages autoUpdate="true" closable="true"/>
+	    	
+	    	<ui:include src="/WEB-INF/template/assistidos/BotoesAssistidos.xhtml"  />
+	    	
+	    	<ui:include src="/WEB-INF/template/assistidos/CapaAssistido.xhtml"  />
+	    	
+	    	<p:tabView style="margin-top:20px">
+	    		<p:tab title="Informações Pessoais"> 
+	    			<ui:include src="/WEB-INF/template/assistidos/DadosPessoais.xhtml" />
+	    		</p:tab>
+	    		<p:tab title="Triagem para hipossuficiencia">
+	    			<ui:include src="/WEB-INF/template/assistidos/TriagemAssistido.xhtml" />
+	    		</p:tab>
+	    		<p:tab title="Contra-parte">
+	    			<ui:include src="/WEB-INF/template/assistidos/ContraParte.xhtml" />
+	    		</p:tab>
+	    		<p:tab title="Observações">
+	    			<ui:include src="/WEB-INF/template/assistidos/ObservacaoAssistido.xhtml" /> 
+	    		</p:tab>
+	    	</p:tabView>
+    	</h:form>
+    </ui:define>
+ </ui:composition>
