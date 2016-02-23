@@ -29,12 +29,13 @@
 			<h:graphicImage library="imagens" name="logo_uniabeu.png" style="width: 142px;"/>
 		</h:link>
 	</div>
-	<div style="float: left; margin-right: 110px;" >
-		<h:outputText value="Sistema Gerenciador de núcleo de Práticas jurídicas (SGNPJ)" style="float: left; height: 30px;font-size:20px; margin-left: 20px; line-height: 30px; margin-right: 60px" />
+	<div style="float: left;margin-right: 70px;width: 400px;" >
+		<h:outputText value="Sistema Gerenciador de núcleo de Práticas jurídicas (SGNPJ)" 
+			style="float: left; height: 30px; font-size: 18px; margin-left: 15px;line-height: 30px;margin-right: 70px; width: 449px;" />
 	</div>
-	<div style="float: right; margin-right: 40px">
+	<div style="float: right;margin-right: 38px;">
 		<span
-			style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
+			style="float: left; height: 30px; line-height: 30px; margin-right: 75px">
 			Olá ! </span>
 
 		<h:form style="display: inline-block">
@@ -44,13 +45,18 @@
 					<p:menuitem value="Usuários" outcome="/Usuario/CadastroUsuario"/>
 					<p:separator />
 					<p:menuitem value="Advogados" outcome="/Advogado/CadastroAdvogado"/>
-					<p:menuitem value="Estagiários" outcome="/produtos/PesquisaProdutos" />
+					<p:menuitem value="Estagiários" outcome="/Estagiario/CadastroEstagiario" />
 					<p:separator />
 					<p:menuitem value="Atividade estagiário"/>
 				</p:submenu>
+				<p:menuitem value="Atendimento"  />
 				<p:submenu label="Processo">
 					<p:menuitem value="Novo Processo"  />
 					<p:menuitem value="Pesquisar processos"  />
+				</p:submenu>
+				<p:submenu label="Audiência">
+					<p:menuitem value="Nova Audiência"  />
+					<p:menuitem value="Pesquisar Audiências"  />
 				</p:submenu>
 				<p:submenu label="Relatórios">
 					<p:menuitem value="Hipossuificiência"  />

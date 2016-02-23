@@ -56,7 +56,63 @@
 				</p:selectOneMenu>
 
 			</p:panelGrid>
+			<p:panel id="panelContato" header="Dados para contato" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel"  >	
+				<p:panelGrid columns="4"  style="width: 100%"
+					columnClasses="rotulo, campo, rotulo, campo">
+					
+					<p:outputLabel value="Logradouro:" for="EndEst" />
+					<p:inputText id="EndEst" size="50"
+						value="" required="true" />
 			
+					<p:outputLabel value="Número:" for="numeroEst" />
+					<p:inputText id="numeroEst" size="5" value="" maxlength="15" required="true"/>
+					
+					
+					<p:outputLabel value="Complemento:" for="ComplementoEst" />
+					<p:inputText id="ComplementoEst" size="50"
+						value="" />
+			
+					<p:outputLabel value="Cidade:" for="cidade" />
+					<p:selectOneMenu id="cidade" style="width: 200px;" required="true">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
+							<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
+							<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+					</p:selectOneMenu>
+			
+					<p:outputLabel value="Estado:" for="estado" />
+					<p:selectOneMenu id="estado" style="width: 200px;" required="true">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItem itemLabel="RJ" itemValue="RJ"/>
+							<f:selectItem itemLabel="MG" itemValue="MG"/>
+							<f:selectItem itemLabel="SP" itemValue="SP"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Cep:" for="entregaCep" required="true"/>
+					<p:inputMask id="entregaCep" mask="99999-999" size="10"
+						value="" required="true"/>
+					
+					<p:outputLabel value="Telefone: " for="telefone" />
+					<p:inputText id="telefone" size="50"
+						value="" required="true" />
+					
+					<p:outputLabel value="Telefone Trab: " for="telefoneTrab" />
+					<p:inputText id="telefoneTrab" size="50"
+						value="" />
+					
+					<p:outputLabel value="Celular: " for="celular" />
+					<p:inputText id="celular" size="50"
+						value="" required="true"/>
+					
+					<p:outputLabel value="Celular trab.: " for="celularTrab" />
+					<p:inputText id="celularTrab" size="50"
+						value="" />
+						
+					<p:outputLabel value="E-mail: " for="emailEst" />
+					<p:inputText id="emailEst" size="50"
+						value="" />					
+				</p:panelGrid>
+			</p:panel>
 		</h:form>
     </ui:define>
  </ui:composition>
