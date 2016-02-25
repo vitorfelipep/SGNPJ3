@@ -26,20 +26,19 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 
-				<p:panelGrid columns="4" style="width: 100%"
+			<p:panelGrid columns="4" style="width: 100%"
 					columnClasses="rotulo, campo, rotulo, campo">
-	
-						<p:outputLabel value="Nome do estágiario: " for="nome" />
-						<p:inputText id="nome" size="60" maxlength="80"
-							value="" required="true"/>
-						
-						<p:outputLabel value="Area de designada: " for="areaDesignada" />
-						<p:selectOneMenu id="areaDesignada" value="" required="true"	>	
-							<f:selectItem itemLabel="Selecione" />
-							<f:selectItem itemLabel="Atividade de pesquisa" itemValue="Atividade de pesquisa"/>
-							<f:selectItem itemLabel="Atividade sobre processos" itemValue="Atividade sobre processos"/>
-							<f:selectItem itemLabel="Atividade de confecção de petição" itemValue="Atividade de confecção de petição"/>
-						</p:selectOneMenu>
+					<p:outputLabel value="Nome do estágiario: " for="nome" />
+					<p:inputText id="nome" size="60" maxlength="80"
+						value="" required="true"/>
+					
+					<p:outputLabel value="Area de designada: " for="areaDesignada" />
+					<p:selectOneMenu id="areaDesignada" value="" required="true"	>	
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="Atividade de pesquisa" itemValue="Atividade de pesquisa"/>
+						<f:selectItem itemLabel="Atividade sobre processos" itemValue="Atividade sobre processos"/>
+						<f:selectItem itemLabel="Atividade de confecção de petição" itemValue="Atividade de confecção de petição"/>
+					</p:selectOneMenu>
 			</p:panelGrid>
 			
 			<p:panel id="panelContato" header="Atividade pesquisa estagiário" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel"  >	
