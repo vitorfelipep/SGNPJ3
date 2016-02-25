@@ -1,0 +1,61 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:define name="titulo">Cadastro de Atendimento</ui:define>
+    
+    <ui:define name="corpo">
+    	<h:form>
+			<h1>Novo Atendimento</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top:20px;">
+				<p:toolbarGroup styleClass="toobarStyle">
+					<p:button value="Novo" outcome="/assistido/CadastroAssistido" />
+					<p:commandButton value="Salvar" id="botaoSalvar"
+						 ajax="false" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right" styleClass="toobarStyle">
+					<p:button value="Pesquisa" outcome="/Advogado/PesquisaAdvogados" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%;margin-top:20px;" columnClasses="rotulo, campo">
+
+				<p:outputLabel value="Assitido: " for="nome" />
+				<p:selectOneMenu id="Assistido" value="" required="true"	>	
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItem itemLabel="José Manuel" itemValue="José Manuel"/>
+					<f:selectItem itemLabel="Maria Rafaela" itemValue="Maria Rafaela"/>
+					<f:selectItem itemLabel="Ricardo Manoel" itemValue="Ricardo Manoel"/>
+					<f:selectItem itemLabel="Rafaela becker" itemValue="Rafaela becker"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Advogado: " for="advogado" />
+				<p:selectOneMenu id="advogado" value="" required="true"	>	
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItem itemLabel="Luciano Alves" itemValue="Luciano Alves"/>
+					<f:selectItem itemLabel="Marcelo Roberto" itemValue="Marcelo Roberto"/>
+					<f:selectItem itemLabel="Lucia Alburques" itemValue="Lucia Alburques"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Estagiário: " for="estagiario" />
+				<p:selectOneMenu id="estagiario" value="" required="true"	>	
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItem itemLabel="Alves Nunes" itemValue="Alves Nunes"/>
+					<f:selectItem itemLabel="Rebeca Castro" itemValue="Rebeca Castro"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Observacao Atendimento: " for="obsAtend" />
+				<p:inputTextarea id="obsAtend" value="" />
+			</p:panelGrid>
+		</h:form>
+    </ui:define>
+ </ui:composition>

@@ -1,0 +1,220 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:define name="titulo">Cadastro de Atividades</ui:define>
+    
+    <ui:define name="corpo">
+    	<h:form>
+			<h1>Novo cadastro de atividades</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top:20px;">
+				<p:toolbarGroup styleClass="toobarStyle">
+					<p:button value="Novo" outcome="/AtividadeEstagiario/CadastroAtividadesEstagiario" />
+					<p:commandButton value="Salvar" id="botaoSalvar"
+						 ajax="false" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right" styleClass="toobarStyle">
+					<p:button value="Pesquisa" outcome="/Estagiario/PesquisaEstagiario" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+				<p:panelGrid columns="4" style="width: 100%"
+					columnClasses="rotulo, campo, rotulo, campo">
+	
+						<p:outputLabel value="Nome do estágiario: " for="nome" />
+						<p:inputText id="nome" size="60" maxlength="80"
+							value="" required="true"/>
+						
+						<p:outputLabel value="Area de designada: " for="areaDesignada" />
+						<p:selectOneMenu id="areaDesignada" value="" required="true"	>	
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItem itemLabel="Atividade de pesquisa" itemValue="Atividade de pesquisa"/>
+							<f:selectItem itemLabel="Atividade sobre processos" itemValue="Atividade sobre processos"/>
+							<f:selectItem itemLabel="Atividade de confecção de petição" itemValue="Atividade de confecção de petição"/>
+						</p:selectOneMenu>
+			</p:panelGrid>
+			
+			<p:panel id="panelContato" header="Atividade pesquisa estagiário" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel"  >	
+					<p:panelGrid columns="4"  style="width: 100%"
+						columnClasses="rotulo, campo, rotulo, campo">
+						
+						<p:outputLabel value="Logradouro:" for="entregaLogradouro" />
+						<p:inputText id="entregaLogradouro" size="50"
+							value="" required="true" />
+				
+						<p:outputLabel value="Número:" for="numero" />
+						<p:inputText id="numero" size="5" value="" maxlength="15" required="true"/>
+						
+						
+						<p:outputLabel value="Complemento:" for="entregaComplemento" />
+						<p:inputText id="entregaComplemento" size="50"
+							value="" />
+				
+						<p:outputLabel value="Cidade:" for="cidade" />
+						<p:selectOneMenu id="cidade" style="width: 200px;" required="true">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
+								<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
+								<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+						</p:selectOneMenu>
+				
+						<p:outputLabel value="Estado:" for="estado" />
+						<p:selectOneMenu id="estado" style="width: 200px;" required="true">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItem itemLabel="RJ" itemValue="RJ"/>
+								<f:selectItem itemLabel="MG" itemValue="MG"/>
+								<f:selectItem itemLabel="SP" itemValue="SP"/>
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Cep:" for="entregaCep" required="true"/>
+						<p:inputMask id="entregaCep" mask="99999-999" size="10"
+							value="" required="true"/>
+						
+						<p:outputLabel value="Telefone: " for="telefone" />
+						<p:inputText id="telefone" size="50"
+							value="" required="true" />
+						
+						<p:outputLabel value="Telefone Trab: " for="telefoneTrab" />
+						<p:inputText id="telefoneTrab" size="50"
+							value="" />
+						
+						<p:outputLabel value="Celular: " for="celular" />
+						<p:inputText id="celular" size="50"
+							value="" required="true"/>
+						
+						<p:outputLabel value="Celular trab.: " for="celularTrab" />
+						<p:inputText id="celularTrab" size="50"
+							value="" />
+							
+						<p:outputLabel value="E-mail: " for="email" />
+						<p:inputText id="email" size="50"
+							value="" />					
+					</p:panelGrid>
+			</p:panel>
+			
+			<p:panel id="panelProcessos" header="Atividade sobre processos" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel2"  >	
+					<p:panelGrid columns="4"  style="width: 100%"
+						columnClasses="rotulo, campo, rotulo, campo">
+						
+						<p:outputLabel value="Logradouro:" for="teste" />
+						<p:inputText id="teste" size="50"
+							value="" required="true" />
+				
+						<p:outputLabel value="Número:" for="numero2" />
+						<p:inputText id="numero2" size="5" value="" maxlength="15" required="true"/>
+						
+						
+						<p:outputLabel value="Complemento:" for="entrega3" />
+						<p:inputText id="entrega3" size="50"
+							value="" />
+				
+						<p:outputLabel value="Cidade:" for="cidade4" />
+						<p:selectOneMenu id="cidade4" style="width: 200px;" required="true">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
+								<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
+								<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+						</p:selectOneMenu>
+				
+						<p:outputLabel value="Estado:" for="estado5" />
+						<p:selectOneMenu id="estado5" style="width: 200px;" required="true">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItem itemLabel="RJ" itemValue="RJ"/>
+								<f:selectItem itemLabel="MG" itemValue="MG"/>
+								<f:selectItem itemLabel="SP" itemValue="SP"/>
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Cep:" for="entregaCep6" required="true"/>
+						<p:inputMask id="entregaCep6" mask="99999-999" size="10"
+							value="" required="true"/>
+						
+						<p:outputLabel value="Telefone: " for="telefone7" />
+						<p:inputText id="telefone7" size="50"
+							value="" required="true" />
+						
+						<p:outputLabel value="Telefone Trab: " for="telefoneTrab1" />
+						<p:inputText id="telefoneTrab1" size="50"
+							value="" />
+						
+						<p:outputLabel value="Celular: " for="celular1" />
+						<p:inputText id="celular1" size="50"
+							value="" required="true"/>
+						
+						<p:outputLabel value="Celular trab.: " for="celularTrab2" />
+						<p:inputText id="celularTrab2" size="50"
+							value="" />
+							
+						<p:outputLabel value="E-mail: " for="email1" />
+						<p:inputText id="email1" size="50"
+							value="" />					
+					</p:panelGrid>
+			</p:panel>
+			
+			<p:panel id="panelConfec" header="Atividade de confecção de petição" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel3"  >	
+					<p:panelGrid columns="4"  style="width: 100%"
+						columnClasses="rotulo, campo, rotulo, campo">
+						
+						<p:outputLabel value="Logradouro:" for="teste4" />
+						<p:inputText id="teste4" size="50"
+							value="" required="true" />
+				
+						<p:outputLabel value="Número:" for="numero3" />
+						<p:inputText id="numero3" size="5" value="" maxlength="15" required="true"/>
+						
+						
+						<p:outputLabel value="Complemento:" for="comp" />
+						<p:inputText id="comp" size="50"
+							value="" />
+				
+						<p:outputLabel value="Cidade:" for="cidade45" />
+						<p:selectOneMenu id="cidade45" style="width: 200px;" required="true">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
+								<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
+								<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+						</p:selectOneMenu>
+				
+						<p:outputLabel value="Estado:" for="estado23" />
+						<p:selectOneMenu id="estado23" style="width: 200px;" required="true">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItem itemLabel="RJ" itemValue="RJ"/>
+								<f:selectItem itemLabel="MG" itemValue="MG"/>
+								<f:selectItem itemLabel="SP" itemValue="SP"/>
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Cep:" for="Cep" required="true"/>
+						<p:inputMask id="Cep" mask="99999-999" size="10"
+							value="" required="true"/>
+						
+						<p:outputLabel value="Telefone: " for="telefone5" />
+						<p:inputText id="telefone5" size="50"
+							value="" required="true" />
+						
+						<p:outputLabel value="Telefone Trab: " for="telefoneTrab6" />
+						<p:inputText id="telefoneTrab6" size="50"
+							value="" />
+						
+						<p:outputLabel value="Celular: " for="celular6" />
+						<p:inputText id="celular6" size="50"
+							value="" required="true"/>
+						
+						<p:outputLabel value="Celular trab.: " for="celularTrab12" />
+						<p:inputText id="celularTrab12" size="50"
+							value="" />
+							
+						<p:outputLabel value="E-mail: " for="email12" />
+						<p:inputText id="email12" size="50"
+							value="" />					
+					</p:panelGrid>
+			</p:panel>
+		</h:form>
+    </ui:define>
+ </ui:composition>

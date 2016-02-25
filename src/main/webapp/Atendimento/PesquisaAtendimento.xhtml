@@ -24,11 +24,6 @@
 	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
 	    			columnClasses="rotulo, campo">
 	    		
-	    		<p:outputLabel value="Número do processo" />
-	    		<h:panelGroup>
-	    			<p:inputText size="10" value="" />
-	    		</h:panelGroup>
-	    			    		
 	    		<p:outputLabel value="Data de Atendimento" />
 	    		<h:panelGroup>
 	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
@@ -70,7 +65,7 @@
 	    				<f:convertDateTime pattern="dd/MM/yyyy" />
 	    			</h:outputText>
 	    		</p:column>
-	    		<p:column headerText="Réu: " style="text-align: right; width: 120px">
+	    		<p:column headerText="Réu: " style="text-align: center; width: 120px">
 	    			<h:outputText value="" />
 	    		</p:column>
 	    		<p:column headerText="Area atendimento:" style="width: 100px">
