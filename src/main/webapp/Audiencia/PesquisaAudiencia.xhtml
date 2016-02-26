@@ -5,11 +5,11 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">Pesquisa de pedidos</ui:define>
+    <ui:define name="titulo">Pesquisa de Audiência</ui:define>
     
     <ui:define name="corpo">
     	<h:form>
-	    	<h1>Pesquisa de Assistido</h1>
+	    	<h1>Pesquisa de Audiência</h1>
 	    	
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
@@ -17,32 +17,21 @@
 	    				update="@form" />
 	    		</p:toolbarGroup>
 	    		<p:toolbarGroup align="right">
-	    			<p:button value="Novo" outcome="/assistido/CadastroAssistido" />
+	    			<p:button value="Novo" outcome="/Audiencia/CadastroAudiencia" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
 	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
 	    			columnClasses="rotulo, campo">
 	    		
-	    		<p:outputLabel value="Número do processo" />
-	    		<h:panelGroup>
-	    			<p:inputText size="10" value="" />
-	    		</h:panelGroup>
+	    		<p:outputLabel value="Número do processo" for="numProcesso"/>
+	    		<p:inputText size="10" value="" id="numProcesso"/>
 	    			    		
-	    		<p:outputLabel value="Data de Atendimento" />
-	    		<h:panelGroup>
-	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
-	    				 />
-	    			a
-	    			<p:calendar size="10" pattern="dd/MM/yyyy"
-	    				/>
-	    		</h:panelGroup>
+	    		<p:outputLabel value="Data da audiência" for="dataAudiencia" />
+	    		<p:calendar id="dataAudiencia" size="10" pattern="dd/MM/yyyy" />
 	    		
-	    		<p:outputLabel value="Atendente" />
-	    		<p:inputText size="40" value="" required="true"/>
-	    		
-	    		<p:outputLabel value="Cliente (Assistido): " />
-	    		<p:inputText size="40" value="" />
+	    		<p:outputLabel value="Assistido: "  for="assistido"/>
+	    		<p:inputText id="assistido" size="40" value="" />
 	    		
 	    		<p:outputLabel value="Status atendimento" />
 	    		<p:selectManyCheckbox >
@@ -52,37 +41,48 @@
 	    		</p:selectManyCheckbox>
 	    	</p:panelGrid>
 	    	
-	    	<p:dataTable id="tabelaAssistido"  var="assistido"
+	    	<p:dataTable id="tabelaAudiencia"  var="audiencia"
 		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
 		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-		    		
-	    		<p:column headerText="Número" style="text-align: center; width: 100px">
-	    			<h:outputText value="232"/>
-	    		</p:column>
-	    		<p:column headerText="Autor">
+		    	
+	    		<p:column headerText="Número do processo">
 	    			<h:outputText value="gfgsfg"/>
 	    		</p:column>
-	    		<p:column headerText="Relato">
+	    		<p:column headerText="Réu">
 	    			<h:outputText value="sdfgdfg"/>
 	    		</p:column>
-	    		<p:column headerText="Data de criação" style="text-align: center; width: 140px">
+	    		<p:column headerText="Estagiario: " style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column headerText="Advogado: " style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column headerText="Endereço:" style="text-align: center; width: 140px">
+	    			<h:outputText value="sdasdsdas" />
+	    		</p:column>
+	    		<p:column headerText="Cidade: " style="text-align: center; width: 120px">
+	    			<h:outputText value="Juiz de Fora" />
+	    		</p:column>
+	    		<p:column headerText="Data da audiência: " style="text-align: center; width: 140px">
 	    			<h:outputText value="05/02/1988">
 	    				<f:convertDateTime pattern="dd/MM/yyyy" />
 	    			</h:outputText>
 	    		</p:column>
-	    		<p:column headerText="Réu " style="text-align: center; width: 120px">
-	    			<h:outputText value="" />
+	    		<p:column headerText="Hora da audiência: " style="text-align: center; width: 120px">
+	    			<h:outputText value="10:55" />
 	    		</p:column>
-	    		<p:column headerText="Area atendimento:" style="width: 100px">
+	    		<p:column headerText="Vara tribunal: " style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column headerText="Juiz Resposanvel: " style="width: 100px">
 	    			<h:outputText value="dfgdfgdfgfg"/>
 	    		</p:column>
 	    		<p:column style="text-align: center; width: 50px">
-	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/assistido/CadastroAssistido">
+	    			<p:button icon="ui-icon-pencil" title="Alterar" >
 	    				<f:param name="assistido" value="12"/>
 	    			</p:button>
 	    		</p:column>
-	    	</p:dataTable>
-	    	
+	    	</p:dataTable>	
     	</h:form>
     </ui:define>
 </ui:composition>

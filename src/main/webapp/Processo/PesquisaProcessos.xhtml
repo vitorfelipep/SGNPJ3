@@ -5,30 +5,22 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">Pesquisa de pedidos</ui:define>
+    <ui:define name="titulo">Adicionar processo</ui:define>
     
     <ui:define name="corpo">
     	<h:form>
-	    	<h1>Pesquisa de Assistido</h1>
+	    	<h1>Vincular número do processo</h1>
 	    	
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
 	    			<p:commandButton value="Pesquisar" 
 	    				update="@form" />
 	    		</p:toolbarGroup>
-	    		<p:toolbarGroup align="right">
-	    			<p:button value="Novo" outcome="/assistido/CadastroAssistido" />
-	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
 	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
 	    			columnClasses="rotulo, campo">
 	    		
-	    		<p:outputLabel value="Número do processo" />
-	    		<h:panelGroup>
-	    			<p:inputText size="10" value="" />
-	    		</h:panelGroup>
-	    			    		
 	    		<p:outputLabel value="Data de Atendimento" />
 	    		<h:panelGroup>
 	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
@@ -47,8 +39,6 @@
 	    		<p:outputLabel value="Status atendimento" />
 	    		<p:selectManyCheckbox >
 	    			<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
-	    			<f:selectItem itemValue="Cancelado" itemLabel="Cancelado" />
-	    			<f:selectItem itemValue="Fechado" itemLabel="Fechado" />
 	    		</p:selectManyCheckbox>
 	    	</p:panelGrid>
 	    	
@@ -77,12 +67,11 @@
 	    			<h:outputText value="dfgdfgdfgfg"/>
 	    		</p:column>
 	    		<p:column style="text-align: center; width: 50px">
-	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/assistido/CadastroAssistido">
+	    			<p:button icon="ui-icon-pencil" title="Alterar" outcome="/assistido/CadastroAssistido">
 	    				<f:param name="assistido" value="12"/>
 	    			</p:button>
 	    		</p:column>
 	    	</p:dataTable>
-	    	
     	</h:form>
     </ui:define>
 </ui:composition>

@@ -5,19 +5,16 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">Pesquisa de pedidos</ui:define>
+    <ui:define name="titulo">Relatório de Hipossuficiência</ui:define>
     
     <ui:define name="corpo">
     	<h:form>
-	    	<h1>Pesquisa de Assistido</h1>
+	    	<h1>Gerar Relatório de Hipossuficiência</h1>
 	    	
 	    	<p:toolbar style="margin-top: 20px">
-	    		<p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
 	    			<p:commandButton value="Pesquisar" 
 	    				update="@form" />
-	    		</p:toolbarGroup>
-	    		<p:toolbarGroup align="right">
-	    			<p:button value="Novo" outcome="/assistido/CadastroAssistido" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
@@ -74,6 +71,12 @@
 	    			<h:outputText value="" />
 	    		</p:column>
 	    		<p:column headerText="Area atendimento:" style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column headerText="Rendimento Familiar:" style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column headerText="Qtd Filhos:" style="width: 100px">
 	    			<h:outputText value="dfgdfgdfgfg"/>
 	    		</p:column>
 	    		<p:column style="text-align: center; width: 50px">

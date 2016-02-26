@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-fluid">
+		<p:panelGrid columns="4" style="width:100%; margin-top:20px;"
+			columnClasses="rotulo, campo, rotulo, campo">
+
+			<p:outputLabel value="Data de Atendimento" />
+     		<p:calendar size="10" pattern="dd/MM/yyyy"  />
+     		
+     		<p:outputLabel value="Hora da audiência: " for="hora-audiencia" />
+			<p:inputMask id="hora-audiencia" size="10" maxlength="80"
+				value="" mask="99:99"  />
+			
+    		<p:outputLabel value="Endereço: " for="endereco" />
+			<p:inputText id="endereco" size="60" maxlength="80"
+				value=""  />
+				
+			<p:outputLabel value="Cidade: " for="cidade" />
+			<p:inputText id="cidade" size="50" maxlength="80"
+				value=""  />
+					
+			<p:outputLabel value="Advogado: " for="advogadoAudiencia" />
+			<p:autoComplete id="advogadoAudiencia" size="40" dropdown="true" required="true" />
+			
+			<p:outputLabel value="Assistido (Autor): " for="reu" />
+			<p:autoComplete id="reu" size="40" dropdown="true" required="true" />
+			
+			<p:outputLabel value="Número do Processo: " for="numProcesso" />
+			<p:inputText id="numProcesso" size="60" maxlength="80"
+				value=""  />
+			
+			<p:outputLabel value="Réu: " for="reuAudiencia" />
+			<p:selectOneMenu id="reuAudiencia" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Julio Cesar" itemValue="Julio Cesar"/>
+				<f:selectItem itemLabel="Casas Bahia" itemValue="Casas Bahia"/>
+			</p:selectOneMenu>
+			
+		
+			<p:outputLabel value="Vara de audiência:  " for="varaAudiencia" />
+			<p:selectOneMenu id="varaAudiencia" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="1º vara da familia" itemValue="1º vara da familia"/>
+				<f:selectItem itemLabel="15º vara " itemValue="15º vara "/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Nome do Juiz " for="JuizAudiencia" />
+			<p:inputText id="JuizAudiencia" size="50" maxlength="80"
+				value=""  />
+		</p:panelGrid>
+	</div>
+</ui:composition>

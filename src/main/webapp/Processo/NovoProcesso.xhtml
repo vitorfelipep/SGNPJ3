@@ -1,0 +1,51 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:define name="titulo">Cadastro de processos</ui:define>
+    
+    <ui:define name="corpo">
+    	<h:form>
+			<h1>Vincular número de processo ao atendimento</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top:20px;">
+				<p:toolbarGroup styleClass="toobarStyle">
+					<p:button value="Novo" outcome="/Processo/NovoProcesso" />
+					<p:commandButton value="Salvar" id="botaoSalvar"
+						 ajax="false" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right" styleClass="toobarStyle">
+					<p:button value="Pesquisa" outcome="/Processo/PesquisaProcessos" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="4" style="width: 100%"
+					columnClasses="rotulo, campo, rotulo, campo">
+					<p:outputLabel value="Número do processo: " for="numProcesso" />
+					<p:inputText id="numProcesso" size="60" maxlength="80"
+						value="" required="true"/>
+					
+					<p:outputLabel value="Assistido: " for="areaDesignada" />
+					<p:inputText id="areaDesignada" size="60" maxlength="80"
+						value="Jóse da silva"  disabled="true"/>
+						
+					<p:outputLabel value="Advogado: " for="advogadoResp" />
+					<p:inputText id="advogadoResp" size="60" maxlength="80"
+						value="MAtheus Nunes"  disabled="true"/>
+					
+					<p:outputLabel value="Observações do atendimento: " for="infAtend" />
+					<p:inputTextarea id="infAtend" size="60" maxlength="80"
+						value="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."  
+						disabled="true"/>		
+						
+			</p:panelGrid>	
+		</h:form>
+    </ui:define>
+ </ui:composition>

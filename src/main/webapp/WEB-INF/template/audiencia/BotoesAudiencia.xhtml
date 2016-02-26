@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+
+		<p:toolbar style="margin-top:20px;">
+    		<p:toolbarGroup styleClass="toobarStyle">
+    			<p:button value="Novo" outcome="/Audiencia/CadastroAudiencia"/>
+    			<p:commandButton value="Salvar" 
+    				update="@form" />
+    		</p:toolbarGroup>
+    			
+    		<p:toolbarGroup align="right" styleClass="toobarStyle">
+    			<p:commandButton value="Excluir" 
+    				process="@this" update="@form"  >
+    				<p:confirm header="Confirmação" message="Você têm certeza que deseja excluir esta audiência?" icon="ui-icon-alert"/>	
+    			</p:commandButton>
+    			<p:commandButton value="Enviar por E-mail" 
+    				process="@this" />  
+    			
+    			<p:separator />
+    			
+    			<p:button value="Pesquisa" outcome="/Audiencia/PesquisaAudiencia"/>
+    		</p:toolbarGroup>
+    	</p:toolbar>
+    	
+    	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+	        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>
+    	
+ </ui:composition>

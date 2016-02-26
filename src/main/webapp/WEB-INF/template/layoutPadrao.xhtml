@@ -51,19 +51,18 @@
 				</p:submenu>
 				<p:menuitem value="Atendimento" outcome="/Atendimento/PesquisaAtendimento" />
 				<p:submenu label="Processo">
-					<p:menuitem value="Novo Processo"  />
-					<p:menuitem value="Pesquisar processos"  />
+					<p:menuitem value="Processos"  outcome="/Processo/PesquisaProcessos"/>
 				</p:submenu>
 				<p:submenu label="Audiência">
-					<p:menuitem value="Nova Audiência"  />
-					<p:menuitem value="Pesquisar Audiências"  />
+					<p:menuitem value="Nova Audiência" outcome="/Audiencia/CadastroAudiencia" />
+					<p:menuitem value="Pesquisar Audiências" outcome="/Audiencia/PesquisaAudiencia" />
 				</p:submenu>
 				<p:submenu label="Relatórios">
-					<p:menuitem value="Hipossuificiência"  />
-					<p:menuitem value="Procuração"  />
-					<p:menuitem value="Ativ. Estagiário"  />
-					<p:menuitem value="Processos"  />
-					<p:menuitem value="Audiências"  />
+					<p:menuitem value="Hipossuificiência" outcome="/Relatorio/Relatorio-Hipossuficiencia" />
+					<p:menuitem value="Procuração"  outcome="/Relatorio/Relatorio-Procuracao"/>
+					<p:menuitem value="Ativ. Estagiário" outcome="/Relatorio/Relatorio-Atividade-Estagiario" />
+					<p:menuitem value="Processos"  outcome="/Relatorio/Relatorio-Processo"/>
+					<p:menuitem value="Audiências" outcome="/Relatorio/Relatorio-Audiencia" />
 				</p:submenu>
 				
 				<p:menuitem value="Sair" style="margin-left: 20px;" />

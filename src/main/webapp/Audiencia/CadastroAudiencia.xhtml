@@ -1,0 +1,65 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:define name="titulo">Cadastro de Assistidos</ui:define>
+    
+    <ui:define name="corpo">
+    	<h:form id="frmCadastro">
+	    	<h1></h1>
+	    	
+	    	<p:messages autoUpdate="true" closable="true"/>
+	    	
+	    	<ui:include src="/WEB-INF/template/audiencia/BotoesAudiencia.xhtml"  />
+	    	
+	    	<ui:include src="/WEB-INF/template/audiencia/CapaAudiencia.xhtml"  /> 
+	    	
+	    	<p:dataTable id="tabelaAudiencia"  var="audiencia"
+		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
+		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+		    	
+	    		<p:column headerText="Número do processo">
+	    			<h:outputText value="gfgsfg"/>
+	    		</p:column>
+	    		<p:column headerText="Réu">
+	    			<h:outputText value="sdfgdfg"/>
+	    		</p:column>
+	    		<p:column headerText="Estagiario: " style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column headerText="Advogado: " style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column headerText="Endereço:" style="text-align: center; width: 140px">
+	    			<h:outputText value="sdasdsdas" />
+	    		</p:column>
+	    		<p:column headerText="Cidade: " style="text-align: center; width: 120px">
+	    			<h:outputText value="Juiz de Fora" />
+	    		</p:column>
+	    		<p:column headerText="Data da audiência: " style="text-align: center; width: 140px">
+	    			<h:outputText value="05/02/1988">
+	    				<f:convertDateTime pattern="dd/MM/yyyy" />
+	    			</h:outputText>
+	    		</p:column>
+	    		<p:column headerText="Hora da audiência: " style="text-align: center; width: 120px">
+	    			<h:outputText value="10:55" />
+	    		</p:column>
+	    		<p:column headerText="Vara tribunal: " style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column headerText="Juiz Resposanvel: " style="width: 100px">
+	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		</p:column>
+	    		<p:column style="text-align: center; width: 50px">
+	    			<p:button icon="ui-icon-pencil" title="Alterar" >
+	    				<f:param name="assistido" value="12"/>
+	    			</p:button>
+	    		</p:column>
+	    	</p:dataTable>
+    	</h:form>
+    </ui:define>
+ </ui:composition>
