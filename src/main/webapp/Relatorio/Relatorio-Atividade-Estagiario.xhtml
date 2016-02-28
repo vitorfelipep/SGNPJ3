@@ -21,12 +21,12 @@
 	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
 	    			columnClasses="rotulo, campo">
 	    		
-	    		<p:outputLabel value="Número do processo" />
+	    		<p:outputLabel value="Nome estagiário: " />
 	    		<h:panelGroup>
 	    			<p:inputText size="10" value="" />
 	    		</h:panelGroup>
 	    			    		
-	    		<p:outputLabel value="Data de Atendimento" />
+	    		<p:outputLabel value="Data da atividade: " />
 	    		<h:panelGroup>
 	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
 	    				 />
@@ -34,19 +34,14 @@
 	    			<p:calendar size="10" pattern="dd/MM/yyyy"
 	    				/>
 	    		</h:panelGroup>
-	    		
-	    		<p:outputLabel value="Atendente" />
-	    		<p:inputText size="40" value="" required="true"/>
-	    		
-	    		<p:outputLabel value="Cliente (Assistido): " />
-	    		<p:inputText size="40" value="" />
-	    		
-	    		<p:outputLabel value="Status atendimento" />
-	    		<p:selectManyCheckbox >
-	    			<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
-	    			<f:selectItem itemValue="Cancelado" itemLabel="Cancelado" />
-	    			<f:selectItem itemValue="Fechado" itemLabel="Fechado" />
-	    		</p:selectManyCheckbox>
+
+	    		<p:outputLabel value="Area de designada: " for="areaDesignada" />
+				<p:selectOneMenu id="areaDesignada" value="" required="true"	>	
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItem itemLabel="Atividade de pesquisa" itemValue="Atividade de pesquisa"/>
+					<f:selectItem itemLabel="Atividade sobre processos" itemValue="Atividade sobre processos"/>
+					<f:selectItem itemLabel="Atividade de confecção de petição" itemValue="Atividade de confecção de petição"/>
+				</p:selectOneMenu>
 	    	</p:panelGrid>
 	    	
 	    	<p:dataTable id="tabelaAssistido"  var="assistido"
