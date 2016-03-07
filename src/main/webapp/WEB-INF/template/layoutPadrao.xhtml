@@ -36,7 +36,7 @@
 	<div style="float: right;margin-right: 38px;">
 		<span
 			style="float: left; height: 30px; line-height: 30px; margin-right: 75px">
-			Olá Vitor.Felipe! </span>
+			Olá #{seguranca.nomeUsuario}! </span>
 
 		<h:form style="display: inline-block">
 			<p:menubar styleClass="menu-sistema">
@@ -65,7 +65,7 @@
 					<p:menuitem value="Audiências" outcome="/Relatorio/Relatorio-Audiencia" />
 				</p:submenu>
 				
-				<p:menuitem value="Sair" style="margin-left: 20px;" />
+				<p:menuitem value="Sair" url="/j_spring_security_logout" style="margin-left: 20px;" />
 			</p:menubar>
 		</h:form>
 	</div>

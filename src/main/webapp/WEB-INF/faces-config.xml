@@ -6,9 +6,18 @@
     version="2.1">
 	
 	<application>
+		
+		<message-bundle>com.sgnpj.Messages</message-bundle>
+	
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
 		</locale-config>
 	</application>
+	
+	<factory>
+		<exception-handler-factory>
+			com.sgnpj.util.jsf.JsfExceptionHandlerFactory
+		</exception-handler-factory>
+	</factory>
 	
 </faces-config>
