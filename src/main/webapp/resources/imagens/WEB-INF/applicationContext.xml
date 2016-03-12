@@ -36,6 +36,9 @@
 		<intercept-url pattern="/AcessoNegado.xhtml" access="isAuthenticated()"/>
 		<intercept-url pattern="/Advogado/**" access="hasAnyRole('ADMINISTRADOR')"/>
 		<intercept-url pattern="/Atendimento/**" access="hasAnyRole('ADMINISTRADOR', 'ESTAGIARIO')"/>
+		<intercept-url pattern="/Usuario/**" access="hasAnyRole('ADMINISTRADOR')"/>
+		<intercept-url pattern="/Processo/**" access="hasAnyRole('ADMINISTRADOR')"/>
+		<intercept-url pattern="/Assistido/**" access="hasAnyRole('ADMINISTRADOR', 'ESTAGIARIO')"/>
 		<intercept-url pattern="/Relatorio/**" access="hasAnyRole('ADMINISTRADOR', 'ESTAGIARIO')"/>
 		<intercept-url pattern="/**" access="denyAll"/>
 		
