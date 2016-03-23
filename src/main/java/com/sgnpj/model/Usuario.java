@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +23,10 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String email;
 	private String senha;
-	private List<Grupo> grupos = new ArrayList<>();
-	
+	private List<Perfil> perfis = new ArrayList<>();
+	private Advogado advogado;
+	private Estagiario estagiario;
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -33,6 +36,7 @@ public class Usuario implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	@Column(nullable = false, length = 80)
 	public String getNome() {
 		return nome;
@@ -41,6 +45,7 @@ public class Usuario implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	@Column(nullable = false, unique = true, length = 255)
 	public String getEmail() {
 		return email;
@@ -49,6 +54,7 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	@Column(nullable = false, length = 20)
 	public String getSenha() {
 		return senha;
@@ -57,13 +63,32 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
 	@ManyToMany(cascade = CascadeType.ALL)
-	public List<Grupo> getGrupos() {
-		return grupos;
+	public List<Perfil> getPerfis() {
+		return perfis;
 	}
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
+
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfis = perfis;
+	}
+
+	@OneToOne
+	public Advogado getAdvogado() {
+		return advogado;
+	}
+
+	public void setAdvogado(Advogado advogado) {
+		this.advogado = advogado;
+	}
+
+	@OneToOne
+	public Estagiario getEstagiario() {
+		return estagiario;
+	}
+
+	public void setEstagiario(Estagiario estagiario) {
+		this.estagiario = estagiario;
 	}
 
 	@Override

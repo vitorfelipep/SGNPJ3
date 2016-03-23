@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
-@Table(name = "grupo")
-public class Grupo implements Serializable {
+@Table(name = "perfil")
+public class Perfil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,7 @@ public class Grupo implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Grupo other = (Grupo) obj;
+		Perfil other = (Perfil) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
