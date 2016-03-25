@@ -26,6 +26,13 @@
 				<f:selectItem itemLabel="Júridica" itemValue="JURIDICA"/>
 			</p:selectOneMenu>
 			
+			<p:outputLabel value="Tipo Assistido: " for="tipoAssitido" />
+			<p:selectOneMenu id="tipoAssitido" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Autor" itemValue="AUTOR"/>
+				<f:selectItem itemLabel="Réu" itemValue="REU"/>
+			</p:selectOneMenu>
+			
 			<p:outputLabel value="Área de atendimento: " for="atendente"  />
 			<p:selectOneMenu id="atendente" style="width: 200px;" rendered="true">
 				<f:selectItem itemLabel="Selecione" />
@@ -37,6 +44,9 @@
 			
 			<p:outputLabel value="Advogado: " for="advogadoAssis" />
 			<p:autoComplete id="advogadoAssis" size="40" dropdown="true" rendered="true" />
+			
+			<p:outputLabel value=" " />
+			<h:outputText />
 					
 		</p:panelGrid>
 	</div>

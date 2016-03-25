@@ -63,7 +63,8 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
+	
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Perfil> getPerfis() {
 		return perfis;

@@ -9,11 +9,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -39,7 +38,8 @@ public class Estagiario implements Serializable {
 	private Date dataTerminoEstagio;
 	private String codOab;
 	private String ObsEstagio;
-	
+	private Usuario usuario;
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -49,7 +49,7 @@ public class Estagiario implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getNome() {
@@ -59,7 +59,6 @@ public class Estagiario implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
 
 	@Column(nullable = false, length = 11)
 	public Integer getMatricula() {
@@ -69,7 +68,7 @@ public class Estagiario implements Serializable {
 	public void setMatricula(Integer matricula) {
 		this.matricula = matricula;
 	}
-	
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 20)
@@ -80,7 +79,7 @@ public class Estagiario implements Serializable {
 	public void setAreaDesignada(AreaAtuacao areaDesignada) {
 		this.areaDesignada = areaDesignada;
 	}
-	
+
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_inicio", nullable = false)
@@ -91,7 +90,7 @@ public class Estagiario implements Serializable {
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getTelefoneContato() {
@@ -101,8 +100,7 @@ public class Estagiario implements Serializable {
 	public void setTelefoneContato(String telefoneContato) {
 		this.telefoneContato = telefoneContato;
 	}
-	
-	
+
 	@Column(nullable = true, length = 80)
 	public String getCelularContato() {
 		return celularContato;
@@ -111,7 +109,7 @@ public class Estagiario implements Serializable {
 	public void setCelularContato(String celularContato) {
 		this.celularContato = celularContato;
 	}
-	
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 20)
@@ -122,7 +120,7 @@ public class Estagiario implements Serializable {
 	public void setSituacao(Situacao situacao) {
 		this.situacao = situacao;
 	}
-	
+
 	@Column(nullable = false, length = 20)
 	public String getPeriodo() {
 		return periodo;
@@ -131,7 +129,7 @@ public class Estagiario implements Serializable {
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
-	
+
 	@Column(nullable = false, length = 20)
 	public String getTurma() {
 		return turma;
@@ -140,7 +138,7 @@ public class Estagiario implements Serializable {
 	public void setTurma(String turma) {
 		this.turma = turma;
 	}
-	
+
 	@Column(nullable = false, length = 20)
 	public String getTurno() {
 		return turno;
@@ -149,7 +147,7 @@ public class Estagiario implements Serializable {
 	public void setTurno(String turno) {
 		this.turno = turno;
 	}
-	
+
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_nascimento", nullable = false)
@@ -160,10 +158,9 @@ public class Estagiario implements Serializable {
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
-	@NotNull
+
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_termino", nullable = false)
+	@Column(name = "data_termino", nullable = true)
 	public Date getDataTerminoEstagio() {
 		return dataTerminoEstagio;
 	}
@@ -171,7 +168,7 @@ public class Estagiario implements Serializable {
 	public void setDataTerminoEstagio(Date dataTerminoEstagio) {
 		this.dataTerminoEstagio = dataTerminoEstagio;
 	}
-	
+
 	@Column(nullable = false, unique = true, length = 25)
 	public String getCodOab() {
 		return codOab;
@@ -180,7 +177,7 @@ public class Estagiario implements Serializable {
 	public void setCodOab(String codOab) {
 		this.codOab = codOab;
 	}
-	
+
 	@Column(columnDefinition = "text", nullable = false)
 	public String getObsEstagio() {
 		return ObsEstagio;
@@ -188,6 +185,15 @@ public class Estagiario implements Serializable {
 
 	public void setObsEstagio(String obsEstagio) {
 		ObsEstagio = obsEstagio;
+	}
+
+	@OneToOne
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

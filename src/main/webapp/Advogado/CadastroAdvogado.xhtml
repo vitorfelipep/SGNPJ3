@@ -1,24 +1,27 @@
 <ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:o="http://omnifaces.org/ui">
-    
-    <ui:define name="titulo">Cadastro de Advogados</ui:define>
-    
-    <ui:define name="corpo">
-    	<h:form>
-			<h1>Novo cadastro</h1>
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+	
+	
+	<f:metadata>
+    	<f:event listener="#{cadastroAdvogadoBean.inicializar}" type="preRenderView" />
+    </f:metadata>
+	
+	<ui:define name="titulo">Cadastro de Advogados</ui:define>
+
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Novo cadastro de Advogado</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
 					<p:button value="Novo" outcome="/Advogado/CadastroAdvogado" />
-					<p:commandButton value="Salvar" id="botaoSalvar"
-						 ajax="false" />
+					<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroAdvogadoBean.cadastrar}" ajax="false" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right" styleClass="toobarStyle">
@@ -26,93 +29,105 @@
 				</p:toolbarGroup>
 			</p:toolbar>
 
-			<p:panelGrid columns="2" id="painel"
+			<p:panelGrid columns="4" id="painel"
 				style="width: 100%;margin-top:20px;" columnClasses="rotulo, campo">
 
-				<p:outputLabel value="Nome: " for="nome" />
-				<p:inputText id="nome" size="60" maxlength="80"
-					value="" required="true"/>
 
+				<p:outputLabel value="Email: " for="login" />
+				<p:inputText id="login" size="50" maxlength="50" value="#{cadastroAdvogadoBean.usuario.email}" />
+
+				<p:outputLabel value="Nome: " for="nome" />
+				<p:inputText id="nome" size="50" maxlength="80" value="#{cadastroAdvogadoBean.usuario.nome}" />
+
+				<p:outputLabel value="Senha: " for="senha" />
+				<p:password id="senha" size="30" feedback="true" maxlength="20"
+					value="#{cadastroAdvogadoBean.usuario.senha}" />
+
+				<p:outputLabel value="Confirmar senha: " for="confSenha" />
+				<p:password id="confSenha" size="30" maxlength="20" feedback="true"
+					value="#{cadastroAdvogadoBean.verificadorSenha}" >
+					
+				</p:password>
+
+				<p:outputLabel value="Perfil: " for="perfil" />
+				<p:selectOneMenu id="perfil" style="width: 200px;"  value="#{cadastroAdvogadoBean.usuario.perfis}"
+					converter="perfilConverter">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{cadastroAdvogadoBean.perfis}" var="perfil"
+					   itemValue="#{perfil}" itemLabel="#{perfil.nome}" />
+				</p:selectOneMenu>
+				
 				<p:outputLabel value="Numero da OAB: " for="numOAB" />
-				<p:inputText id="numOAB" size="60" maxlength="80"
-					value="" required="true"/>
+				<p:inputText id="numOAB" size="30" maxlength="80" value="#{cadastroAdvogadoBean.advogado.codigo_OAB}"
+					required="true" />
+					
+				<p:outputLabel value="CPF: " for="cpf" />
+				<p:inputText id="cpf"  size="30"  value="#{cadastroAdvogadoBean.advogado.cpf}" />
 
 				<p:outputLabel value="Area de atuação: " for="areaAtuacao" />
-				<p:selectOneMenu id="areaAtuacao" value="" required="true"	>	
+				<p:selectOneMenu id="areaAtuacao" style="width: 200px;" required="true" value="#{cadastroAdvogadoBean.advogado.areaAtuacao}">
 					<f:selectItem itemLabel="Selecione" />
-					<f:selectItem itemLabel="Cívil" itemValue="Cívil"/>
-					<f:selectItem itemLabel="Penal" itemValue="Penal"/>
-					<f:selectItem itemLabel="Trabalhista" itemValue="Trabalhista"/>
-					<f:selectItem itemLabel="Familiar" itemValue="Familiar"/>
+					<f:selectItems value="#{cadastroAdvogadoBean.areasAtuacao}" var="areas"
+					   itemValue="#{areas}"   itemLabel="#{areas.descricao}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Situação: " for="sitAdv" />
-				<p:selectOneMenu id="sitAdv" value=""	required="true" >	
+				<p:selectOneMenu id="sitAdv" value="#{cadastroAdvogadoBean.advogado.situacao}" style="width: 130px;" required="true">
 					<f:selectItem itemLabel="Selecione" />
-					<f:selectItem itemLabel="Ativo" itemValue="ATIVO"/>
-					<f:selectItem itemLabel="Inativo" itemValue="INATIVO"/>
-					<f:selectItem itemLabel="Em férias" itemValue="Em férias"/>
-					<f:selectItem itemLabel="Afastado" itemValue="Afastado"/>
+					<f:selectItems value="#{cadastroAdvogadoBean.situacao}" var="situacao"
+						itemValue="#{situacao}" itemLabel="#{situacao.descricao}"/>
 				</p:selectOneMenu>
+				
+				<p:outputLabel  />
+				<p:outputLabel />
 
 			</p:panelGrid>
-			<p:panel id="panelContato" header="Dados para contato" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel"  >	
-				<p:panelGrid columns="4"  style="width: 100%"
+			<p:panel id="panelContato" header="Dados para contato"
+				toggleable="true" toggleSpeed="500" closeSpeed="500"
+				widgetVar="panel">
+				<p:panelGrid columns="4" style="width: 100%"
 					columnClasses="rotulo, campo, rotulo, campo">
-					
-					<p:outputLabel value="Logradouro:" for="EndEst" />
-					<p:inputText id="EndEst" size="50"
-						value="" required="true" />
-			
+
+					<p:outputLabel value="Endereço:" for="logradouro" />
+					<p:inputText id="logradouro" size="50" value="#{cadastroAdvogadoBean.advogado.endereco}" required="true" />
+
 					<p:outputLabel value="Número:" for="numeroEst" />
-					<p:inputText id="numeroEst" size="5" value="" maxlength="15" required="true"/>
+					<p:inputText id="numeroEst" size="5" value="#{cadastroAdvogadoBean.advogado.numero}" maxlength="15"
+						required="true" />
 					
-					
+
 					<p:outputLabel value="Complemento:" for="ComplementoEst" />
-					<p:inputText id="ComplementoEst" size="50"
-						value="" />
-			
+					<p:inputText id="ComplementoEst" size="50" value="#{cadastroAdvogadoBean.advogado.complemento}" />
+	
+					<p:outputLabel value="Bairro:" for="bairro" />
+					<p:inputText id="bairro" size="50" value="#{cadastroAdvogadoBean.advogado.bairro}" />
+					
 					<p:outputLabel value="Cidade:" for="cidade" />
-					<p:selectOneMenu id="cidade" style="width: 200px;" required="true">
-							<f:selectItem itemLabel="Selecione" />
-							<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
-							<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
-							<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+					<p:selectOneMenu id="cidade" style="width: 200px;" required="true" value="#{cadastroAdvogadoBean.advogado.cidade}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo" />
+						<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
+						<f:selectItem itemLabel="Nilópolis" itemValue="Nilopolis" />
 					</p:selectOneMenu>
-			
+					
+					
 					<p:outputLabel value="Estado:" for="estado" />
-					<p:selectOneMenu id="estado" style="width: 200px;" required="true">
-							<f:selectItem itemLabel="Selecione" />
-							<f:selectItem itemLabel="RJ" itemValue="RJ"/>
-							<f:selectItem itemLabel="MG" itemValue="MG"/>
-							<f:selectItem itemLabel="SP" itemValue="SP"/>
+					<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.estado}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="RJ" itemValue="RJ" />
 					</p:selectOneMenu>
-					
-					<p:outputLabel value="Cep:" for="entregaCep" required="true"/>
-					<p:inputMask id="entregaCep" mask="99999-999" size="10"
-						value="" required="true"/>
-					
+
+					<p:outputLabel value="Cep:" for="cep"  />
+					<p:inputMask id="cep" mask="99999-999" size="10" value="#{cadastroAdvogadoBean.advogado.cep}"
+						 />
+
 					<p:outputLabel value="Telefone: " for="telefone" />
-					<p:inputText id="telefone" size="50"
-						value="" required="true" />
-					
-					<p:outputLabel value="Telefone Trab: " for="telefoneTrab" />
-					<p:inputText id="telefoneTrab" size="50"
-						value="" />
-					
+					<p:inputMask id="telefone" mask="(99)9999-9999" size="50" value="#{cadastroAdvogadoBean.advogado.telefoneContato}" />
+
 					<p:outputLabel value="Celular: " for="celular" />
-					<p:inputText id="celular" size="50"
-						value="" required="true"/>
-					
-					<p:outputLabel value="Celular trab.: " for="celularTrab" />
-					<p:inputText id="celularTrab" size="50"
-						value="" />
-						
-					<p:outputLabel value="E-mail: " for="emailEst" />
-					<p:inputText id="emailEst" size="50"
-						value="" />					
+					<p:inputMask id="celular" mask="(99) 99999-9999" size="50" value="#{cadastroAdvogadoBean.advogado.celularContato}"  />
 				</p:panelGrid>
 			</p:panel>
 		</h:form>
-    </ui:define>
- </ui:composition>
+	</ui:define>
+</ui:composition>

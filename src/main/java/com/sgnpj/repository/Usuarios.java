@@ -20,7 +20,7 @@ public class Usuarios implements Serializable {
 		return manager.find(Usuario.class, id);
 	}
 
-	public List<Usuario> vendedores() {
+	public List<Usuario> usuarios() {
 		return this.manager
 				.createQuery("from Usuario ",
 						Usuario.class).getResultList();
@@ -38,5 +38,8 @@ public class Usuarios implements Serializable {
 		
 		return usuario;
 	}
-
+	
+	public Usuario armazenar(Usuario usuario){
+		return usuario = manager.merge(usuario);
+	}
 }

@@ -3,7 +3,6 @@ package com.sgnpj.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -32,12 +31,15 @@ public class Advogado implements Serializable {
 	private AreaAtuacao areaAtuacao;
 	private Situacao situacao;
 	private String endereco;
+	private Integer numero;
+	private String complemento;
 	private String bairro;
 	private String cidade;
+	private String estado;
+	private String cep;
 	private String cpf;
 	private String telefoneContato;
 	private String celularContato;
-	
 
 	@Id
 	@GeneratedValue
@@ -57,7 +59,7 @@ public class Advogado implements Serializable {
 	public void setCodigo_OAB(String codigo_OAB) {
 		this.codigo_OAB = codigo_OAB;
 	}
-	
+
 	@OneToOne
 	public Usuario getUsuario() {
 		return usuario;
@@ -67,7 +69,6 @@ public class Advogado implements Serializable {
 		this.usuario = usuario;
 	}
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_cadastro", nullable = false)
 	public Date getDataCadastro() {
@@ -108,7 +109,16 @@ public class Advogado implements Serializable {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	
+
+	@Column(nullable = true, length = 80)
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
 	@Column(nullable = false, length = 80)
 	public String getBairro() {
 		return bairro;
@@ -117,7 +127,7 @@ public class Advogado implements Serializable {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	
+
 	@Column(nullable = false, length = 80)
 	public String getCidade() {
 		return cidade;
@@ -126,7 +136,25 @@ public class Advogado implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	
+
+	@Column(nullable = false, length = 2)
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	@Column(nullable = false, length = 9)
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
 	@NotEmpty
 	@CPF
 	@Column(nullable = false)
@@ -137,7 +165,7 @@ public class Advogado implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false)
 	public String getTelefoneContato() {
@@ -147,7 +175,7 @@ public class Advogado implements Serializable {
 	public void setTelefoneContato(String telefoneContato) {
 		this.telefoneContato = telefoneContato;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false)
 	public String getCelularContato() {
@@ -156,6 +184,16 @@ public class Advogado implements Serializable {
 
 	public void setCelularContato(String celularContato) {
 		this.celularContato = celularContato;
+	}
+
+	@NotNull
+	@Column(nullable = false)
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
 	}
 
 	@Override
