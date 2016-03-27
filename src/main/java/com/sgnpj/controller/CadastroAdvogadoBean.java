@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Produces;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 import com.sgnpj.model.Advogado;
 import com.sgnpj.model.AreaAtuacao;
@@ -29,21 +32,26 @@ public class CadastroAdvogadoBean implements Serializable {
 
 	@Inject
 	private CadastrarUsuarioService usuarioService;
-
+	
+	@Produces
+	@AdvogadoEdicao
 	private Advogado advogado;
+
 	private Usuario usuario;
 
+	private Perfil perfil;
+
 	private String verificadorSenha;
-	
+
 	private List<Perfil> perfis;
 
 	public CadastroAdvogadoBean() {
-		
+
 		this.advogado = new Advogado();
 		this.usuario = new Usuario();
 	}
-	
-	public void inicializar(){
+
+	public void inicializar() {
 		if (FacesUtil.isNotPostBack()) {
 			this.perfis = new ArrayList<Perfil>();
 			this.perfis = usuarioService.perfis();
@@ -53,20 +61,27 @@ public class CadastroAdvogadoBean implements Serializable {
 	public void limparForm() {
 		this.advogado = new Advogado();
 		this.usuario = new Usuario();
+		this.perfis = new ArrayList<Perfil>();
+		this.perfis = usuarioService.perfis();
 	}
 
 	public void cadastrar() {
-
-		this.usuario = usuarioService.salvar(usuario);
-		this.advogado.setUsuario(usuario);
-		Date dataCadastro = new Date();
-		this.advogado.setDataCadastro(dataCadastro);
-		this.advogado = advogadoService.salvar(advogado);
-		this.usuario.setAdvogado(advogado);
-
-		limparForm();
-
-		FacesUtil.addInfoMesage("Advogado salvo com sucesso!");
+		
+		try{
+			this.usuario = usuarioService.salvar(usuario);
+			this.advogado.setUsuario(usuario);
+			Date dataCadastro = new Date();
+			this.advogado.setDataCadastro(dataCadastro);
+			this.advogado = advogadoService.salvar(this.advogado);
+			this.usuario.setAdvogado(advogado);
+			this.perfis = new ArrayList<Perfil>();
+			this.perfis.add(perfil);
+			this.usuario.setPerfis(perfis);
+			this.usuario = usuarioService.salvar(this.usuario);
+			FacesUtil.addInfoMesage("Advogado salvo com sucesso!");
+		}finally{
+			limparForm();
+		}
 	}
 
 	// Lista de enums do tipo area de atuação
@@ -84,6 +99,11 @@ public class CadastroAdvogadoBean implements Serializable {
 					.addWarningMesage("As senhas não estão iguais, por favor tente novamente!");
 		}
 	}
+	
+	//Atualizar o pedido quando ele for emitido, para o novo status
+	public void advogadoAlterado(@Observes AdvogadoAlteradoEvent event){//Essa anotation observes do javax é o observador do evento que fará a atualização do novo objeto pedido.
+		this.advogado = event.getAdvogado() ;
+	}
 
 	public Advogado getAdvogado() {
 		return advogado;
@@ -99,6 +119,19 @@ public class CadastroAdvogadoBean implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+		
+		if(this.usuario != null){
+			
+			for(Perfil perfil : usuario.getPerfis()){
+				this.perfil = perfil;
+			}
+			
+		}
+	}
+	
+	
+	public boolean isEditando(){
+		return this.advogado.getId_advogado() != null;
 	}
 
 	public List<Perfil> getPerfis() {
@@ -115,6 +148,15 @@ public class CadastroAdvogadoBean implements Serializable {
 
 	public void setVerificadorSenha(String verificadorSenha) {
 		this.verificadorSenha = verificadorSenha;
+	}
+	
+	@NotNull
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 
 }

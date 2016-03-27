@@ -18,7 +18,7 @@
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
 					<p:commandButton value="Pesquisar" id="pesquisar"
-						 update="@form" />
+						 update="@form" action="#{pesquisaAdvogadoBean.pesquisar}"/>
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right" styleClass="toobarStyle">
@@ -31,55 +31,54 @@
 
 				<p:outputLabel value="Número OAB: " for="numOAB" />
 				<p:inputText id="numOAB" size="20"
-					value="" />
+					value="#{pesquisaAdvogadoBean.filtro.codigo_OAB}" />
 
 				<p:outputLabel value="Nome do advogado: " for="nome" />
 				<p:inputText id="nome" size="60"
-					value="" />
+					value="#{pesquisaAdvogadoBean.filtro.nome}" />
 
 			</p:panelGrid>
 
 			<p:dataTable id="produtosTable"
-				 var="produto"
+				value="#{pesquisaAdvogadoBean.advogadosFiltrados}"  var="advogado"
 				style="margin-top:20px;" emptyMessage="Nenhum produto encontrado"
 				rows="20" paginator="true" paginatorAlwaysVisible="false">
 
 				<p:column headerText="Numero OAB" style="text-align:center; width: 100px;">
-					<h:outputText value="" />
+					<h:outputText value="#{advogado.codigo_OAB}" />
 				</p:column>
 
 				<p:column headerText="Advogado">
-					<h:outputText value="" />
+					<h:outputText value="#{advogado.usuario.nome}" />
 				</p:column>
 
 				<p:column headerText="Area de atuação" style="width:250px;">
 					<h:outputText
-						value="" />
+						value="#{advogado.areaAtuacao.descricao}" />
 				</p:column>
 
 				<p:column headerText="Situação"
 					style="text-align:rigth; width:120px;">
-					<h:outputText value="">
+					<h:outputText value="#{advogado.situacao.descricao}">
 						
 					</h:outputText>
 				</p:column>
 
 				<p:column style="width:80px; text-align: center;">
-					<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil"
+					<p:button outcome="/Advogado/CadastroAdvogado" icon="ui-icon-pencil"
 						title="Editar">
-						<f:param name="produto" value="" />
+						<f:param name="advogado" value="#{advogado.id_advogado}" />
+						<f:param name="usuario" value="#{advogado.usuario.id}" />
 					</p:button>
 					<p:commandButton icon="ui-icon-trash" title="Excluir"
 						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":frmPesquisa:confirmacaoExclusaoDialog">
-						<f:setPropertyActionListener
-							target=""
-							value="" />
+						
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 			<p:confirmDialog header="Exclusão de produto"
-				message="Tem certeza que deseja excluir o produto #{pesquisaProdutosBean.produtoSelecionado.sku}?"
+				message="Tem certeza que deseja excluir o advogado?"
 				showEffect="fade" hideEffect="fade"
 				widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog">
 				<p:button value="Não"

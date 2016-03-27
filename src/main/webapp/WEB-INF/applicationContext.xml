@@ -35,11 +35,13 @@
 		<intercept-url pattern="/Home.xhtml" access="isAuthenticated()"/>
 		<intercept-url pattern="/AcessoNegado.xhtml" access="isAuthenticated()"/>
 		<intercept-url pattern="/Advogado/**" access="hasAnyRole('ADMINISTRADOR')"/>
-		<intercept-url pattern="/Atendimento/**" access="hasAnyRole('ADMINISTRADOR', 'ESTAGIARIO')"/>
+		<intercept-url pattern="/Estagiario/**" access="hasAnyRole('ADMINISTRADOR')"/>
+		<intercept-url pattern="/Atendimento/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR', 'ESTAGIARIO')"/>
 		<intercept-url pattern="/Usuario/**" access="hasAnyRole('ADMINISTRADOR')"/>
-		<intercept-url pattern="/Processo/**" access="hasAnyRole('ADMINISTRADOR')"/>
-		<intercept-url pattern="/Assistido/**" access="hasAnyRole('ADMINISTRADOR', 'ESTAGIARIO')"/>
-		<intercept-url pattern="/Relatorio/**" access="hasAnyRole('ADMINISTRADOR', 'ESTAGIARIO')"/>
+		<intercept-url pattern="/Processo/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR')"/>
+		<intercept-url pattern="/Audiencia/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR')"/>
+		<intercept-url pattern="/Assistido/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR', 'ESTAGIARIO')"/>
+		<intercept-url pattern="/Relatorio/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR', 'ESTAGIARIO')"/>
 		<intercept-url pattern="/**" access="denyAll"/>
 		
 		<form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?invalid=true"

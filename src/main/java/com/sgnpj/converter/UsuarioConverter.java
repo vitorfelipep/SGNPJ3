@@ -5,6 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import com.sgnpj.model.Advogado;
 import com.sgnpj.model.Usuario;
 import com.sgnpj.repository.Usuarios;
 import com.sgnpj.util.cdi.CDIServiceLocator;
@@ -32,9 +33,11 @@ public class UsuarioConverter implements Converter{
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
-		if(value != null){
-			return ((Usuario) value).getId().toString();
+		if (value != null) {
+			Usuario usuario = (Usuario) value;
+			return usuario.getId() == null ? null : usuario.getId().toString();
 		}
+		
 		return "";
 	}
 

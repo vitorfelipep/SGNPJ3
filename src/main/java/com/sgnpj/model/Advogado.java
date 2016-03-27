@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -50,7 +51,8 @@ public class Advogado implements Serializable {
 	public void setId_advogado(Integer id_advogado) {
 		this.id_advogado = id_advogado;
 	}
-
+	
+	@NotBlank
 	@Column(nullable = false, unique = true, length = 25)
 	public String getCodigo_OAB() {
 		return codigo_OAB;
@@ -100,7 +102,8 @@ public class Advogado implements Serializable {
 	public void setSituacao(Situacao situacao) {
 		this.situacao = situacao;
 	}
-
+	
+	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getEndereco() {
 		return endereco;
@@ -109,7 +112,7 @@ public class Advogado implements Serializable {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-
+	
 	@Column(nullable = true, length = 80)
 	public String getComplemento() {
 		return complemento;
@@ -118,7 +121,8 @@ public class Advogado implements Serializable {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-
+	
+	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getBairro() {
 		return bairro;
@@ -127,7 +131,8 @@ public class Advogado implements Serializable {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-
+	
+	@NotNull
 	@Column(nullable = false, length = 80)
 	public String getCidade() {
 		return cidade;
@@ -136,7 +141,8 @@ public class Advogado implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-
+	
+	@NotBlank
 	@Column(nullable = false, length = 2)
 	public String getEstado() {
 		return estado;
@@ -145,7 +151,8 @@ public class Advogado implements Serializable {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-
+	
+	@NotBlank
 	@Column(nullable = false, length = 9)
 	public String getCep() {
 		return cep;
@@ -156,7 +163,7 @@ public class Advogado implements Serializable {
 	}
 
 	@NotEmpty
-	@CPF
+	@CPF(message = "inválido!")
 	@Column(nullable = false)
 	public String getCpf() {
 		return cpf;
@@ -220,5 +227,5 @@ public class Advogado implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 }

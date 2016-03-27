@@ -7,14 +7,16 @@
 	
 	
 	<f:metadata>
+		<o:viewParam name="advogado" value="#{cadastroAdvogadoBean.advogado}"/>
+		<o:viewParam name="usuario" value="#{cadastroAdvogadoBean.usuario}"/>
     	<f:event listener="#{cadastroAdvogadoBean.inicializar}" type="preRenderView" />
     </f:metadata>
 	
-	<ui:define name="titulo">Cadastro de Advogados</ui:define>
+	<ui:define name="titulo">#{cadastroAdvogadoBean.editando ? 'Edição de Advogado' : 'Novo Advogado'}</ui:define>
 
 	<ui:define name="corpo">
 		<h:form>
-			<h1>Novo cadastro de Advogado</h1>
+			<h1>#{cadastroAdvogadoBean.editando ? 'Edição de Advogado' : 'Novo Advogado'}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
@@ -50,36 +52,34 @@
 				</p:password>
 
 				<p:outputLabel value="Perfil: " for="perfil" />
-				<p:selectOneMenu id="perfil" style="width: 200px;"  value="#{cadastroAdvogadoBean.usuario.perfis}"
-					converter="perfilConverter">
+				<p:selectOneMenu id="perfil" style="width: 200px;"  value="#{cadastroAdvogadoBean.perfil}" converter="perfilConverter">
 					<f:selectItem itemLabel="Selecione" />
 					<f:selectItems value="#{cadastroAdvogadoBean.perfis}" var="perfil"
 					   itemValue="#{perfil}" itemLabel="#{perfil.nome}" />
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Numero da OAB: " for="numOAB" />
-				<p:inputText id="numOAB" size="30" maxlength="80" value="#{cadastroAdvogadoBean.advogado.codigo_OAB}"
-					required="true" />
+				<p:inputMask id="numOAB" mask="99999999" size="30"  value="#{cadastroAdvogadoBean.advogado.codigo_OAB}" />
 					
 				<p:outputLabel value="CPF: " for="cpf" />
 				<p:inputText id="cpf"  size="30"  value="#{cadastroAdvogadoBean.advogado.cpf}" />
 
 				<p:outputLabel value="Area de atuação: " for="areaAtuacao" />
-				<p:selectOneMenu id="areaAtuacao" style="width: 200px;" required="true" value="#{cadastroAdvogadoBean.advogado.areaAtuacao}">
+				<p:selectOneMenu id="areaAtuacao" style="width: 200px;"  value="#{cadastroAdvogadoBean.advogado.areaAtuacao}">
 					<f:selectItem itemLabel="Selecione" />
 					<f:selectItems value="#{cadastroAdvogadoBean.areasAtuacao}" var="areas"
 					   itemValue="#{areas}"   itemLabel="#{areas.descricao}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Situação: " for="sitAdv" />
-				<p:selectOneMenu id="sitAdv" value="#{cadastroAdvogadoBean.advogado.situacao}" style="width: 130px;" required="true">
+				<p:selectOneMenu id="sitAdv" value="#{cadastroAdvogadoBean.advogado.situacao}" style="width: 130px;" >
 					<f:selectItem itemLabel="Selecione" />
 					<f:selectItems value="#{cadastroAdvogadoBean.situacao}" var="situacao"
 						itemValue="#{situacao}" itemLabel="#{situacao.descricao}"/>
 				</p:selectOneMenu>
 				
-				<p:outputLabel  />
 				<p:outputLabel />
+				<h:outputText />
 
 			</p:panelGrid>
 			<p:panel id="panelContato" header="Dados para contato"
@@ -89,11 +89,10 @@
 					columnClasses="rotulo, campo, rotulo, campo">
 
 					<p:outputLabel value="Endereço:" for="logradouro" />
-					<p:inputText id="logradouro" size="50" value="#{cadastroAdvogadoBean.advogado.endereco}" required="true" />
+					<p:inputText id="logradouro" size="50" value="#{cadastroAdvogadoBean.advogado.endereco}"  />
 
 					<p:outputLabel value="Número:" for="numeroEst" />
-					<p:inputText id="numeroEst" size="5" value="#{cadastroAdvogadoBean.advogado.numero}" maxlength="15"
-						required="true" />
+					<p:inputText id="numeroEst" size="5" value="#{cadastroAdvogadoBean.advogado.numero}"  />
 					
 
 					<p:outputLabel value="Complemento:" for="ComplementoEst" />
@@ -103,7 +102,7 @@
 					<p:inputText id="bairro" size="50" value="#{cadastroAdvogadoBean.advogado.bairro}" />
 					
 					<p:outputLabel value="Cidade:" for="cidade" />
-					<p:selectOneMenu id="cidade" style="width: 200px;" required="true" value="#{cadastroAdvogadoBean.advogado.cidade}">
+					<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.cidade}">
 						<f:selectItem itemLabel="Selecione" />
 						<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo" />
 						<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
@@ -115,6 +114,7 @@
 					<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.estado}">
 						<f:selectItem itemLabel="Selecione" />
 						<f:selectItem itemLabel="RJ" itemValue="RJ" />
+						<f:selectItem itemLabel="SP" itemValue="SP" />
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Cep:" for="cep"  />

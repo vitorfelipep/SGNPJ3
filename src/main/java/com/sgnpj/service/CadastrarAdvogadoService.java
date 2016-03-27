@@ -23,7 +23,7 @@ public class CadastrarAdvogadoService implements Serializable{
 			 advogadoExistente =  advogados.porId(advogado.getId_advogado());
 		}
 		
-		if(advogadoExistente != null && advogadoExistente.equals(advogado)){
+		if(advogadoExistente != null && !advogadoExistente.equals(advogado)){
 			throw new AdvogadoCadastroException("Já existe um advogado com este id.");
 		}
 		

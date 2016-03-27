@@ -13,6 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
@@ -36,7 +39,8 @@ public class Usuario implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getNome() {
 		return nome;
@@ -45,7 +49,9 @@ public class Usuario implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
+	@NotBlank
+	@Email(message = "inválido!")
 	@Column(nullable = false, unique = true, length = 255)
 	public String getEmail() {
 		return email;
@@ -54,7 +60,8 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	@NotBlank
 	@Column(nullable = false, length = 20)
 	public String getSenha() {
 		return senha;
@@ -63,7 +70,6 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Perfil> getPerfis() {

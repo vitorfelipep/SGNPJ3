@@ -6,10 +6,17 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import com.sgnpj.model.Perfil;
+import com.sgnpj.repository.Perfis;
+import com.sgnpj.util.cdi.CDIServiceLocator;
 
 @FacesConverter(value = "perfilConverter")
 public class PerfilConverter implements Converter{
 	
+private Perfis perfis;
+	
+	public PerfilConverter() {
+		this.perfis = (Perfis) CDIServiceLocator.getBean(Perfis.class);
+	}
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
@@ -17,7 +24,7 @@ public class PerfilConverter implements Converter{
 		Perfil retorno = null;
 		
 		if(value != null){
-			retorno = (Perfil) component.getAttributes().get(value); 
+			retorno = this.perfis.porId(new Long(value)); 
 		}
 		return retorno;
 	}
@@ -26,9 +33,8 @@ public class PerfilConverter implements Converter{
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
 		if(value != null){
-			return (String) value.toString();
+			return ((Perfil) value).getId().toString();
 		}
-		
 		return "";
 	}
 
