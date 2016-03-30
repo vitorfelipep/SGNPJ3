@@ -37,7 +37,7 @@ public class Estagiario implements Serializable {
 	private Date dataNascimento;
 	private Date dataTerminoEstagio;
 	private String codOab;
-	private String ObsEstagio;
+	private String obsEstagio;
 	private Usuario usuario;
 
 	@Id
@@ -180,11 +180,11 @@ public class Estagiario implements Serializable {
 
 	@Column(columnDefinition = "text", nullable = false)
 	public String getObsEstagio() {
-		return ObsEstagio;
+		return obsEstagio;
 	}
 
 	public void setObsEstagio(String obsEstagio) {
-		ObsEstagio = obsEstagio;
+		this.obsEstagio = obsEstagio;
 	}
 
 	@OneToOne

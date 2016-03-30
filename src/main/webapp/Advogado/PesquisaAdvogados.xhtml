@@ -25,24 +25,28 @@
 					<p:button value="Novo" outcome="/Advogado/CadastroAdvogado" />
 				</p:toolbarGroup>
 			</p:toolbar>
-
-			<p:panelGrid columns="2" id="painel"
-				style="width: 100%;margin-top:20px;" columnClasses="rotulo, campo">
-
-				<p:outputLabel value="Número OAB: " for="numOAB" />
-				<p:inputText id="numOAB" size="20"
-					value="#{pesquisaAdvogadoBean.filtro.codigo_OAB}" />
-
-				<p:outputLabel value="Nome do advogado: " for="nome" />
-				<p:inputText id="nome" size="60"
-					value="#{pesquisaAdvogadoBean.filtro.nome}" />
-
-			</p:panelGrid>
-
+			
+			<div class="ui-fluid ">
+				<p:panelGrid columns="2" id="painel"
+					style="width: 100%;margin-top:20px;" 
+					styleClass="panelgrid-noborder"  layout="grid" 
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+	
+					<p:outputLabel value="Número OAB: " for="numOAB" />
+					<p:inputText id="numOAB" size="20"
+						value="#{pesquisaAdvogadoBean.filtro.codigo_OAB}" />
+	
+					<p:outputLabel value="Nome do advogado: " for="nome" />
+					<p:inputText id="nome" size="60"
+						value="#{pesquisaAdvogadoBean.filtro.nome}" />
+	
+				</p:panelGrid>
+			</div>
+			
 			<p:dataTable id="produtosTable"
 				value="#{pesquisaAdvogadoBean.advogadosFiltrados}"  var="advogado"
 				style="margin-top:20px;" emptyMessage="Nenhum produto encontrado"
-				rows="20" paginator="true" paginatorAlwaysVisible="false">
+				rows="20" paginator="true" paginatorAlwaysVisible="false" reflow="true">
 
 				<p:column headerText="Numero OAB" style="text-align:center; width: 100px;">
 					<h:outputText value="#{advogado.codigo_OAB}" />

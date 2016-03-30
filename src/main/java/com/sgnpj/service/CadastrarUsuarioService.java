@@ -40,5 +40,9 @@ public class CadastrarUsuarioService implements Serializable{
 	public List<Perfil> perfis() {
 		return perfis.listarPerfis();
 	}
+	
+	public List<Perfil> perfilEstagiario() {
+		return perfis.listarPerfisEstagirio();
+	}
 
 }

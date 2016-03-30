@@ -21,38 +21,41 @@
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
-	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
-	    			columnClasses="rotulo, campo">
-	    		
-	    		<p:outputLabel value="Número do processo" />
-	    		<h:panelGroup>
-	    			<p:inputText size="10" value="" />
-	    		</h:panelGroup>
-	    			    		
-	    		<p:outputLabel value="Data de Atendimento" />
-	    		<h:panelGroup>
-	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
-	    				 />
-	    			a
-	    			<p:calendar size="10" pattern="dd/MM/yyyy"
-	    				/>
-	    		</h:panelGroup>
-	    		
-	    		<p:outputLabel value="Atendente" />
-	    		<p:inputText size="40" value="" required="true"/>
-	    		
-	    		<p:outputLabel value="Cliente (Assistido): " />
-	    		<p:inputText size="40" value="" />
-	    		
-	    		<p:outputLabel value="Status atendimento" />
-	    		<p:selectManyCheckbox >
-	    			<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
-	    			<f:selectItem itemValue="Cancelado" itemLabel="Cancelado" />
-	    			<f:selectItem itemValue="Fechado" itemLabel="Fechado" />
-	    		</p:selectManyCheckbox>
-	    	</p:panelGrid>
+	    	<div class="ui-fluid ">
+		    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+		    			styleClass="panelgrid-noborder"  layout="grid" 
+						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+		    		
+		    		<p:outputLabel value="Número do processo" />
+		    		<h:panelGroup>
+		    			<p:inputText size="10" value="" />
+		    		</h:panelGroup>
+		    			    		
+		    		<p:outputLabel value="Data de Atendimento" />
+		    		<h:panelGroup>
+		    			<p:calendar size="10" pattern="dd/MM/yyyy" 
+		    				 />
+		    			a
+		    			<p:calendar size="10" pattern="dd/MM/yyyy"
+		    				/>
+		    		</h:panelGroup>
+		    		
+		    		<p:outputLabel value="Atendente" />
+		    		<p:inputText size="40" value="" required="true"/>
+		    		
+		    		<p:outputLabel value="Cliente (Assistido): " />
+		    		<p:inputText size="40" value="" />
+		    		
+		    		<p:outputLabel value="Status atendimento" />
+		    		<p:selectManyCheckbox >
+		    			<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
+		    			<f:selectItem itemValue="Cancelado" itemLabel="Cancelado" />
+		    			<f:selectItem itemValue="Fechado" itemLabel="Fechado" />
+		    		</p:selectManyCheckbox>
+		    	</p:panelGrid>
+	    	</div>
 	    	
-	    	<p:dataTable id="tabelaAssistido"  var="assistido"
+	    	<p:dataTable id="tabelaAssistido"  var="assistido" reflow="true"
 		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
 		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 		    		

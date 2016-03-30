@@ -2,7 +2,6 @@ package com.sgnpj.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.event.Observes;
@@ -10,32 +9,32 @@ import javax.enterprise.inject.Produces;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
 
-import com.sgnpj.model.Advogado;
 import com.sgnpj.model.AreaAtuacao;
+import com.sgnpj.model.Estagiario;
 import com.sgnpj.model.Perfil;
+import com.sgnpj.model.PeriodoLetivo;
 import com.sgnpj.model.Situacao;
 import com.sgnpj.model.Usuario;
-import com.sgnpj.service.CadastrarAdvogadoService;
 import com.sgnpj.service.CadastrarUsuarioService;
+import com.sgnpj.service.EstagiarioService;
 import com.sgnpj.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class CadastroAdvogadoBean implements Serializable {
+public class CadastroEstagiarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private CadastrarAdvogadoService advogadoService;
+	private EstagiarioService estagiarioService;
 
 	@Inject
 	private CadastrarUsuarioService usuarioService;
 	
 	@Produces
-	@AdvogadoEdicao
-	private Advogado advogado;
+	@EstagiarioEdicao
+	private Estagiario estagiario;
 
 	private Usuario usuario;
 
@@ -45,72 +44,71 @@ public class CadastroAdvogadoBean implements Serializable {
 
 	private List<Perfil> perfis;
 
-	public CadastroAdvogadoBean() {
-
-		this.advogado = new Advogado();
+	public CadastroEstagiarioBean() {
+		this.estagiario = new Estagiario();
 		this.usuario = new Usuario();
 	}
-
+	
 	public void inicializar() {
 		if (FacesUtil.isNotPostBack()) {
 			this.perfis = new ArrayList<Perfil>();
-			this.perfis = usuarioService.perfis();
+			this.perfis = usuarioService.perfilEstagiario();
 		}
 	}
-
+	
 	public void limparForm() {
-		this.advogado = new Advogado();
+		this.estagiario = new Estagiario();
 		this.usuario = new Usuario();
 		this.perfis = new ArrayList<Perfil>();
 		this.perfis = usuarioService.perfis();
 	}
 
 	public void cadastrar() {
-		
-		try{
-			this.usuario = usuarioService.salvar(usuario);
-			this.advogado.setUsuario(usuario);
-			Date dataCadastro = new Date();
-			this.advogado.setDataCadastro(dataCadastro);
-			this.advogado = advogadoService.salvar(this.advogado);
-			this.usuario.setAdvogado(advogado);
+		try {
+			
+			this.usuario  = usuarioService.salvar(usuario);
+			this.estagiario.setUsuario(usuario);
+			this.estagiario.setNome(usuario.getNome());
+			this.estagiario = estagiarioService.salvar(estagiario);
+			this.usuario.setEstagiario(estagiario);
 			this.perfis = new ArrayList<Perfil>();
 			this.perfis.add(perfil);
 			this.usuario.setPerfis(perfis);
 			this.usuario = usuarioService.salvar(this.usuario);
-			FacesUtil.addInfoMesage("Advogado salvo com sucesso!");
-		}finally{
+			
+			FacesUtil.addInfoMesage("Estagiario salvo com sucesso!");
+			
+		} finally {
 			limparForm();
 		}
 	}
-
+	
+	//Atualizar o advogado quando ele for alterado
+	public void estagiarioAlterado(@Observes EstagiarioAlteradoEvent event){
+		this.estagiario = event.getEstagiario();
+	}
+	
 	// Lista de enums do tipo area de atuação
 	public AreaAtuacao[] getAreasAtuacao() {
 		return AreaAtuacao.values();
 	}
-
+	
+	//Lista enum de situação
 	public Situacao[] getSituacao() {
 		return Situacao.values();
 	}
-
-	public void verificarSenhas() {
-		if (!usuario.getSenha().equals(verificadorSenha)) {
-			FacesUtil
-					.addWarningMesage("As senhas não estão iguais, por favor tente novamente!");
-		}
-	}
 	
-	//Atualizar o advogado quando ele for emitido, para o novo status
-	public void advogadoAlterado(@Observes AdvogadoAlteradoEvent event){//Essa anotation observes do javax é o observador do evento que fará a atualização do novo objeto pedido.
-		this.advogado = event.getAdvogado() ;
+	//Lista enum de periodo letivo
+	public PeriodoLetivo[] getPeriodoLetivo() {
+		return PeriodoLetivo.values();
 	}
 
-	public Advogado getAdvogado() {
-		return advogado;
+	public Estagiario getEstagiario() {
+		return estagiario;
 	}
 
-	public void setAdvogado(Advogado advogado) {
-		this.advogado = advogado;
+	public void setEstagiario(Estagiario estagiario) {
+		this.estagiario = estagiario;
 	}
 
 	public Usuario getUsuario() {
@@ -128,18 +126,13 @@ public class CadastroAdvogadoBean implements Serializable {
 			
 		}
 	}
-	
-	
-	public boolean isEditando(){
-		return this.advogado.getId_advogado() != null;
+
+	public Perfil getPerfil() {
+		return perfil;
 	}
 
-	public List<Perfil> getPerfis() {
-		return perfis;
-	}
-
-	public void setPerfis(List<Perfil> perfis) {
-		this.perfis = perfis;
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 
 	public String getVerificadorSenha() {
@@ -149,14 +142,13 @@ public class CadastroAdvogadoBean implements Serializable {
 	public void setVerificadorSenha(String verificadorSenha) {
 		this.verificadorSenha = verificadorSenha;
 	}
-	
-	@NotNull
-	public Perfil getPerfil() {
-		return perfil;
+
+	public List<Perfil> getPerfis() {
+		return perfis;
 	}
 
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfis = perfis;
 	}
 
 }

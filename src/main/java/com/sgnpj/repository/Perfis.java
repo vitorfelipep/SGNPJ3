@@ -21,6 +21,10 @@ public class Perfis implements Serializable {
 				Perfil.class).getResultList();
 	}
 	
+	public List<Perfil> listarPerfisEstagirio() {
+		return manager.createQuery("from Perfil where descricao not in ('Administrador', 'Advogado') ",
+				Perfil.class).getResultList();
+	}
 	
 	public Perfil porId(Long id){
 		return manager.find(Perfil.class, id);

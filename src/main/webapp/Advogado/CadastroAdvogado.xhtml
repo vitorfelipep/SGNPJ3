@@ -30,104 +30,49 @@
 					<p:button value="Pesquisa" outcome="/Advogado/PesquisaAdvogados" />
 				</p:toolbarGroup>
 			</p:toolbar>
-
-			<p:panelGrid columns="4" id="painel"
-				style="width: 100%;margin-top:20px;" columnClasses="rotulo, campo">
-
-
-				<p:outputLabel value="Email: " for="login" />
-				<p:inputText id="login" size="50" maxlength="50" value="#{cadastroAdvogadoBean.usuario.email}" />
-
-				<p:outputLabel value="Nome: " for="nome" />
-				<p:inputText id="nome" size="50" maxlength="80" value="#{cadastroAdvogadoBean.usuario.nome}" />
-
-				<p:outputLabel value="Senha: " for="senha" />
-				<p:password id="senha" size="30" feedback="true" maxlength="20"
-					value="#{cadastroAdvogadoBean.usuario.senha}" />
-
-				<p:outputLabel value="Confirmar senha: " for="confSenha" />
-				<p:password id="confSenha" size="30" maxlength="20" feedback="true"
-					value="#{cadastroAdvogadoBean.verificadorSenha}" >
-					
-				</p:password>
-
-				<p:outputLabel value="Perfil: " for="perfil" />
-				<p:selectOneMenu id="perfil" style="width: 200px;"  value="#{cadastroAdvogadoBean.perfil}" converter="perfilConverter">
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItems value="#{cadastroAdvogadoBean.perfis}" var="perfil"
-					   itemValue="#{perfil}" itemLabel="#{perfil.nome}" />
-				</p:selectOneMenu>
-				
-				<p:outputLabel value="Numero da OAB: " for="numOAB" />
-				<p:inputMask id="numOAB" mask="99999999" size="30"  value="#{cadastroAdvogadoBean.advogado.codigo_OAB}" />
-					
-				<p:outputLabel value="CPF: " for="cpf" />
-				<p:inputText id="cpf"  size="30"  value="#{cadastroAdvogadoBean.advogado.cpf}" />
-
-				<p:outputLabel value="Area de atuação: " for="areaAtuacao" />
-				<p:selectOneMenu id="areaAtuacao" style="width: 200px;"  value="#{cadastroAdvogadoBean.advogado.areaAtuacao}">
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItems value="#{cadastroAdvogadoBean.areasAtuacao}" var="areas"
-					   itemValue="#{areas}"   itemLabel="#{areas.descricao}" />
-				</p:selectOneMenu>
-
-				<p:outputLabel value="Situação: " for="sitAdv" />
-				<p:selectOneMenu id="sitAdv" value="#{cadastroAdvogadoBean.advogado.situacao}" style="width: 130px;" >
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItems value="#{cadastroAdvogadoBean.situacao}" var="situacao"
-						itemValue="#{situacao}" itemLabel="#{situacao.descricao}"/>
-				</p:selectOneMenu>
-				
-				<p:outputLabel />
-				<h:outputText />
-
-			</p:panelGrid>
-			<p:panel id="panelContato" header="Dados para contato"
+			
+			<!-- Dados do usuário -->
+			<p:panel id="panelUsuario" header="Dados do usuário"
 				toggleable="true" toggleSpeed="500" closeSpeed="500"
-				widgetVar="panel">
-				<p:panelGrid columns="4" style="width: 100%"
-					columnClasses="rotulo, campo, rotulo, campo">
-
-					<p:outputLabel value="Endereço:" for="logradouro" />
-					<p:inputText id="logradouro" size="50" value="#{cadastroAdvogadoBean.advogado.endereco}"  />
-
-					<p:outputLabel value="Número:" for="numeroEst" />
-					<p:inputText id="numeroEst" size="5" value="#{cadastroAdvogadoBean.advogado.numero}"  />
-					
-
-					<p:outputLabel value="Complemento:" for="ComplementoEst" />
-					<p:inputText id="ComplementoEst" size="50" value="#{cadastroAdvogadoBean.advogado.complemento}" />
-	
-					<p:outputLabel value="Bairro:" for="bairro" />
-					<p:inputText id="bairro" size="50" value="#{cadastroAdvogadoBean.advogado.bairro}" />
-					
-					<p:outputLabel value="Cidade:" for="cidade" />
-					<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.cidade}">
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo" />
-						<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
-						<f:selectItem itemLabel="Nilópolis" itemValue="Nilopolis" />
-					</p:selectOneMenu>
-					
-					
-					<p:outputLabel value="Estado:" for="estado" />
-					<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.estado}">
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItem itemLabel="RJ" itemValue="RJ" />
-						<f:selectItem itemLabel="SP" itemValue="SP" />
-					</p:selectOneMenu>
-
-					<p:outputLabel value="Cep:" for="cep"  />
-					<p:inputMask id="cep" mask="99999-999" size="10" value="#{cadastroAdvogadoBean.advogado.cep}"
-						 />
-
-					<p:outputLabel value="Telefone: " for="telefone" />
-					<p:inputMask id="telefone" mask="(99)9999-9999" size="50" value="#{cadastroAdvogadoBean.advogado.telefoneContato}" />
-
-					<p:outputLabel value="Celular: " for="celular" />
-					<p:inputMask id="celular" mask="(99) 99999-9999" size="50" value="#{cadastroAdvogadoBean.advogado.celularContato}"  />
-				</p:panelGrid>
+				styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 10px;"
+				widgetVar="panelGridUsuario">
+				<div class="ui-fluid">
+					<p:panelGrid columns="4" id="panelGridUsuario" layout="grid" 
+						style="margin-top:20px;" 
+						styleClass="panelgrid-noborder" 
+						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+		
+		
+						<p:outputLabel value="Email: " for="login" />
+						<p:inputText id="login" size="50" maxlength="50" value="#{cadastroAdvogadoBean.usuario.email}" />
+		
+						<p:outputLabel value="Nome: " for="nome" />
+						<p:inputText id="nome" size="50" maxlength="80" value="#{cadastroAdvogadoBean.usuario.nome}" />
+		
+						<p:outputLabel value="Senha: " for="senha" />
+						<p:password id="senha" size="30" feedback="true" maxlength="20"
+							value="#{cadastroAdvogadoBean.usuario.senha}" />
+		
+						<p:outputLabel value="Confirmar senha: " for="confSenha" />
+						<p:password id="confSenha" size="30" maxlength="20" feedback="true"
+							value="#{cadastroAdvogadoBean.verificadorSenha}" >
+							
+						</p:password>
+		
+						<p:outputLabel value="Perfil: " for="perfil" />
+						<p:selectOneMenu id="perfil" style="width: 200px;"  value="#{cadastroAdvogadoBean.perfil}" converter="perfilConverter">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{cadastroAdvogadoBean.perfis}" var="perfil"
+							   itemValue="#{perfil}" itemLabel="#{perfil.nome}" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+				</div>
 			</p:panel>
+			
+			<ui:include src="/WEB-INF/template/advogados/dadosAdvogados.xhtml"  />
+			
+			<ui:include src="/WEB-INF/template/advogados/dadosParaContato.xhtml"  />
+			
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+		<!-- Dados do advogado -->
+		<p:panel id="panelAdvogado" header="Dados do advogado"
+			toggleable="true" toggleSpeed="500" closeSpeed="500"
+			styleClass="panelgrid-noborder"
+			widgetVar="painelAdvogado">
+				<div class="ui-fluid">
+					<p:panelGrid columns="4" id="painelAdvogado"
+						style="width:100%;margin-top:20px;" 
+						styleClass="panelgrid-noborder"  layout="grid" 
+						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+						
+						<p:outputLabel value="Numero da OAB: " for="numOAB" />
+						<p:inputMask id="numOAB" mask="99999999" size="30"  value="#{cadastroAdvogadoBean.advogado.codigo_OAB}" />
+							
+						<p:outputLabel value="CPF: " for="cpf" />
+						<p:inputText id="cpf"  size="30"  value="#{cadastroAdvogadoBean.advogado.cpf}" />
+		
+						<p:outputLabel value="Area de atuação: " for="areaAtuacao" />
+						<p:selectOneMenu id="areaAtuacao" style="width: 200px;"  value="#{cadastroAdvogadoBean.advogado.areaAtuacao}">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{cadastroAdvogadoBean.areasAtuacao}" var="areas"
+							   itemValue="#{areas}"   itemLabel="#{areas.descricao}" />
+						</p:selectOneMenu>
+		
+						<p:outputLabel value="Situação: " for="sitAdv" />
+						<p:selectOneMenu id="sitAdv" value="#{cadastroAdvogadoBean.advogado.situacao}" style="width: 130px;" >
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{cadastroAdvogadoBean.situacao}" var="situacao"
+								itemValue="#{situacao}" itemLabel="#{situacao.descricao}"/>
+						</p:selectOneMenu>
+						
+				</p:panelGrid>
+			</div>
+		</p:panel>
+</ui:composition>

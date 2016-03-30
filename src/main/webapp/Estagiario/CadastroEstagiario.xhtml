@@ -6,6 +6,11 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui">
     
+    
+    <f:metadata>
+    	<f:event listener="#{cadastroEstagiarioBean.inicializar}" type="preRenderView" /> 
+    </f:metadata>
+    
     <ui:define name="titulo">Cadastro de Estagiário</ui:define>
     
     <ui:define name="corpo">
@@ -17,7 +22,7 @@
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
 					<p:button value="Novo" outcome="/Estagiario/CadastroEstagiario" />
-					<p:commandButton value="Salvar" id="botaoSalvar"
+					<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroEstagiarioBean.cadastrar}"
 						 ajax="false" />
 				</p:toolbarGroup>
 
@@ -25,134 +30,118 @@
 					<p:button value="Pesquisa" outcome="/Estagiario/PesquisaEstagiario" />
 				</p:toolbarGroup>
 			</p:toolbar>
-
-				<p:panelGrid columns="4" style="width: 100%"
-					columnClasses="rotulo, campo, rotulo, campo">
-	
-						<p:outputLabel value="Nome do estágiario: " for="nome" />
-						<p:inputText id="nome" size="60" maxlength="80"
-							value="" required="true"/>
+				
+				<!-- Dados do usuário -->
+			<p:panel id="panelUsuario" header="Dados do usuário"
+				toggleable="true" toggleSpeed="500" closeSpeed="500"
+				styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 10px;"
+				widgetVar="panelGridUsuario">
+				<div class="ui-fluid">
+					<p:panelGrid columns="4" id="panelGridUsuario" layout="grid" 
+						style="margin-top:20px;" 
+						styleClass="panelgrid-noborder" 
+						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
 		
-						<p:outputLabel value="Matricula: " for="matr" />
-						<p:inputText id="matr" size="40" maxlength="80"
-							value="" required="true"/>
 		
-						<p:outputLabel value="Area de designada: " for="areaDesignada" />
-						<p:selectOneMenu id="areaDesignada" value="" required="true"	>	
-							<f:selectItem itemLabel="Selecione" />
-							<f:selectItem itemLabel="Cívil" itemValue="Cívil"/>
-							<f:selectItem itemLabel="Penal" itemValue="Penal"/>
-							<f:selectItem itemLabel="Trabalhista" itemValue="Trabalhista"/>
-							<f:selectItem itemLabel="Familiar" itemValue="Familiar"/>
-						</p:selectOneMenu>
+						<p:outputLabel value="Email: " for="login" />
+						<p:inputText id="login" size="50" maxlength="50" value="#{cadastroEstagiarioBean.usuario.email}" />
 		
-						<p:outputLabel value="Data ínicio contrato: " for="datInicio" />
-						<p:calendar id="datInicio" pattern="dd/MM/yyyy" size="10" required="true"/>
-						
-						<p:outputLabel value="Data termino contrato: " for="datTermino" />
-						<p:calendar id="datTermino" pattern="dd/MM/yyyy" size="10" required="true"/>
-						
-						<p:outputLabel value="Situação: " for="situacaoEstagiario"/>
-						<p:selectOneMenu id="situacaoEstagiario" effect="fade">
-							<f:selectItem  itemLabel="-Selecione-" itemValue=""/>
-							<f:selectItem  itemLabel="Ativo" itemValue="ATIVO"/>
-							<f:selectItem  itemLabel="Inativo" itemValue="INATIVO"/>
-							<f:selectItem  itemLabel="Em férias" itemValue="FERIAS"/>
-						</p:selectOneMenu>
-						
-						<p:outputLabel value="Período letivo: " for="periodoLetivo"/>
-						<p:selectOneMenu id="periodoLetivo" effect="fade" filter="true" filterMatchMode="startsWith">
-							<f:selectItem  itemLabel="-Selecione-" itemValue=""/>
-							<f:selectItem  itemLabel="1º Período" itemValue="1º Período"/>
-							<f:selectItem  itemLabel="2º Período" itemValue="2º Período"/>
-							<f:selectItem  itemLabel="3º Período" itemValue="3º Período"/>
-							<f:selectItem  itemLabel="4º Período" itemValue="4º Período"/>
-							<f:selectItem  itemLabel="5º Período" itemValue="5º Período"/>
-							<f:selectItem  itemLabel="6º Período" itemValue="6º Período"/>
-							<f:selectItem  itemLabel="7º Período" itemValue="7º Período"/>
-							<f:selectItem  itemLabel="8º Período" itemValue="8º Período"/>
-						</p:selectOneMenu>
-						
-						<p:outputLabel value="Turma: " for="turma" />
-						<p:inputText id="turma" size="40" maxlength="80"
-							value="" required="true"/>
-						
-						<p:outputLabel value="Turno: " for="turno"/>
-						<p:selectOneMenu id="turno" effect="fade" filter="true" filterMatchMode="startsWith">
-							<f:selectItem  itemLabel="-Selecione-" itemValue=""/>
-							<f:selectItem  itemLabel="Manhã" itemValue="Manhã"/>
-							<f:selectItem  itemLabel="Tarde" itemValue="Tarde"/>
-							<f:selectItem  itemLabel="Noite" itemValue="Noite"/>
-						</p:selectOneMenu>	
-						
-						<p:outputLabel value="Data Nascimento: " for="datNasc" />
-						<p:calendar id="datNasc" pattern="dd/MM/yyyy" size="10" required="true"/>
-						
-						<p:outputLabel value="Número OAB: " for="cod-OAB-Est" />
-						<p:inputText id="cod-OAB-Est" size="40" maxlength="80"
-							value="" required="true"/>
+						<p:outputLabel value="Nome: " for="nome" />
+						<p:inputText id="nome" size="50" maxlength="80" value="#{cadastroEstagiarioBean.usuario.nome}" />
+		
+						<p:outputLabel value="Senha: " for="senha" />
+						<p:password id="senha" size="30" feedback="true" maxlength="20"
+							value="#{cadastroEstagiarioBean.usuario.senha}" />
+		
+						<p:outputLabel value="Confirmar senha: " for="confSenha" />
+						<p:password id="confSenha" size="30" maxlength="20" feedback="true"
+							value="#{cadastroEstagiarioBean.verificadorSenha}" >
 							
-						<p:outputLabel value="Observações: " for="obsEst" />	
-						<p:inputTextarea rows="5" id="obsEst" style="width: 100%"
-							value="" />						
-			</p:panelGrid>
-			
-			<p:panel id="panelContato" header="Dados para contato" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel"  >	
-				<p:panelGrid columns="4"  style="width: 100%"
-					columnClasses="rotulo, campo, rotulo, campo">
-					
-					<p:outputLabel value="Logradouro:" for="EndEst" />
-					<p:inputText id="EndEst" size="50"
-						value="" required="true" />
-			
-					<p:outputLabel value="Número:" for="numeroEst" />
-					<p:inputText id="numeroEst" size="5" value="" maxlength="15" required="true"/>
-					
-					
-					<p:outputLabel value="Complemento:" for="ComplementoEst" />
-					<p:inputText id="ComplementoEst" size="50"
-						value="" />
-			
-					<p:outputLabel value="Cidade:" for="cidade" />
-					<p:selectOneMenu id="cidade" style="width: 200px;" required="true">
+						</p:password>
+		
+						<p:outputLabel value="Perfil: " for="perfil" />
+						<p:selectOneMenu id="perfil" style="width: 200px;"  value="#{cadastroEstagiarioBean.perfil}" converter="perfilConverter">
 							<f:selectItem itemLabel="Selecione" />
-							<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
-							<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
-							<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
-					</p:selectOneMenu>
+							<f:selectItems value="#{cadastroEstagiarioBean.perfis}" var="perfil"
+							   itemValue="#{perfil}" itemLabel="#{perfil.nome}" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+				</div>
+			</p:panel>
+				
+			<!-- dados do aluno -->
+			<p:panel id="panelAluno" header="Dados do Aluno"
+				toggleable="true" toggleSpeed="500" closeSpeed="500"
+				styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 10px;"
+				widgetVar="panelGridAluno">
+				<div class="ui-fluid">	
+					<p:panelGrid columns="4" id="panelGridAluno" style="width: 100%"
+						columnClasses="rotulo, campo, rotulo, campo">
 			
-					<p:outputLabel value="Estado:" for="estado" />
-					<p:selectOneMenu id="estado" style="width: 200px;" required="true">
-							<f:selectItem itemLabel="Selecione" />
-							<f:selectItem itemLabel="RJ" itemValue="RJ"/>
-							<f:selectItem itemLabel="MG" itemValue="MG"/>
-							<f:selectItem itemLabel="SP" itemValue="SP"/>
-					</p:selectOneMenu>
-					
-					<p:outputLabel value="Cep:" for="entregaCep" required="true"/>
-					<p:inputMask id="entregaCep" mask="99999-999" size="10"
-						value="" required="true"/>
-					
-					<p:outputLabel value="Telefone: " for="telefone" />
-					<p:inputText id="telefone" size="50"
-						value="" required="true" />
-					
-					<p:outputLabel value="Telefone Trab: " for="telefoneTrab" />
-					<p:inputText id="telefoneTrab" size="50"
-						value="" />
-					
-					<p:outputLabel value="Celular: " for="celular" />
-					<p:inputText id="celular" size="50"
-						value="" required="true"/>
-					
-					<p:outputLabel value="Celular trab.: " for="celularTrab" />
-					<p:inputText id="celularTrab" size="50"
-						value="" />
-						
-					<p:outputLabel value="E-mail: " for="emailEst" />
-					<p:inputText id="emailEst" size="50"
-						value="" />					
-				</p:panelGrid>
+							<p:outputLabel value="Matricula: " for="matr" />
+							<p:inputMask id="matr" size="20" mask="999999999" 
+								value="#{cadastroEstagiarioBean.estagiario.matricula}" />
+								
+							<p:outputLabel value="Número OAB: " for="cod-OAB-Est" />
+							<p:inputText id="cod-OAB-Est" size="20" maxlength="12"
+								value="#{cadastroEstagiarioBean.estagiario.codOab}" required="true"/>
+			
+							<p:outputLabel value="Area de designada: " for="areaDesignada" />
+							<p:selectOneMenu id="areaDesignada" style="width: 200px;"  value="#{cadastroEstagiarioBean.estagiario.areaDesignada}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{cadastroEstagiarioBean.areasAtuacao}" var="areas"
+								   itemValue="#{areas}"   itemLabel="#{areas.descricao}" />
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="Data Nascimento: " for="datNasc" />
+							<p:calendar id="datNasc" pattern="dd/MM/yyyy" locale="pt" size="10" value="#{cadastroEstagiarioBean.estagiario.dataNascimento}"/>
+							
+							<p:outputLabel value="Data ínicio estágio: " for="datInicio" />
+							<p:calendar id="datInicio" pattern="dd/MM/yyyy"  locale="pt" size="10" value="#{cadastroEstagiarioBean.estagiario.dataInicio}"/>
+							
+							<p:outputLabel value="Data termino estágio: " for="datTermino" />
+							<p:calendar id="datTermino" pattern="dd/MM/yyyy"  locale="pt" navigator="true"  size="10" value="#{cadastroEstagiarioBean.estagiario.dataTerminoEstagio}"/>
+							
+							<p:outputLabel value="Situação: " for="situacaoEstagiario"/>
+							<p:selectOneMenu id="situacaoEstagiario" value="#{cadastroEstagiarioBean.estagiario.situacao}" style="width: 130px;" >
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{cadastroEstagiarioBean.situacao}" var="situacao"
+									itemValue="#{situacao}" itemLabel="#{situacao.descricao}"/>
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="Período letivo: " for="periodoLetivo"/>
+							<p:selectOneMenu id="periodoLetivo" value="#{cadastroEstagiarioBean.estagiario.periodo}" 
+									effect="fade" filter="true" filterMatchMode="startsWith" style="width: 130px;">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{cadastroEstagiarioBean.periodoLetivo}" var="periodo"
+								itemValue="#{periodo}" itemLabel="#{periodo.descricao}"/>
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="Turma: " for="turma" />
+							<p:inputText id="turma" size="10" 
+								value="#{cadastroEstagiarioBean.estagiario.turma}" />
+							
+							<p:outputLabel value="Turno: " for="turno"/>
+							<p:selectOneMenu id="turno" value="#{cadastroEstagiarioBean.estagiario.turno}" effect="fade" filter="true" filterMatchMode="startsWith">
+								<f:selectItem  itemLabel="-Selecione-" itemValue=""/>
+								<f:selectItem  itemLabel="Manhã" itemValue="Manhã"/>
+								<f:selectItem  itemLabel="Tarde" itemValue="Tarde"/>
+								<f:selectItem  itemLabel="Noite" itemValue="Noite"/>
+							</p:selectOneMenu>	
+							
+							<p:outputLabel value="Telefone: " for="telefone" />
+							<p:inputMask id="telefone" size="30" mask="(99)9999-9999"
+								value="#{cadastroEstagiarioBean.estagiario.telefoneContato}" />	
+								
+							<p:outputLabel value="Celular: " for="celular" />
+							<p:inputMask id="celular" size="30" mask="(99)99999-9999"
+								value="#{cadastroEstagiarioBean.estagiario.celularContato}" />
+								
+							<p:outputLabel value="Observações: " for="obsEst" />	
+							<p:inputTextarea rows="5" id="obsEst" style="width: 100%"
+								value="#{cadastroEstagiarioBean.estagiario.obsEstagio}" />						
+					</p:panelGrid>
+				</div>
 			</p:panel>
 		</h:form>
     </ui:define>

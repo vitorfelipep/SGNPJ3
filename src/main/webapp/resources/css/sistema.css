@@ -20,6 +20,20 @@ header{
  	box-shadow:0px 2px 2px #ccc;
 }
 
+/* PANELGRID */
+.ui-panelgrid .panelgrid-noborder .ui-grid-responsive {
+	border: none !important;
+	
+}
+
+.ui-panelgrid .ui-panelgrid-cell{
+	border-style: none !important;
+}
+
+.ui-widget-content{
+	border: none !important;
+}
+
 header > div{
 	margin-left: 8px;
 }

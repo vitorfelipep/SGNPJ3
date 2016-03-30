@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+		<!-- Dados para contato -->
+		<p:panel id="panelContato" header="Dados para contato"
+			toggleable="true" toggleSpeed="500" closeSpeed="500"
+			widgetVar="panel"  >
+			<div class="ui-fluid ">
+				<p:panelGrid columns="4" style="width: 100%"
+					styleClass="panelgrid-noborder"  layout="grid" 
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+	
+					<p:outputLabel value="Endereço:" for="logradouro" />
+					<p:inputText id="logradouro" size="50" value="#{cadastroAdvogadoBean.advogado.endereco}"  />
+	
+					<p:outputLabel value="Número:" for="numeroEst" />
+					<p:inputText id="numeroEst" size="5" value="#{cadastroAdvogadoBean.advogado.numero}"  />
+					
+	
+					<p:outputLabel value="Complemento:" for="ComplementoEst" />
+					<p:inputText id="ComplementoEst" size="50" value="#{cadastroAdvogadoBean.advogado.complemento}" />
+	
+					<p:outputLabel value="Bairro:" for="bairro" />
+					<p:inputText id="bairro" size="50" value="#{cadastroAdvogadoBean.advogado.bairro}" />
+					
+					<p:outputLabel value="Cidade:" for="cidade" />
+					<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.cidade}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo" />
+						<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
+						<f:selectItem itemLabel="Nilópolis" itemValue="Nilopolis" />
+					</p:selectOneMenu>
+					
+					
+					<p:outputLabel value="Estado:" for="estado" />
+					<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.estado}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="RJ" itemValue="RJ" />
+						<f:selectItem itemLabel="SP" itemValue="SP" />
+					</p:selectOneMenu>
+	
+					<p:outputLabel value="Cep:" for="cep"  />
+					<p:inputMask id="cep" mask="99999-999" size="10" value="#{cadastroAdvogadoBean.advogado.cep}"
+						 />
+	
+					<p:outputLabel value="Telefone: " for="telefone" />
+					<p:inputMask id="telefone" mask="(99)9999-9999" size="50" value="#{cadastroAdvogadoBean.advogado.telefoneContato}" />
+	
+					<p:outputLabel value="Celular: " for="celular" />
+					<p:inputMask id="celular" mask="(99) 99999-9999" size="50" value="#{cadastroAdvogadoBean.advogado.celularContato}"  />
+				</p:panelGrid>
+			</div>
+		</p:panel>
+</ui:composition>
