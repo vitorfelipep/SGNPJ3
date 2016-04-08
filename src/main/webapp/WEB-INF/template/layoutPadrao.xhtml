@@ -36,37 +36,37 @@
 		</div>
 		<div style="float: right;margin-right: 38px;">
 			<span
-				style="float: left; height: 30px; line-height: 30px; margin-right: 75px">
+				style="float: left; height: 30px; line-height: 30px; margin-right: 40px">
 				Olá #{seguranca.nomeUsuario}! </span>
 	
 			<h:form style="display: inline-block">
 				<p:menubar styleClass="menu-sistema">
-					<p:submenu label="Cadastros">
+					<p:submenu label="Cadastros" icon="ui-icon-circle-check">
 						<p:menuitem value="Assistidos (Autor e réu)" outcome="/assistido/CadastroAssistido" />
-						<p:menuitem value="Usuários" outcome="/Usuario/CadastroUsuario"/>
 						<p:separator />
-						<p:menuitem value="Advogados" outcome="/Advogado/CadastroAdvogado"/>
-						<p:menuitem value="Estagiários" outcome="/Estagiario/CadastroEstagiario" />
+						<p:menuitem value="Advogado" outcome="/Advogado/CadastroAdvogado"/>
+						<p:menuitem value="Estagiário" outcome="/Estagiario/CadastroEstagiario" />
+					</p:submenu>
+					
+					<p:submenu label="Processos" icon="ui-icon-pin-w">
+						<p:menuitem value="Atendimento" outcome="/Atendimento/PesquisaAtendimento" />
 						<p:separator />
-						<p:menuitem value="Atividade estagiário" outcome="/AtividadeEstagiario/CadastroAtividadesEstagiario"/>
-					</p:submenu>
-					<p:menuitem value="Atendimento" outcome="/Atendimento/PesquisaAtendimento" />
-					<p:submenu label="Processo">
-						<p:menuitem value="Processos"  outcome="/Processo/PesquisaProcessos"/>
-					</p:submenu>
-					<p:submenu label="Audiência">
+						<p:menuitem value="Processo"  outcome="/Processo/PesquisaProcessos"/>
+						<p:separator />
 						<p:menuitem value="Nova Audiência" outcome="/Audiencia/CadastroAudiencia" />
 						<p:menuitem value="Pesquisar Audiências" outcome="/Audiencia/PesquisaAudiencia" />
 					</p:submenu>
-					<p:submenu label="Relatórios">
+					<p:submenu label="Relatórios" icon="ui-icon-script">
 						<p:menuitem value="Hipossuificiência" outcome="/Relatorio/Relatorio-Hipossuficiencia" />
 						<p:menuitem value="Procuração"  outcome="/Relatorio/Relatorio-Procuracao"/>
 						<p:menuitem value="Ativ. Estagiário" outcome="/Relatorio/Relatorio-Atividade-Estagiario" />
 						<p:menuitem value="Processos"  outcome="/Relatorio/Relatorio-Processo"/>
 						<p:menuitem value="Audiências" outcome="/Relatorio/Relatorio-Audiencia" />
 					</p:submenu>
-					
-					<p:menuitem value="Sair" url="/j_spring_security_logout" style="margin-left: 20px;" />
+					<p:submenu label="Configurações" icon="ui-icon-gear">
+						<p:menuitem value="Usuário" outcome="/Usuario/CadastroUsuario" icon="ui-icon-person"/>
+					</p:submenu>
+					<p:menuitem value="Sair" icon="ui-icon-power"  url="/j_spring_security_logout" style="margin-left: 20px;" />
 				</p:menubar>
 			</h:form>
 		</div>

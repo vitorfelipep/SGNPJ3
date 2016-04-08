@@ -1,11 +1,13 @@
 package com.sgnpj.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import com.sgnpj.model.Estagiario;
 import com.sgnpj.repository.Estagiarios;
+import com.sgnpj.repository.filter.EstagiarioFiltro;
 import com.sgnpj.util.jpa.Transactional;
 
 public class EstagiarioService implements Serializable{
@@ -29,6 +31,11 @@ public class EstagiarioService implements Serializable{
 		}
 		
 		return estagiarios.armazenar(estagiario);
+	}
+	
+	
+	public List<Estagiario> buscarEstagairio(EstagiarioFiltro filtro){
+		return estagiarios.filtrados(filtro);
 	}
 
 }

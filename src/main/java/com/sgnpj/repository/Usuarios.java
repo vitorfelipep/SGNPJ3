@@ -7,6 +7,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
 import com.sgnpj.model.Usuario;
 
 public class Usuarios implements Serializable {
@@ -41,5 +45,18 @@ public class Usuarios implements Serializable {
 	
 	public Usuario armazenar(Usuario usuario){
 		return usuario = manager.merge(usuario);
+	}
+
+	public boolean verficarSenha(Usuario usuario, String senha) {
+		try{
+			usuario = this.manager.createQuery("from Usuario where lower(email) = :email", Usuario.class)
+				.setParameter("email", usuario.getEmail().toLowerCase())
+				.getSingleResult();
+	
+			return usuario.getSenha().equals(senha);
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

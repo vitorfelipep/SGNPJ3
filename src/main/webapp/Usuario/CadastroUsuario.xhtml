@@ -5,24 +5,22 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
-
-	<ui:define name="titulo">Cadastrar Usuario</ui:define>
+	<f:metadata>
+    	<f:event listener="#{seguranca.inicializar}" type="preRenderView" />
+    </f:metadata>
+    
+	<ui:define name="titulo">Configurações do Usuario</ui:define>
 
 	<ui:define name="corpo">
 
 		<h:form>
-			<h1>Novo cadastro</h1>
+			<h1>Alterar meu perfil</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
-					<p:button value="Novo" outcome="/Usuario/CadastroUsuario" />
-					<p:commandButton value="Salvar" id="botaoSalvar" ajax="false" />
-				</p:toolbarGroup>
-
-				<p:toolbarGroup align="right" styleClass="toobarStyle">
-					<p:button value="Pesquisa" outcome="/Usuario/PesquisaUsuarios" />
+					<p:commandButton value="Alterar" id="botaoSalvar" ajax="false" action="#{seguranca.alterarUsuario}"/>
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -30,25 +28,25 @@
 				style="width: 100%;margin-top:20px;" columnClasses="rotulo, campo">
 
 				<p:outputLabel value="Login: " for="login" />
-				<p:inputText id="login" size="60" maxlength="20" value="" />
+				<p:inputText id="login" size="60" maxlength="20" value="#{seguranca.usuario.email}" />
 
 				<p:outputLabel value="Nome: " for="nome" />
-				<p:inputText id="nome" size="60" maxlength="80" value="" />
+				<p:inputText id="nome" size="60" maxlength="80" value="#{seguranca.usuario.nome}" />
 				
 				<p:outputLabel value="Perfil: " for="perfil" />
-				<p:selectOneMenu id="perfil" style="width: 200px;" required="true"	>
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
-					<f:selectItem itemLabel="Estagiário" itemValue="Estagiário"/>
-				</p:selectOneMenu>	
+				<h:outputText id="perfil" value="#{seguranca.perfil}"/>
 				
 				<p:outputLabel value="Senha: " for="senha" />
 				<p:password id="senha" size="30" feedback="true" maxlength="20"
-					value="" />
+					value="#{seguranca.usuario.senha}" />
+				
+				<p:outputLabel value="Nova Senha: " for="nSenha" />
+				<p:password id="nSenha" size="30" feedback="true" maxlength="20"
+					value="#{seguranca.novaSenha}" />
 
 				<p:outputLabel value="Confirmar senha: " for="confSenha" />
 				<p:password id="confSenha" size="30" maxlength="20" feedback="true"
-					value="" />
+					value="#{seguranca.novaSenha2}" />
 
 			</p:panelGrid>
 

@@ -5,7 +5,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 	
-	
 	<f:metadata>
 		<o:viewParam name="advogado" value="#{cadastroAdvogadoBean.advogado}"/>
 		<o:viewParam name="usuario" value="#{cadastroAdvogadoBean.usuario}"/>
@@ -15,7 +14,7 @@
 	<ui:define name="titulo">#{cadastroAdvogadoBean.editando ? 'Edição de Advogado' : 'Novo Advogado'}</ui:define>
 
 	<ui:define name="corpo">
-		<h:form>
+		<h:form  >
 			<h1>#{cadastroAdvogadoBean.editando ? 'Edição de Advogado' : 'Novo Advogado'}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
@@ -49,15 +48,14 @@
 						<p:outputLabel value="Nome: " for="nome" />
 						<p:inputText id="nome" size="50" maxlength="80" value="#{cadastroAdvogadoBean.usuario.nome}" />
 		
-						<p:outputLabel value="Senha: " for="senha" />
+						<p:outputLabel value="Senha: " for="senha" rendered="#{cadastroAdvogadoBean.naoEditando}" />
 						<p:password id="senha" size="30" feedback="true" maxlength="20"
-							value="#{cadastroAdvogadoBean.usuario.senha}" />
-		
-						<p:outputLabel value="Confirmar senha: " for="confSenha" />
-						<p:password id="confSenha" size="30" maxlength="20" feedback="true"
-							value="#{cadastroAdvogadoBean.verificadorSenha}" >
+							value="#{cadastroAdvogadoBean.usuario.senha}" rendered="#{cadastroAdvogadoBean.naoEditando}"/>
 							
-						</p:password>
+						<p:outputLabel value="Senha: " for="senhaAdvogado" rendered="#{cadastroAdvogadoBean.editando}" />
+						<h:outputText id="senhaAdvogado" size="30" feedback="true" maxlength="20" 
+							value="#{cadastroAdvogadoBean.usuario.senha}" rendered="#{cadastroAdvogadoBean.editando}"/>	
+							
 		
 						<p:outputLabel value="Perfil: " for="perfil" />
 						<p:selectOneMenu id="perfil" style="width: 200px;"  value="#{cadastroAdvogadoBean.perfil}" converter="perfilConverter">

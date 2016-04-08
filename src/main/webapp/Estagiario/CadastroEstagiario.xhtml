@@ -8,14 +8,16 @@
     
     
     <f:metadata>
+    	<o:viewParam name="estagiario" value="#{cadastroEstagiarioBean.estagiario}"/>
+		<o:viewParam name="usuario" value="#{cadastroEstagiarioBean.usuario}"/>
     	<f:event listener="#{cadastroEstagiarioBean.inicializar}" type="preRenderView" /> 
     </f:metadata>
     
-    <ui:define name="titulo">Cadastro de Estagiário</ui:define>
+    <ui:define name="titulo">#{cadastroEstagiarioBean.editando ? 'Editar Estagiário' : 'Cadastro de Estagiário'}</ui:define>
     
     <ui:define name="corpo">
     	<h:form>
-			<h1>Novo cadastro</h1>
+			<h1>#{cadastroEstagiarioBean.editando ? 'Editar Estagiário' : 'Novo Cadastro de Estagiário'}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
@@ -49,13 +51,17 @@
 						<p:outputLabel value="Nome: " for="nome" />
 						<p:inputText id="nome" size="50" maxlength="80" value="#{cadastroEstagiarioBean.usuario.nome}" />
 		
-						<p:outputLabel value="Senha: " for="senha" />
+						<p:outputLabel value="Senha: " for="senha" rendered="#{cadastroEstagiarioBean.naoEditando}"/>
 						<p:password id="senha" size="30" feedback="true" maxlength="20"
-							value="#{cadastroEstagiarioBean.usuario.senha}" />
+							value="#{cadastroEstagiarioBean.usuario.senha}" rendered="#{cadastroEstagiarioBean.naoEditando}" />
+							
+						<p:outputLabel value="Senha: " for="senhaEstagiario" rendered="#{cadastroEstagiarioBean.editando}" />
+						<h:outputText id="senhaEstagiario" size="30"  maxlength="20"
+							value="#{cadastroEstagiarioBean.usuario.senha}" rendered="#{cadastroEstagiarioBean.editando}"/>	
 		
-						<p:outputLabel value="Confirmar senha: " for="confSenha" />
+						<p:outputLabel value="Confirmar senha: " for="confSenha" rendered="#{cadastroEstagiarioBean.naoEditando}"/>
 						<p:password id="confSenha" size="30" maxlength="20" feedback="true"
-							value="#{cadastroEstagiarioBean.verificadorSenha}" >
+							value="#{cadastroEstagiarioBean.verificadorSenha}" rendered="#{cadastroEstagiarioBean.naoEditando}" >
 							
 						</p:password>
 		

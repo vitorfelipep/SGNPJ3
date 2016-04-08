@@ -36,6 +36,7 @@ public class AdvogadoConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
+		
 		if (value != null) {
 			Advogado advogado = (Advogado) value;
 			return advogado.getId_advogado() == null ? null : advogado.getId_advogado().toString();

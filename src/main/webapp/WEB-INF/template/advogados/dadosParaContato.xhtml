@@ -1,14 +1,15 @@
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	
 		<!-- Dados para contato -->
 		<p:panel id="panelContato" header="Dados para contato"
 			toggleable="true" toggleSpeed="500" closeSpeed="500"
 			widgetVar="panel"  >
+			
 			<div class="ui-fluid ">
 				<p:panelGrid columns="4" style="width: 100%"
 					styleClass="panelgrid-noborder"  layout="grid" 
@@ -54,5 +55,5 @@
 					<p:inputMask id="celular" mask="(99) 99999-9999" size="50" value="#{cadastroAdvogadoBean.advogado.celularContato}"  />
 				</p:panelGrid>
 			</div>
-		</p:panel>
+		</p:panel>	
 </ui:composition>

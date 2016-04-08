@@ -88,6 +88,14 @@ public class CadastroEstagiarioBean implements Serializable {
 		this.estagiario = event.getEstagiario();
 	}
 	
+	public boolean isEditando() {
+		return this.estagiario.getId() != null;
+	}
+	
+	public boolean isNaoEditando(){
+		return this.estagiario.getId() == null;
+	}
+	
 	// Lista de enums do tipo area de atuação
 	public AreaAtuacao[] getAreasAtuacao() {
 		return AreaAtuacao.values();

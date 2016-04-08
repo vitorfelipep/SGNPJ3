@@ -1,0 +1,17 @@
+
+#painelAutenticacao{
+	width: 50%;
+	margin-top: 10%;
+	margin-left: 25%;
+}
+
+.header-painel{
+	width: 300px;
+    margin-top: -18px !important;
+    padding-bottom: 11px;
+    margin-left: 120px;
+}
+
+#painelAutenticacao_toggler{
+	margin-top: -23.2px !important;
+}

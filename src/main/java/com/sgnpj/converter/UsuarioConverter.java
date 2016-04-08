@@ -5,7 +5,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import com.sgnpj.model.Advogado;
 import com.sgnpj.model.Usuario;
 import com.sgnpj.repository.Usuarios;
 import com.sgnpj.util.cdi.CDIServiceLocator;

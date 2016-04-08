@@ -32,7 +32,7 @@ public class CadastroAdvogadoBean implements Serializable {
 
 	@Inject
 	private CadastrarUsuarioService usuarioService;
-	
+
 	@Produces
 	@AdvogadoEdicao
 	private Advogado advogado;
@@ -66,20 +66,23 @@ public class CadastroAdvogadoBean implements Serializable {
 	}
 
 	public void cadastrar() {
-		
-		try{
-			this.usuario = usuarioService.salvar(usuario);
-			this.advogado.setUsuario(usuario);
-			Date dataCadastro = new Date();
-			this.advogado.setDataCadastro(dataCadastro);
-			this.advogado = advogadoService.salvar(this.advogado);
-			this.usuario.setAdvogado(advogado);
-			this.perfis = new ArrayList<Perfil>();
-			this.perfis.add(perfil);
-			this.usuario.setPerfis(perfis);
-			this.usuario = usuarioService.salvar(this.usuario);
-			FacesUtil.addInfoMesage("Advogado salvo com sucesso!");
-		}finally{
+
+		try {
+			if (this.advogado.getCidade() != null) {
+				this.usuario = usuarioService.salvar(usuario);
+				this.advogado.setUsuario(usuario);
+				Date dataCadastro = new Date();
+				this.advogado.setDataCadastro(dataCadastro);
+				this.advogado = advogadoService.salvar(this.advogado);
+				this.usuario.setAdvogado(advogado);
+				this.perfis = new ArrayList<Perfil>();
+				this.perfis.add(perfil);
+				this.usuario.setPerfis(perfis);
+				this.usuario = usuarioService.salvar(this.usuario);
+
+				FacesUtil.addInfoMesage("Advogado salvo com sucesso!");
+			}
+		} finally {
 			limparForm();
 		}
 	}
@@ -99,10 +102,11 @@ public class CadastroAdvogadoBean implements Serializable {
 					.addWarningMesage("As senhas não estão iguais, por favor tente novamente!");
 		}
 	}
-	
-	//Atualizar o advogado quando ele for emitido, para o novo status
-	public void advogadoAlterado(@Observes AdvogadoAlteradoEvent event){//Essa anotation observes do javax é o observador do evento que fará a atualização do novo objeto pedido.
-		this.advogado = event.getAdvogado() ;
+
+	// Atualizar o advogado quando ele for emitido, para o novo status
+	// Essa  anotation observes do javax é o observador do evento que fará a atualização do novo objeto pedido.
+	public void advogadoAlterado(@Observes AdvogadoAlteradoEvent event) {
+		this.advogado = event.getAdvogado();
 	}
 
 	public Advogado getAdvogado() {
@@ -119,19 +123,22 @@ public class CadastroAdvogadoBean implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-		
-		if(this.usuario != null){
-			
-			for(Perfil perfil : usuario.getPerfis()){
+
+		if (this.usuario != null) {
+
+			for (Perfil perfil : usuario.getPerfis()) {
 				this.perfil = perfil;
 			}
-			
+
 		}
 	}
-	
-	
-	public boolean isEditando(){
+
+	public boolean isEditando() {
 		return this.advogado.getId_advogado() != null;
+	}
+
+	public boolean isNaoEditando() {
+		return this.advogado.getId_advogado() == null;
 	}
 
 	public List<Perfil> getPerfis() {
@@ -149,7 +156,7 @@ public class CadastroAdvogadoBean implements Serializable {
 	public void setVerificadorSenha(String verificadorSenha) {
 		this.verificadorSenha = verificadorSenha;
 	}
-	
+
 	@NotNull
 	public Perfil getPerfil() {
 		return perfil;

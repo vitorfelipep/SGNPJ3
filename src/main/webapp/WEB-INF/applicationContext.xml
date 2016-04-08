@@ -37,7 +37,7 @@
 		<intercept-url pattern="/Advogado/**" access="hasAnyRole('ADMINISTRADOR')"/>
 		<intercept-url pattern="/Estagiario/**" access="hasAnyRole('ADMINISTRADOR')"/>
 		<intercept-url pattern="/Atendimento/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR', 'ESTAGIARIO')"/>
-		<intercept-url pattern="/Usuario/**" access="hasAnyRole('ADMINISTRADOR')"/>
+		<intercept-url pattern="/Usuario/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR', 'ESTAGIARIO')"/>
 		<intercept-url pattern="/Processo/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR')"/>
 		<intercept-url pattern="/Audiencia/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR')"/>
 		<intercept-url pattern="/Assistido/**" access="hasAnyRole('ADVOGADO','ADMINISTRADOR', 'ESTAGIARIO')"/>

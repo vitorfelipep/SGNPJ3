@@ -6,18 +6,18 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-	<ui:define name="titulo">Pesquisa de Advogados</ui:define>
+	<ui:define name="titulo">Pesquisar estagiários</ui:define>
 
 	<ui:define name="corpo">
 
 		<h:form id="frmPesquisa">
-			<h1>Pesquisa de Advogados</h1>
+			<h1>Pesquisa de estagiários</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
-					<p:commandButton value="Pesquisar" id="pesquisar"
+					<p:commandButton value="Pesquisar" id="pesquisar" action="#{pesquisaEstagiarioBean.pesquisar}"
 						 update="@form" />
 				</p:toolbarGroup>
 
@@ -31,56 +31,68 @@
 				
 				<p:outputLabel value="Número OAB: " for="numOABEst" />
 				<p:inputText id="numOABEst" size="20"
-					value="" />
+					value="#{pesquisaEstagiarioBean.filtro.numOab}" />
 					
-				<p:outputLabel value="Matricula: " for="numOAB" />
-				<p:inputText id="numOAB" size="20" value="" />	
+				<p:outputLabel value="Matricula: " for="matricula" />
+				<p:inputText id="matricula" size="20" value="#{pesquisaEstagiarioBean.filtro.matricula}" />	
 					
 				<p:outputLabel value="Nome do Estagiario " for="nome" />
-				<p:inputText id="nome" size="60" value="" />
+				<p:inputText id="nome" size="60" value="#{pesquisaEstagiarioBean.filtro.nome}" />
 				
 				
 				<p:outputLabel value="Data de inicio e fim" />
 	    		<h:panelGroup>
 	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
-	    				value="#{pesquisaPedidosBean.filtro.dataCriacaoDe}" />
+	    				value="#{pesquisaEstagiarioBean.filtro.dataInicial}" />
 	    			a
 	    			<p:calendar size="10" pattern="dd/MM/yyyy"
-	    				value="#{pesquisaPedidosBean.filtro.dataCriacaoAte}" />
+	    				value="#{pesquisaEstagiarioBean.filtro.dataFinal}" />
 	    		</h:panelGroup>
 				
 
 			</p:panelGrid>
 
-			<p:dataTable id="produtosTable"
-				 var="produto"
+			<p:dataTable id="produtosTable" value="#{pesquisaEstagiarioBean.estagiariosFiltrados}"
+				 var="estagiario"
 				style="margin-top:20px;" emptyMessage="Nenhum produto encontrado"
 				rows="20" paginator="true" paginatorAlwaysVisible="false">
 
 				<p:column headerText="Numero OAB" style="text-align:center; width: 100px;">
-					<h:outputText value="" />
+					<h:outputText value="#{estagiario.codOab}" />
 				</p:column>
-
+				
+				<p:column headerText="Matricula">
+					<h:outputText value="#{estagiario.matricula}" />
+				</p:column>
+				
 				<p:column headerText="Estagiário">
-					<h:outputText value="" />
+					<h:outputText value="#{estagiario.nome}" />
 				</p:column>
 
 				<p:column headerText="Area de atuação" style="width:250px;">
 					<h:outputText
-						value="" />
+						value="#{estagiario.areaDesignada}" />
 				</p:column>
 
 				<p:column headerText="Situação"
 					style="text-align:rigth; width:120px;">
-					<h:outputText value="">
+					<h:outputText value="#{estagiario.situacao}" />
 						
+				</p:column>
+				
+				<p:column headerText="Data de inicio"
+					style="text-align:rigth; width:120px;">
+					<h:outputText value="#{estagiario.dataInicio}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
+						
 				</p:column>
 
 				<p:column style="width:80px; text-align: center;">
 					<p:button outcome="/Estagiario/CadastroEstagiario" icon="ui-icon-pencil"
 						title="Editar">
-						<f:param name="estagiario" value="" />
+						<f:param name="estagiario" value="#{estagiario.id}" />
+						<f:param name="usuario" value="#{estagiario.usuario.id}" />
 					</p:button>
 					<p:commandButton icon="ui-icon-trash" title="Excluir"
 						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
