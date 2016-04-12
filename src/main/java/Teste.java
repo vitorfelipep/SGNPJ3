@@ -46,9 +46,9 @@ public class Teste {
 //		est.setTurma("102");
 //		est.setTelefoneContato("27581818");
 		
-		usu = manager.find(Usuario.class, 6L);
-		est = manager.find(Estagiario.class, 1L);
-		usu.setEstagiario(est);
+//		usu = manager.find(Usuario.class, 6L);
+//		est = manager.find(Estagiario.class, 1L);
+//		usu.setEstagiario(est);
 		
 //		System.out.println(adv.getAreaAtuacao().getDescricao());
 		

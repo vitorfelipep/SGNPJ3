@@ -2,21 +2,41 @@ package com.sgnpj.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name = "processo")
 public class Processo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	private Integer numeroProcesso;
-	private Assistido assistido;
-	private Advogado advogado;
-	private Atendimento atendimento;
-	private String situacao;
+	private List<Atendimento> atendimentos;
+	private StatusProcesso situacao;
 	private Date dataAbertura;
 	private Date dataConclusao;
 	private String observacao;
 
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -24,7 +44,8 @@ public class Processo implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	@Column(nullable = true, unique = true, length = 20)
 	public Integer getNumeroProcesso() {
 		return numeroProcesso;
 	}
@@ -33,38 +54,29 @@ public class Processo implements Serializable {
 		this.numeroProcesso = numeroProcesso;
 	}
 
-	public Assistido getAssistido() {
-		return assistido;
+	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	public List<Atendimento> getAtendimentos() {
+		return atendimentos;
 	}
 
-	public void setAssistido(Assistido assistido) {
-		this.assistido = assistido;
+	public void setAtendimentos(List<Atendimento> atendimentos) {
+		this.atendimentos = atendimentos;
 	}
-
-	public Advogado getAdvogado() {
-		return advogado;
-	}
-
-	public void setAdvogado(Advogado advogado) {
-		this.advogado = advogado;
-	}
-
-	public Atendimento getAtendimento() {
-		return atendimento;
-	}
-
-	public void setAtendimento(Atendimento atendimento) {
-		this.atendimento = atendimento;
-	}
-
-	public String getSituacao() {
+	
+	@NotEmpty
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 10)
+	public StatusProcesso getSituacao() {
 		return situacao;
 	}
 
-	public void setSituacao(String situacao) {
+	public void setSituacao(StatusProcesso situacao) {
 		this.situacao = situacao;
 	}
-
+	
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_abertura", nullable = false)
 	public Date getDataAbertura() {
 		return dataAbertura;
 	}
@@ -72,7 +84,10 @@ public class Processo implements Serializable {
 	public void setDataAbertura(Date dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
-
+	
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_conclusao", nullable = false)
 	public Date getDataConclusao() {
 		return dataConclusao;
 	}
@@ -80,7 +95,9 @@ public class Processo implements Serializable {
 	public void setDataConclusao(Date dataConclusao) {
 		this.dataConclusao = dataConclusao;
 	}
-
+	
+	@NotBlank
+	@Column(columnDefinition = "text", nullable = false)
 	public String getObservacao() {
 		return observacao;
 	}

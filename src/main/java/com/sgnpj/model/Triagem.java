@@ -2,9 +2,19 @@ package com.sgnpj.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+@Entity
+@Table(name = "triagem")
 public class Triagem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -17,8 +27,12 @@ public class Triagem implements Serializable {
 	private Double rendaFamiliar;
 	private String primeiroAtendimento;
 	private String obsTriagem;
-	private List<Assistido> assistidotriagem  = new ArrayList<>();;
+	private Assistido assistidotriagem;
 
+
+
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -27,6 +41,8 @@ public class Triagem implements Serializable {
 		this.id = id;
 	}
 
+	@NotNull
+	@Column(nullable = false)
 	public Integer getQtdFilhos() {
 		return qtdFilhos;
 	}
@@ -35,6 +51,8 @@ public class Triagem implements Serializable {
 		this.qtdFilhos = qtdFilhos;
 	}
 
+	@NotNull
+	@Column(nullable = false)
 	public Integer getMaior14() {
 		return maior14;
 	}
@@ -43,6 +61,8 @@ public class Triagem implements Serializable {
 		this.maior14 = maior14;
 	}
 
+	@NotNull
+	@Column(nullable = false)
 	public Integer getMenor14() {
 		return menor14;
 	}
@@ -51,6 +71,8 @@ public class Triagem implements Serializable {
 		this.menor14 = menor14;
 	}
 
+	@NotNull
+	@Column(name = "renda_bruta", nullable = false, precision = 10, scale = 2)
 	public BigDecimal getRendaBruta() {
 		return rendaBruta;
 	}
@@ -59,6 +81,8 @@ public class Triagem implements Serializable {
 		this.rendaBruta = rendaBruta;
 	}
 
+	@NotNull
+	@Column(name = "renda_familiar", nullable = false, precision = 10, scale = 2)
 	public Double getRendaFamiliar() {
 		return rendaFamiliar;
 	}
@@ -67,6 +91,8 @@ public class Triagem implements Serializable {
 		this.rendaFamiliar = rendaFamiliar;
 	}
 
+	@NotBlank
+	@Column(name = "primeiro_atendimento", nullable = false, length = 3)
 	public String getPrimeiroAtendimento() {
 		return primeiroAtendimento;
 	}
@@ -75,6 +101,7 @@ public class Triagem implements Serializable {
 		this.primeiroAtendimento = primeiroAtendimento;
 	}
 
+	@Column(columnDefinition = "text", nullable = false)
 	public String getObsTriagem() {
 		return obsTriagem;
 	}
@@ -83,11 +110,12 @@ public class Triagem implements Serializable {
 		this.obsTriagem = obsTriagem;
 	}
 
-	public List<Assistido> getAssistidotriagem() {
+	@OneToOne
+	public Assistido getAssistidotriagem() {
 		return assistidotriagem;
 	}
 
-	public void setAssistidotriagem(List<Assistido> assistidotriagem) {
+	public void setAssistidotriagem(Assistido assistidotriagem) {
 		this.assistidotriagem = assistidotriagem;
 	}
 

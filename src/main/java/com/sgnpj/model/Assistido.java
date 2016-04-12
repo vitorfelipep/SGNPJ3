@@ -2,6 +2,22 @@ package com.sgnpj.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name = "assistido")
 public class Assistido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,14 +29,19 @@ public class Assistido implements Serializable {
 	private String estado;
 	private String cidade;
 	private String bairro;
-	private String tipoLogradouro;
 	private String logradouro;
 	private Integer numero;
 	private String complemento;
 	private String tipoEndereco;
-	private String referencia;
-	private String situacao;
+	private String email;
+	private SituacaoAssitido situacao;
+	private PessoaFisica pessoaFisica;
+	private PessoaJuridica pessoaJuridica;
+	private Triagem triagem;
 
+
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -29,6 +50,8 @@ public class Assistido implements Serializable {
 		this.id = id;
 	}
 
+	@NotBlank
+	@Column(nullable = false, length = 60)
 	public String getNome() {
 		return nome;
 	}
@@ -37,6 +60,8 @@ public class Assistido implements Serializable {
 		this.nome = nome;
 	}
 
+	@NotBlank
+	@Column(nullable = false, length = 8)
 	public String getTipoAssistido() {
 		return tipoAssistido;
 	}
@@ -45,6 +70,8 @@ public class Assistido implements Serializable {
 		this.tipoAssistido = tipoAssistido;
 	}
 
+	@NotBlank
+	@Column(nullable = false, length = 9)
 	public String getCep() {
 		return cep;
 	}
@@ -53,6 +80,8 @@ public class Assistido implements Serializable {
 		this.cep = cep;
 	}
 
+	@NotBlank
+	@Column(nullable = false, length = 2)
 	public String getEstado() {
 		return estado;
 	}
@@ -61,6 +90,8 @@ public class Assistido implements Serializable {
 		this.estado = estado;
 	}
 
+	@NotEmpty
+	@Column(nullable = false, length = 80)
 	public String getCidade() {
 		return cidade;
 	}
@@ -69,6 +100,8 @@ public class Assistido implements Serializable {
 		this.cidade = cidade;
 	}
 
+	@NotBlank
+	@Column(nullable = false, length = 80)
 	public String getBairro() {
 		return bairro;
 	}
@@ -77,14 +110,8 @@ public class Assistido implements Serializable {
 		this.bairro = bairro;
 	}
 
-	public String getTipoLogradouro() {
-		return tipoLogradouro;
-	}
-
-	public void setTipoLogradouro(String tipoLogradouro) {
-		this.tipoLogradouro = tipoLogradouro;
-	}
-
+	@NotBlank
+	@Column(nullable = false, length = 80)
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -93,6 +120,8 @@ public class Assistido implements Serializable {
 		this.logradouro = logradouro;
 	}
 
+	@NotNull
+	@Column(nullable = false)
 	public Integer getNumero() {
 		return numero;
 	}
@@ -101,6 +130,7 @@ public class Assistido implements Serializable {
 		this.numero = numero;
 	}
 
+	@Column(nullable = true, length = 60)
 	public String getComplemento() {
 		return complemento;
 	}
@@ -109,6 +139,8 @@ public class Assistido implements Serializable {
 		this.complemento = complemento;
 	}
 
+	@NotBlank
+	@Column(nullable = false, length = 30)
 	public String getTipoEndereco() {
 		return tipoEndereco;
 	}
@@ -117,22 +149,57 @@ public class Assistido implements Serializable {
 		this.tipoEndereco = tipoEndereco;
 	}
 
-	public String getReferencia() {
-		return referencia;
-	}
-
-	public void setReferencia(String referencia) {
-		this.referencia = referencia;
-	}
-
-	public String getSituacao() {
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
+	public SituacaoAssitido getSituacao() {
 		return situacao;
 	}
 
-	public void setSituacao(String situacao) {
+	public void setSituacao(SituacaoAssitido situacao) {
 		this.situacao = situacao;
 	}
 
+	@NotBlank
+	@Email(message = "inválido!")
+	@Column(nullable = false, unique = true, length = 150)
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@OneToOne
+	public PessoaFisica getPessoaFisica() {
+		return pessoaFisica;
+	}
+
+	public void setPessoaFisica(PessoaFisica pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
+	}
+
+	@OneToOne
+	public PessoaJuridica getPessoaJuridica() {
+		return pessoaJuridica;
+	}
+
+	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
+		this.pessoaJuridica = pessoaJuridica;
+	}
+
+	@NotNull
+	@OneToOne
+	public Triagem getTriagem() {
+		return triagem;
+	}
+
+	public void setTriagem(Triagem triagem) {
+		this.triagem = triagem;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

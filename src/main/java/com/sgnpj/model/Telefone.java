@@ -1,27 +1,43 @@
 package com.sgnpj.model;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name = "telefone")
 public class Telefone implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private Long id_telefone;
 	private String telefoneResidencial;
 	private String celularPessoal;
 	private String telefoneTrabalho;
 	private String celularTrabalho;
-	private List<Assistido> assistido;
+	private Assistido assistido;
 
-	public Long getId() {
-		return id;
+	@Id
+	@GeneratedValue
+	public Long getId_telefone() {
+		return id_telefone;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId_telefone(Long id_telefone) {
+		this.id_telefone = id_telefone;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false)
 	public String getTelefoneResidencial() {
 		return telefoneResidencial;
 	}
@@ -29,7 +45,9 @@ public class Telefone implements Serializable {
 	public void setTelefoneResidencial(String telefoneResidencial) {
 		this.telefoneResidencial = telefoneResidencial;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false)
 	public String getCelularPessoal() {
 		return celularPessoal;
 	}
@@ -37,7 +55,9 @@ public class Telefone implements Serializable {
 	public void setCelularPessoal(String celularPessoal) {
 		this.celularPessoal = celularPessoal;
 	}
-
+	
+	
+	@Column(nullable = true)
 	public String getTelefoneTrabalho() {
 		return telefoneTrabalho;
 	}
@@ -45,7 +65,8 @@ public class Telefone implements Serializable {
 	public void setTelefoneTrabalho(String telefoneTrabalho) {
 		this.telefoneTrabalho = telefoneTrabalho;
 	}
-
+	
+	@Column(nullable = true)
 	public String getCelularTrabalho() {
 		return celularTrabalho;
 	}
@@ -53,12 +74,15 @@ public class Telefone implements Serializable {
 	public void setCelularTrabalho(String celularTrabalho) {
 		this.celularTrabalho = celularTrabalho;
 	}
-
-	public List<Assistido> getAssistido() {
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "assistido_id", nullable = false)
+	public Assistido getAssistido() {
 		return assistido;
 	}
-
-	public void setAssistido(List<Assistido> assistido) {
+	
+	public void setAssistido(Assistido assistido) {
 		this.assistido = assistido;
 	}
 
@@ -66,7 +90,7 @@ public class Telefone implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((id_telefone == null) ? 0 : id_telefone.hashCode());
 		return result;
 	}
 
@@ -79,10 +103,10 @@ public class Telefone implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Telefone other = (Telefone) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (id_telefone == null) {
+			if (other.id_telefone != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id_telefone.equals(other.id_telefone))
 			return false;
 		return true;
 	}

@@ -43,10 +43,25 @@
 		<p:outputLabel value="Orgão Expedidor:" for="org" />
 		<p:inputText id="org" size="10"
 			value="" required="true" />
+			
+		<p:outputLabel value="Carteira de motorista:" for="cnh" />
+		<p:inputText id="cnh" size="20"
+			value="" required="true"/>
+			
+		<p:outputLabel value="Carteira de trabalho:" for="ctb" />
+		<p:inputText id="ctb" size="20"
+			value="" required="true"/>
 		
 		<p:outputLabel value="Naturalidade:" for="naturalidade" />
 		<p:inputText id="naturalidade" size="30"
 			value="" required="true" />
+			
+		<p:outputLabel value="Sexo:" for="sexo" />
+		<p:selectOneMenu id="sexo" style="width: 80px;"	 >
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Mascuilo" itemValue="M"/>
+				<f:selectItem itemLabel="Feminino" itemValue="F"/>
+		</p:selectOneMenu>	
 			
 		<p:outputLabel value="Estado Cívil:" for="estadoCivil" />
 		<p:selectOneMenu id="estadoCivil" style="width: 200px;"	required="true" >
@@ -56,7 +71,12 @@
 				<f:selectItem itemLabel="Viúvo" itemValue="viuvo"/>
 		</p:selectOneMenu>	
 		
-			
+		<p:outputLabel value="Menor de idade?" for="isMenor" />
+		<p:selectOneMenu id="isMenor" style="width: 80px;"	 >
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Sim" itemValue="S"/>
+				<f:selectItem itemLabel="Não" itemValue="N"/>
+		</p:selectOneMenu>		
 	</p:panelGrid>
 </p:panel>
 <p:panel id="panelContato" header="Dados para contato" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel"  >	
@@ -74,7 +94,16 @@
 		<p:outputLabel value="Complemento:" for="entregaComplemento" />
 		<p:inputText id="entregaComplemento" size="50"
 			value="" />
-
+			
+		<p:outputLabel value="Tipo endereço: " for="tipo-endereco" />
+		<p:selectOneMenu id="tipo-endereco" style="width: 200px;" required="true">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Casa Própria" itemValue="CASA_PROPRIA"/>
+				<f:selectItem itemLabel="ALugado" itemValue="ALUGADO"/>
+				<f:selectItem itemLabel="Cedido" itemValue="CEDIDO"/>
+				<f:selectItem itemLabel="União" itemValue="Uniao"/>
+		</p:selectOneMenu>	
+					
 		<p:outputLabel value="Cidade:" for="cidade" />
 		<p:selectOneMenu id="cidade" style="width: 200px;" required="true">
 				<f:selectItem itemLabel="Selecione" />

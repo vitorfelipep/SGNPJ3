@@ -9,6 +9,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -41,6 +43,8 @@ public class Advogado implements Serializable {
 	private String cpf;
 	private String telefoneContato;
 	private String celularContato;
+	
+	private Atendimento atendimento;
 
 	@Id
 	@GeneratedValue
@@ -51,7 +55,7 @@ public class Advogado implements Serializable {
 	public void setId_advogado(Integer id_advogado) {
 		this.id_advogado = id_advogado;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, unique = true, length = 25)
 	public String getCodigo_OAB() {
@@ -102,7 +106,7 @@ public class Advogado implements Serializable {
 	public void setSituacao(Situacao situacao) {
 		this.situacao = situacao;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getEndereco() {
@@ -112,7 +116,7 @@ public class Advogado implements Serializable {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	
+
 	@Column(nullable = true, length = 80)
 	public String getComplemento() {
 		return complemento;
@@ -121,7 +125,7 @@ public class Advogado implements Serializable {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getBairro() {
@@ -131,7 +135,7 @@ public class Advogado implements Serializable {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	
+
 	@NotNull
 	@Column(nullable = false, length = 80)
 	public String getCidade() {
@@ -141,7 +145,7 @@ public class Advogado implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 2)
 	public String getEstado() {
@@ -151,7 +155,7 @@ public class Advogado implements Serializable {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 9)
 	public String getCep() {
@@ -202,6 +206,17 @@ public class Advogado implements Serializable {
 	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "atendimento_id", nullable = false)
+	public Atendimento getAtendimento() {
+		return atendimento;
+	}
+
+	public void setAtendimento(Atendimento atendimento) {
+		this.atendimento = atendimento;
+	}
 
 	@Override
 	public int hashCode() {
@@ -227,5 +242,5 @@ public class Advogado implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

@@ -2,7 +2,7 @@ package com.sgnpj.model;
 
 public enum AreaAtuacao {
 	
-	PENAL("Penal"),FAMILIAR("Familiar"),CIVIL("Cívil"),TRABALHISTA("Trabalhista");
+	PENAL("Penal"),FAMILIAR("Familiar"),CIVIL("Cívil"),TRABALHISTA("Trabalhista"), UNIAO_ESTAVEL("União estavel");
 	
 	private String descricao;
 	
