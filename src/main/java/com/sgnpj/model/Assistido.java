@@ -39,7 +39,6 @@ public class Assistido implements Serializable {
 	private PessoaJuridica pessoaJuridica;
 	private Triagem triagem;
 
-
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -198,8 +197,7 @@ public class Assistido implements Serializable {
 	public void setTriagem(Triagem triagem) {
 		this.triagem = triagem;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

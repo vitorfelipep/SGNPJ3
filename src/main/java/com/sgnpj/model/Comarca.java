@@ -2,6 +2,20 @@ package com.sgnpj.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name = "comarca")
 public class Comarca implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -15,7 +29,9 @@ public class Comarca implements Serializable {
 	private String bairro;
 	private String complemento;
 	private Integer numero;
-
+	
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -23,7 +39,9 @@ public class Comarca implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	@NotBlank
+	@Column(nullable = false, length = 60)
 	public String getNome() {
 		return nome;
 	}
@@ -31,7 +49,10 @@ public class Comarca implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "tribunal_id", nullable = false)
 	public Tribunal getTribunal() {
 		return tribunal;
 	}
@@ -39,7 +60,9 @@ public class Comarca implements Serializable {
 	public void setTribunal(Tribunal tribunal) {
 		this.tribunal = tribunal;
 	}
-
+	
+	@NotBlank
+	@Column(nullable = false, length = 10)
 	public String getCep() {
 		return cep;
 	}
@@ -47,7 +70,9 @@ public class Comarca implements Serializable {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-
+	
+	@NotBlank
+	@Column(nullable = false, length = 2)
 	public String getUf() {
 		return uf;
 	}
@@ -55,7 +80,9 @@ public class Comarca implements Serializable {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-
+	
+	@NotBlank
+	@Column(nullable = false, length = 80)
 	public String getCidade() {
 		return cidade;
 	}
@@ -63,7 +90,9 @@ public class Comarca implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-
+	
+	@NotBlank
+	@Column(nullable = false, length = 70)
 	public String getBairro() {
 		return bairro;
 	}
@@ -71,7 +100,8 @@ public class Comarca implements Serializable {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-
+	
+	@Column(nullable = true, length = 120)
 	public String getComplemento() {
 		return complemento;
 	}
@@ -79,7 +109,9 @@ public class Comarca implements Serializable {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false)
 	public Integer getNumero() {
 		return numero;
 	}

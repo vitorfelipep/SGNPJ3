@@ -9,8 +9,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,8 +41,7 @@ public class Advogado implements Serializable {
 	private String cpf;
 	private String telefoneContato;
 	private String celularContato;
-	
-	private Atendimento atendimento;
+
 
 	@Id
 	@GeneratedValue
@@ -207,17 +204,6 @@ public class Advogado implements Serializable {
 		this.numero = numero;
 	}
 	
-	
-	@ManyToOne
-	@JoinColumn(name = "atendimento_id", nullable = false)
-	public Atendimento getAtendimento() {
-		return atendimento;
-	}
-
-	public void setAtendimento(Atendimento atendimento) {
-		this.atendimento = atendimento;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

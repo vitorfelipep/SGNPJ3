@@ -1,7 +1,6 @@
 package com.sgnpj.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +11,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -27,28 +25,19 @@ public class Atendimento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private List<Assistido> assistidos;
-	private List<Advogado> advogados;
+	private Assistido assistido;
+	private Advogado advogado;
+	private Estagiario estagiario;
 	private Processo processo;
 	private String atendimentoRelato;
 	private Date dataAtendimento;
+	private List<Processo> processos;
 
 	public Atendimento() {
 	}
 
 	public Atendimento(Long id, String atendimentoRelato, Date dataAtendimento) {
 		this.id = id;
-		this.atendimentoRelato = atendimentoRelato;
-		this.dataAtendimento = dataAtendimento;
-	}
-
-	public Atendimento(Long id, List<Assistido> assistidos,
-			List<Advogado> advogados, Processo processo,
-			String atendimentoRelato, Date dataAtendimento) {
-		this.id = id;
-		this.assistidos = assistidos;
-		this.advogados = advogados;
-		this.processo = processo;
 		this.atendimentoRelato = atendimentoRelato;
 		this.dataAtendimento = dataAtendimento;
 	}
@@ -63,17 +52,29 @@ public class Atendimento implements Serializable {
 		this.id = id;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	public List<Assistido> getAssistidos() {
-		return assistidos;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "assitido_id", nullable = false)
+	public Assistido getAssistido() {
+		return assistido;
 	}
 
-	public void setAssistidos(List<Assistido> assistidos) {
-		this.assistidos = assistidos;
+	public void setAssistido(Assistido assistido) {
+		this.assistido = assistido;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "processo_id", nullable = false)
+	@JoinColumn(name = "estagiario_id", nullable = true)
+	public Estagiario getEstagiario() {
+		return estagiario;
+	}
+
+	public void setEstagiario(Estagiario estagiario) {
+		this.estagiario = estagiario;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "processo_id", nullable = true)
 	public Processo getProcesso() {
 		return processo;
 	}
@@ -82,15 +83,17 @@ public class Atendimento implements Serializable {
 		this.processo = processo;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	public List<Advogado> getAdvogados() {
-		return advogados;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "advogado_id", nullable = false)
+	public Advogado getAdvogado() {
+		return advogado;
 	}
 
-	public void setAdvogados(List<Advogado> advogados) {
-		this.advogados = advogados;
+	public void setAdvogado(Advogado advogado) {
+		this.advogado = advogado;
 	}
-	
+
 	@Column(columnDefinition = "text", nullable = false)
 	public String getAtendimentoRelato() {
 		return atendimentoRelato;
@@ -99,7 +102,7 @@ public class Atendimento implements Serializable {
 	public void setAtendimentoRelato(String atendimentoRelato) {
 		this.atendimentoRelato = atendimentoRelato;
 	}
-	
+
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_atendimento", nullable = false)
@@ -109,6 +112,15 @@ public class Atendimento implements Serializable {
 
 	public void setDataAtendimento(Date dataAtendimento) {
 		this.dataAtendimento = dataAtendimento;
+	}
+
+	@OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	public List<Processo> getProcessos() {
+		return processos;
+	}
+
+	public void setProcessos(List<Processo> processos) {
+		this.processos = processos;
 	}
 
 	@Override
@@ -135,23 +147,4 @@ public class Atendimento implements Serializable {
 			return false;
 		return true;
 	}
-
-	@Transient
-	public void adicionarAssistido(Assistido a) {
-		if (this.assistidos == null) {
-			this.assistidos = new ArrayList<Assistido>();
-		}
-
-		this.assistidos.add(a);
-	}
-
-	@Transient
-	public void adicionarAdvogados(Advogado ad) {
-		if (this.advogados == null) {
-			this.advogados = new ArrayList<Advogado>();
-		}
-
-		this.advogados.add(ad);
-	}
-
 }

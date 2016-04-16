@@ -2,17 +2,15 @@ package com.sgnpj.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +27,7 @@ public class Processo implements Serializable {
 
 	private Long id;
 	private Integer numeroProcesso;
-	private List<Atendimento> atendimentos;
+	private Atendimento atendimento;
 	private StatusProcesso situacao;
 	private Date dataAbertura;
 	private Date dataConclusao;
@@ -54,15 +52,17 @@ public class Processo implements Serializable {
 		this.numeroProcesso = numeroProcesso;
 	}
 
-	@OneToMany(mappedBy = "processo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	public List<Atendimento> getAtendimentos() {
-		return atendimentos;
+	
+	@ManyToOne
+	@JoinColumn(name = "atendimento_id", nullable = false)
+	public Atendimento getAtendimento() {
+		return atendimento;
 	}
 
-	public void setAtendimentos(List<Atendimento> atendimentos) {
-		this.atendimentos = atendimentos;
+	public void setAtendimento(Atendimento atendimento) {
+		this.atendimento = atendimento;
 	}
-	
+
 	@NotEmpty
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 10)

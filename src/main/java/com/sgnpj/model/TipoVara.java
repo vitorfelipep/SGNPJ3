@@ -3,6 +3,21 @@ package com.sgnpj.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+@Entity
+@Table(name = "tipo_vara")
 public class TipoVara implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +26,9 @@ public class TipoVara implements Serializable {
 	private String nome;
 	private Date dataCadastro;
 	private Comarca cormarca;
-
+	
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -19,7 +36,9 @@ public class TipoVara implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	@NotBlank
+	@Column(nullable = false, length = 80)
 	public String getNome() {
 		return nome;
 	}
@@ -27,7 +46,10 @@ public class TipoVara implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_audiencia", nullable = false)
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
@@ -35,7 +57,10 @@ public class TipoVara implements Serializable {
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "comarca_id", nullable = false)
 	public Comarca getCormarca() {
 		return cormarca;
 	}

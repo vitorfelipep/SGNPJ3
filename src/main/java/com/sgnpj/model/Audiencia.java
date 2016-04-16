@@ -3,6 +3,23 @@ package com.sgnpj.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+@Entity
+@Table(name = "audiencia")
 public class Audiencia implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,13 +30,47 @@ public class Audiencia implements Serializable {
 	private String endereco;
 	private String cidade;
 	private Advogado advogadoResponsavel;
-	private Assistido assistido;
 	private String juizResponsavel;
 	private String varaTribunal;
 	private Estagiario estagiario;
 	private Processo processo;
-	private String tipoAudiencia;
+	private TipoAudiencia tipoAudiencia;
 
+	public Audiencia() {
+	}
+
+	public Audiencia(Long id, Date dataAudiencia, String horaAudiencia,
+			String endereco, String cidade, String juizResponsavel,
+			String varaTribunal, TipoAudiencia tipoAudiencia) {
+		this.id = id;
+		this.dataAudiencia = dataAudiencia;
+		this.horaAudiencia = horaAudiencia;
+		this.endereco = endereco;
+		this.cidade = cidade;
+		this.juizResponsavel = juizResponsavel;
+		this.varaTribunal = varaTribunal;
+		this.tipoAudiencia = tipoAudiencia;
+	}
+	
+	public Audiencia(Long id, Date dataAudiencia, String horaAudiencia,
+			String endereco, String cidade, Advogado advogadoResponsavel,
+			String juizResponsavel, String varaTribunal, Estagiario estagiario,
+			Processo processo, TipoAudiencia tipoAudiencia) {
+		this.id = id;
+		this.dataAudiencia = dataAudiencia;
+		this.horaAudiencia = horaAudiencia;
+		this.endereco = endereco;
+		this.cidade = cidade;
+		this.advogadoResponsavel = advogadoResponsavel;
+		this.juizResponsavel = juizResponsavel;
+		this.varaTribunal = varaTribunal;
+		this.estagiario = estagiario;
+		this.processo = processo;
+		this.tipoAudiencia = tipoAudiencia;
+	}
+
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -28,6 +79,9 @@ public class Audiencia implements Serializable {
 		this.id = id;
 	}
 
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_audiencia", nullable = false)
 	public Date getDataAudiencia() {
 		return dataAudiencia;
 	}
@@ -36,6 +90,8 @@ public class Audiencia implements Serializable {
 		this.dataAudiencia = dataAudiencia;
 	}
 
+	@NotBlank
+	@Column(name = "hora_audiencia", nullable = false)
 	public String getHoraAudiencia() {
 		return horaAudiencia;
 	}
@@ -44,6 +100,8 @@ public class Audiencia implements Serializable {
 		this.horaAudiencia = horaAudiencia;
 	}
 
+	@NotBlank
+	@Column(name = "endereco", nullable = false, length = 80)
 	public String getEndereco() {
 		return endereco;
 	}
@@ -52,6 +110,8 @@ public class Audiencia implements Serializable {
 		this.endereco = endereco;
 	}
 
+	@NotBlank
+	@Column(name = "cidade", nullable = false, length = 80)
 	public String getCidade() {
 		return cidade;
 	}
@@ -60,6 +120,9 @@ public class Audiencia implements Serializable {
 		this.cidade = cidade;
 	}
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "advogado_id", nullable = false)
 	public Advogado getAdvogadoResponsavel() {
 		return advogadoResponsavel;
 	}
@@ -68,14 +131,8 @@ public class Audiencia implements Serializable {
 		this.advogadoResponsavel = advogadoResponsavel;
 	}
 
-	public Assistido getAssistido() {
-		return assistido;
-	}
-
-	public void setAssistido(Assistido assistido) {
-		this.assistido = assistido;
-	}
-
+	@NotBlank
+	@Column(name = "juiz_responsavel", nullable = false, length = 80)
 	public String getJuizResponsavel() {
 		return juizResponsavel;
 	}
@@ -84,6 +141,8 @@ public class Audiencia implements Serializable {
 		this.juizResponsavel = juizResponsavel;
 	}
 
+	@NotBlank
+	@Column(name = "juiz_atendimento", nullable = false, length = 80)
 	public String getVaraTribunal() {
 		return varaTribunal;
 	}
@@ -92,6 +151,8 @@ public class Audiencia implements Serializable {
 		this.varaTribunal = varaTribunal;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "estagiario_id", nullable = false)
 	public Estagiario getEstagiario() {
 		return estagiario;
 	}
@@ -100,6 +161,9 @@ public class Audiencia implements Serializable {
 		this.estagiario = estagiario;
 	}
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "processo_id", nullable = false)
 	public Processo getProcesso() {
 		return processo;
 	}
@@ -107,12 +171,15 @@ public class Audiencia implements Serializable {
 	public void setProcesso(Processo processo) {
 		this.processo = processo;
 	}
-
-	public String getTipoAudiencia() {
+	
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 40)
+	public TipoAudiencia getTipoAudiencia() {
 		return tipoAudiencia;
 	}
 
-	public void setTipoAudiencia(String tipoAudiencia) {
+	public void setTipoAudiencia(TipoAudiencia tipoAudiencia) {
 		this.tipoAudiencia = tipoAudiencia;
 	}
 

@@ -2,6 +2,17 @@ package com.sgnpj.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name = "tribunal")
 public class Tribunal implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,7 +27,9 @@ public class Tribunal implements Serializable {
 	private String logradouro;
 	private String complemento;
 	private Integer numero;
-
+	
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -24,7 +37,9 @@ public class Tribunal implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	@NotBlank
+	@Column(name = "desc_tribunal", nullable = false, length = 80)
 	public String getDescTribunal() {
 		return descTribunal;
 	}
@@ -32,7 +47,9 @@ public class Tribunal implements Serializable {
 	public void setDescTribunal(String descTribunal) {
 		this.descTribunal = descTribunal;
 	}
-
+	
+	@NotBlank
+	@Column(name = "nome", nullable = false, length = 60)
 	public String getNome() {
 		return nome;
 	}
@@ -40,7 +57,9 @@ public class Tribunal implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false, length = 10)
 	public String getCep() {
 		return cep;
 	}
@@ -48,7 +67,9 @@ public class Tribunal implements Serializable {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false, length = 2)
 	public String getUf() {
 		return uf;
 	}
@@ -56,7 +77,9 @@ public class Tribunal implements Serializable {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false, length = 80)
 	public String getCidade() {
 		return cidade;
 	}
@@ -64,7 +87,9 @@ public class Tribunal implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false, length = 80)
 	public String getBairro() {
 		return bairro;
 	}
@@ -72,7 +97,9 @@ public class Tribunal implements Serializable {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false, length = 80)
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -80,7 +107,8 @@ public class Tribunal implements Serializable {
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
-
+	
+	@Column(nullable = true, length = 10)
 	public String getComplemento() {
 		return complemento;
 	}
@@ -88,7 +116,9 @@ public class Tribunal implements Serializable {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-
+	
+	@NotEmpty
+	@Column(nullable = false)
 	public Integer getNumero() {
 		return numero;
 	}
