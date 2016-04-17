@@ -60,7 +60,7 @@ public class CadastroEstagiarioBean implements Serializable {
 		this.estagiario = new Estagiario();
 		this.usuario = new Usuario();
 		this.perfis = new ArrayList<Perfil>();
-		this.perfis = usuarioService.perfis();
+		this.perfis = usuarioService.perfilEstagiario();
 	}
 
 	public void cadastrar() {
@@ -83,7 +83,7 @@ public class CadastroEstagiarioBean implements Serializable {
 		}
 	}
 	
-	//Atualizar o advogado quando ele for alterado
+	//Atualizar o estagiario quando ele for alterado
 	public void estagiarioAlterado(@Observes EstagiarioAlteradoEvent event){
 		this.estagiario = event.getEstagiario();
 	}

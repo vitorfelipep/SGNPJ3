@@ -22,7 +22,7 @@
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
 					<p:button value="Novo" outcome="/Advogado/CadastroAdvogado" />
-					<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroAdvogadoBean.cadastrar}" ajax="false" />
+					<p:commandButton value="Salvar" id="botaoSalvar" update="panelUsuario" action="#{cadastroAdvogadoBean.cadastrar}" ajax="false" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right" styleClass="toobarStyle">
@@ -42,11 +42,11 @@
 						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
 		
 		
-						<p:outputLabel value="Email: " for="login" />
-						<p:inputText id="login" size="50" maxlength="50" value="#{cadastroAdvogadoBean.usuario.email}" />
-		
 						<p:outputLabel value="Nome: " for="nome" />
 						<p:inputText id="nome" size="50" maxlength="80" value="#{cadastroAdvogadoBean.usuario.nome}" />
+						
+						<p:outputLabel value="Email: " for="login" />
+						<p:inputText id="login" size="50" maxlength="50" value="#{cadastroAdvogadoBean.usuario.email}" />
 		
 						<p:outputLabel value="Senha: " for="senha" rendered="#{cadastroAdvogadoBean.naoEditando}" />
 						<p:password id="senha" size="30" feedback="true" maxlength="20"

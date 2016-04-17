@@ -38,6 +38,9 @@ public class Assistido implements Serializable {
 	private PessoaFisica pessoaFisica;
 	private PessoaJuridica pessoaJuridica;
 	private Triagem triagem;
+	
+	public Assistido() {
+	}
 
 	@Id
 	@GeneratedValue

@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -31,6 +32,7 @@ public class Atendimento implements Serializable {
 	private Processo processo;
 	private String atendimentoRelato;
 	private Date dataAtendimento;
+	private String areaAtendimento;
 	private List<Processo> processos;
 
 	public Atendimento() {
@@ -121,6 +123,15 @@ public class Atendimento implements Serializable {
 
 	public void setProcessos(List<Processo> processos) {
 		this.processos = processos;
+	}
+	
+	@Transient
+	public String getAreaAtendimento() {
+		return areaAtendimento;
+	}
+
+	public void setAreaAtendimento(String areaAtendimento) {
+		this.areaAtendimento = areaAtendimento;
 	}
 
 	@Override

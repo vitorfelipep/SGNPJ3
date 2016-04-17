@@ -14,9 +14,16 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.sgnpj.model.Advogado;
+import com.sgnpj.model.Assistido;
 import com.sgnpj.repository.filter.AdvogadoFilter;
 
-public class Advogados implements Serializable{
+/**
+ * 
+ * @author Vitor
+ *
+ */
+
+public class Assistidos implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -24,16 +31,16 @@ public class Advogados implements Serializable{
 	private EntityManager manager;
 	
 	
-	public Advogado armazenar(Advogado advogado){
-		return advogado = manager.merge(advogado);
+	public Assistido armazenar(Assistido assistido){
+		return assistido = manager.merge(assistido);
 	}
 	
-	public Advogado porId(Integer id){
-		return manager.find(Advogado.class, id);
+	public Assistido porId(Long id){
+		return manager.find(Assistido.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Advogado> filtrados(AdvogadoFilter filtro) {
+	public List<Assistido> filtrados(AdvogadoFilter filtro) {
 		Session session = manager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Advogado.class)
 				//INNER JOIN COM A TABELA USUÁRIO
@@ -48,20 +55,5 @@ public class Advogados implements Serializable{
 		}
 		
 		return criteria.addOrder(Order.asc("u.nome")).list(); 
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Advogado> porNome(String nome) {
-		
-		Session session = manager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Advogado.class)
-				//INNER JOIN COM A TABELA USUÁRIO
-				.createAlias("usuario", "u");
-		
-		if(StringUtils.isNotBlank(nome)){
-			criteria.add(Restrictions.ilike("u.nome", nome.toUpperCase(), MatchMode.ANYWHERE));
-		}
-		
-		return criteria.addOrder(Order.asc("u.nome")).list();
 	}
 }

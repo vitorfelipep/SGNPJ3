@@ -61,7 +61,7 @@
 					<h:outputText value="#{estagiario.codOab}" />
 				</p:column>
 				
-				<p:column headerText="Matricula">
+				<p:column headerText="Matricula" style="text-align:center;">
 					<h:outputText value="#{estagiario.matricula}" />
 				</p:column>
 				
@@ -69,19 +69,19 @@
 					<h:outputText value="#{estagiario.nome}" />
 				</p:column>
 
-				<p:column headerText="Area de atuação" style="width:250px;">
+				<p:column headerText="Area de atuação" style="text-align:center;width:250px;">
 					<h:outputText
 						value="#{estagiario.areaDesignada}" />
 				</p:column>
 
 				<p:column headerText="Situação"
-					style="text-align:rigth; width:120px;">
+					style="text-align:center; width:120px;">
 					<h:outputText value="#{estagiario.situacao}" />
 						
 				</p:column>
 				
 				<p:column headerText="Data de inicio"
-					style="text-align:rigth; width:120px;">
+					style="text-align:center; width:120px;">
 					<h:outputText value="#{estagiario.dataInicio}" >
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
@@ -103,6 +103,7 @@
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
+			
 			<p:confirmDialog header="Excluir Estagiário"
 				message="Tem certeza que deseja excluir o estagiario #{pesquisaProdutosBean.produtoSelecionado.sku}?"
 				showEffect="fade" hideEffect="fade"
