@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<div class="ui-fluid">
-		<p:panelGrid columns="4" style="width:100%; margin-top:20px;"
+		<p:panelGrid id="capaAssistido" columns="4" style="width:100%; margin-top:20px;"
 			columnClasses="rotulo, campo, rotulo, campo">
 
 			<p:outputLabel value="Número processo:"/>
@@ -20,10 +20,11 @@
 			<h:outputText value="Em atendimento" style="color: red;"/>
 
 			<p:outputLabel value="Tipo de pessoa: " for="tipoPessoa" />
-			<p:selectOneMenu id="tipoPessoa" style="width: 200px;" value="#{cadastroAssistidoBean.tipoPessoa}">
+			<p:selectOneMenu id="tipoPessoa" style="width: 200px;" value="#{cadastroAssistidoBean.tipoPessoa}" valueChangeListener="#{cadastroAssistidoBean.verificarTipoPessoa}">
 				<f:selectItem itemLabel="Selecione" />
-				<f:selectItems value="#{cadastroAssistidoBean.tipoPessoa}" var="tipoPessoa"
-				   itemValue="#{tipoPessoa}"   itemLabel="#{tipoPessoa.descricao}" />
+				<f:selectItems value="#{cadastroAssistidoBean.tiposPessoa}" var="tipoPessoa"
+				   itemValue="#{tipoPessoa}"   itemLabel="#{tipoPessoa.descricao}" /> 
+				   <f:ajax event="change" render="frmCadastro" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel value="Tipo Assistido: " for="tipoAssitido" />

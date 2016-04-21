@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -125,7 +124,8 @@ public class Atendimento implements Serializable {
 		this.processos = processos;
 	}
 	
-	@Transient
+	@NotNull
+	@Column(nullable = false, length = 50)
 	public String getAreaAtendimento() {
 		return areaAtendimento;
 	}

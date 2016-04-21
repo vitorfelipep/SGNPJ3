@@ -161,7 +161,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>PedidoVenda</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

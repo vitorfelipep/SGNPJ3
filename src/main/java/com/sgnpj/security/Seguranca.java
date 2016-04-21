@@ -122,6 +122,11 @@ public class Seguranca implements Serializable {
 
 		return usuario;
 	}
+	
+	
+	public UsuarioSistema getUsuarioLogadoNoSistema(){
+		return this.getUsuarioLogado();
+	}
 
 	public boolean isEmitirPedidoPermitido() {
 		return externalContext.isUserInRole("ADMINISTRADORES")

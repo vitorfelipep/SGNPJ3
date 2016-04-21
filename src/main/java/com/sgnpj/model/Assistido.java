@@ -6,8 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -38,8 +41,12 @@ public class Assistido implements Serializable {
 	private PessoaFisica pessoaFisica;
 	private PessoaJuridica pessoaJuridica;
 	private Triagem triagem;
-	
+	private Assistido contraParte;
+
+
 	public Assistido() {
+		this.pessoaFisica = new PessoaFisica();
+		this.pessoaJuridica = new PessoaJuridica();
 	}
 
 	@Id
@@ -173,6 +180,7 @@ public class Assistido implements Serializable {
 		this.email = email;
 	}
 
+	@NotNull
 	@OneToOne
 	public PessoaFisica getPessoaFisica() {
 		return pessoaFisica;
@@ -182,6 +190,7 @@ public class Assistido implements Serializable {
 		this.pessoaFisica = pessoaFisica;
 	}
 
+	@NotNull
 	@OneToOne
 	public PessoaJuridica getPessoaJuridica() {
 		return pessoaJuridica;
@@ -201,6 +210,17 @@ public class Assistido implements Serializable {
 		this.triagem = triagem;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_contraParte", insertable = true, updatable = true, nullable = true)
+	public Assistido getContraParte() {
+		return contraParte;
+	}
+
+	public void setContraParte(Assistido contraParte) {
+		this.contraParte = contraParte;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -9,38 +9,38 @@
 	<p:panelGrid columns="4" style="width: 100%"
 		columnClasses="rotulo, campo, rotulo, campo">
 		<p:outputLabel value="Qtd de filhos: " for="numFilhos" />
-		<p:inputText id="numFilhos" size="50" value="" required="true"/>
+		<p:inputText id="numFilhos" size="50" value="#{cadastroAssistidoBean.assistido.triagem.qtdFilhos}"/>
 		
-		<p:outputLabel value="Qtd maior de 13 anos: " for="maior13anos" />
-		<p:inputText id="maior13anos" size="50" value="" required="true" />
+		<p:outputLabel value="Qtd maior de 14 anos: " for="maior14anos" />
+		<p:inputText id="maior14anos" size="50" value="#{cadastroAssistidoBean.assistido.triagem.maior14}"  />
 		
 		<p:outputLabel value="Qtd menor de 13 anos: " for="menor13anos" />
-		<p:inputText id="menor13anos" size="50" value="" required="true"/>
+		<p:inputText id="menor13anos" size="50" value="#{cadastroAssistidoBean.assistido.triagem.menor14}" />
 		
-		<p:outputLabel value="Renda pessoal:" for="rendaPessoal" />
-		<p:inputText id="rendaPessoal" size="50" value="" required="true"/>
+		<p:outputLabel value="Renda bruta:" for="rendaPessoal" />
+		<p:inputText id="rendaPessoal" size="50" value="#{cadastroAssistidoBean.assistido.triagem.rendaBruta}" />
 		
 		<p:outputLabel value="Renda Familiar:" for="rendaFamiliar" />
-		<p:inputText id="rendaFamiliar" size="50" value="" required="true"/>
+		<p:inputText id="rendaFamiliar" size="50" value="#{cadastroAssistidoBean.assistido.triagem.rendaFamiliar}" />
 		
 		<p:outputLabel value="Primeiro atendimento?" for="primeiroAtend" />
-		<p:selectOneMenu id="primeiroAtend" style="width: 200px;" required="true">
+		<p:selectOneMenu id="primeiroAtend" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.triagem.primeiroAtendimento}">
 				<f:selectItem itemLabel="Sim" itemValue="Sim"/>
 				<f:selectItem itemLabel="Não" itemValue="Não"/>
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Já foi atendido por esta serviço judiciário?" for="verificacaAtend" />
-		<p:selectOneRadio id="verificacaAtend" value="" required="true">
+		<p:selectOneRadio id="verificacaAtend" value="#{cadastroAssistidoBean.assistido.triagem.jafoiAtendido}" >
 			<f:selectItem itemLabel="Sim" itemValue="Sim" />
 			<f:selectItem itemLabel="Não" itemValue="Não" />
 		</p:selectOneRadio>
 		
 		<p:outputLabel value="Sobre que problema?" for="problemaTriagem" />
-		<p:inputText id="problemaTriagem" size="50" maxlength="150" value="" />
+		<p:inputText id="problemaTriagem" size="50" maxlength="150" value="#{cadastroAssistidoBean.assistido.triagem.qualProblemaAnterior}" />
 		
 		<p:outputLabel value="Observações:" for="obsTriagem" />
 		<p:inputTextarea rows="5" id="obsTriagem" style="width: 100%"
-			value=""/>
+			value="#{cadastroAssistidoBean.assistido.triagem.obsTriagem}"/>
 			
 	</p:panelGrid>
 </ui:composition>

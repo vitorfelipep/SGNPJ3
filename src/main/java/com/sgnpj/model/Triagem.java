@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -26,11 +27,15 @@ public class Triagem implements Serializable {
 	private BigDecimal rendaBruta;
 	private Double rendaFamiliar;
 	private String primeiroAtendimento;
+	private String jafoiAtendido;
+	private String qualProblemaAnterior;
 	private String obsTriagem;
 	private Assistido assistidotriagem;
 
-
-
+	public Triagem() {
+	}
+	
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -117,6 +122,24 @@ public class Triagem implements Serializable {
 
 	public void setAssistidotriagem(Assistido assistidotriagem) {
 		this.assistidotriagem = assistidotriagem;
+	}
+
+	@Transient
+	public String getJafoiAtendido() {
+		return jafoiAtendido;
+	}
+
+	public void setJafoiAtendido(String jafoiAtendido) {
+		this.jafoiAtendido = jafoiAtendido;
+	}
+
+	@Transient
+	public String getQualProblemaAnterior() {
+		return qualProblemaAnterior;
+	}
+
+	public void setQualProblemaAnterior(String qualProblemaAnterior) {
+		this.qualProblemaAnterior = qualProblemaAnterior;
 	}
 
 	@Override

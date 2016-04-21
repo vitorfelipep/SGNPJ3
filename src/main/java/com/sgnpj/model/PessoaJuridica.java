@@ -40,7 +40,7 @@ public class PessoaJuridica implements Serializable {
 	}
 	
 	@NotBlank
-	@CNPJ
+	@CNPJ(message = "inválido!")
 	@Column(nullable = false, length = 20)
 	public String getCnpj() {
 		return cnpj;

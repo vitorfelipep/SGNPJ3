@@ -8,75 +8,79 @@
 	<p:panelGrid columns="4" style="width: 100%"
 		columnClasses="rotulo, campo, rotulo, campo">
 		
-		<p:outputLabel value="Nome:" for="nomeAssistido" />
-		<p:inputText id="nomeAssistido" size="50"
-			value="" required="true"/>
+		<p:outputLabel value="Nome:" for="nomeAssistido" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputText id="nomeAssistido" size="50" value="#{cadastroAssistidoBean.assistido.nome}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
-		<p:outputLabel value="Nome do Pai" for="pai" />
-		<p:inputText id="pai" size="50"
-			value="" required="true" />
+		<p:outputLabel value="Nome do Pai" for="pai" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputText id="pai" size="50" value="#{cadastroAssistidoBean.assistido.pessoaFisica.nomePai}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
-		<p:outputLabel value="Nome da mãe:" for="mae" />
-		<p:inputText id="mae" size="50"
-			value="" required="true"/>
+		<p:outputLabel value="Nome da mãe:" for="mae" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputText id="mae" size="50" value="#{cadastroAssistidoBean.assistido.pessoaFisica.nomeMae}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 			
-		<p:outputLabel value="Profissão:" for="profissao" />
-		<p:inputText id="profissao" size="50"
-			value="" required="true"/>
+		<p:outputLabel value="Profissão:" for="profissao" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputText id="profissao" size="50" value="#{cadastroAssistidoBean.assistido.pessoaFisica.profissao}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
-		<p:outputLabel value="Data de Nasc.:" for="nascimento" />
-		<p:calendar id="nascimento" pattern="dd/MM/yyyy" size="10" required="true"
-			 />
+		<p:outputLabel value="Data de Nasc.:" for="nascimento" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:calendar id="nascimento" pattern="dd/MM/yyyy" value="#{cadastroAssistidoBean.assistido.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
-		<p:outputLabel value="CPF:" for="cpf" />
-		<p:inputMask id="cpf" size="20"  mask="999.999.999-99" title="Digite seu CPF" 
-			value="" required="true" />
-
-		<p:outputLabel value="CNPJ" for="cnpj" />
-		<p:inputMask id="cnpj" mask=" 99.999.999/9999-99" size="20"
-			value="" required="true"/>
+		<p:outputLabel value="CPF:" for="cpf" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputMask id="cpf" size="20"  mask="999.999.999-99" title="Digite seu CPF" value="#{cadastroAssistidoBean.assistido.pessoaFisica.cpf}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />
 		
-		<p:outputLabel value="RG:" for="rg" />
-		<p:inputText id="rg" size="20"
-			value="" required="true"/>
+		<p:outputLabel value="RG:" for="rg" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />
+		<p:inputMask id="rg" size="20" mask="99.999.9999" value="#{cadastroAssistidoBean.assistido.pessoaFisica.identidade}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 			
-		<p:outputLabel value="Orgão Expedidor:" for="org" />
-		<p:inputText id="org" size="10"
-			value="" required="true" />
+		<p:outputLabel value="Orgão Expedidor:" for="org" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputText id="org" size="10" value="#{cadastroAssistidoBean.assistido.pessoaFisica.orgao}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />
 			
-		<p:outputLabel value="Carteira de motorista:" for="cnh" />
-		<p:inputText id="cnh" size="20"
-			value="" required="true"/>
+		<p:outputLabel value="Carteira de motorista:" for="cnh" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputText id="cnh" size="20" value="#{cadastroAssistidoBean.assistido.pessoaFisica.cnh}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 			
-		<p:outputLabel value="Carteira de trabalho:" for="ctb" />
-		<p:inputText id="ctb" size="20"
-			value="" required="true"/>
+		<p:outputLabel value="Carteira de trabalho:" for="ctb" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputMask id="ctb" size="20" mask="9999999/999-99" value="#{cadastroAssistidoBean.assistido.pessoaFisica.carteiraTrabalho}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 		
-		<p:outputLabel value="Naturalidade:" for="naturalidade" />
-		<p:inputText id="naturalidade" size="30"
-			value="" required="true" />
+		<p:outputLabel value="Naturalidade:" for="naturalidade" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputText id="naturalidade" size="30" value="#{cadastroAssistidoBean.assistido.pessoaFisica.naturalidade}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 			
-		<p:outputLabel value="Sexo:" for="sexo" />
-		<p:selectOneMenu id="sexo" style="width: 80px;"	 >
+		<p:outputLabel value="Sexo:" for="sexo" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:selectOneMenu id="sexo" style="width: 100px;" value="#{cadastroAssistidoBean.assistido.pessoaFisica.sexo}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" >
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItem itemLabel="Mascuilo" itemValue="M"/>
 				<f:selectItem itemLabel="Feminino" itemValue="F"/>
 		</p:selectOneMenu>	
 			
-		<p:outputLabel value="Estado Cívil:" for="estadoCivil" />
-		<p:selectOneMenu id="estadoCivil" style="width: 200px;"	required="true" >
+		<p:outputLabel value="Estado Cívil:" for="estadoCivil" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />
+		<p:selectOneMenu id="estadoCivil" style="width: 200px;"	value="#{cadastroAssistidoBean.assistido.pessoaFisica.estadoCivil}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}">
 				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="Casado" itemValue="Casado"/>
-				<f:selectItem itemLabel="Solteiro" itemValue="Solteiro"/>
-				<f:selectItem itemLabel="Viúvo" itemValue="viuvo"/>
+				<f:selectItems value="#{cadastroAssistidoBean.estadoCivil}" var="estadoCivil"
+				  	 itemValue="#{estadoCivil}"   itemLabel="#{estadoCivil.descricao}" />
 		</p:selectOneMenu>	
 		
-		<p:outputLabel value="Menor de idade?" for="isMenor" />
-		<p:selectOneMenu id="isMenor" style="width: 80px;"	 >
+		<p:outputLabel value="Menor de idade?" for="isMenor"  rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />
+		<p:selectOneMenu id="isMenor" style="width: 100px;"	value="#{cadastroAssistidoBean.assistido.pessoaFisica.menorIdade}" 
+					rendered="#{cadastroAssistidoBean.tipoPessoaFisica}">
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItem itemLabel="Sim" itemValue="S"/>
 				<f:selectItem itemLabel="Não" itemValue="N"/>
-		</p:selectOneMenu>		
+		</p:selectOneMenu>	
+		
+		
+		
+		<p:outputLabel value="CNPJ" for="cnpj"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}"/>
+		<p:inputMask id="cnpj" mask="99.999.999/9999-99" size="20" value="#{cadastroAssistidoBean.assistido.pessoaJuridica.cnpj}"
+			rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}" />
+		
+		<p:outputLabel value="Nome fantasia: " for="nomeJuridico"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}"/>
+		<p:inputText id="nomeJuridico" size="50" value="#{cadastroAssistidoBean.assistido.pessoaJuridica.nomeJuridico}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}" />
+		
+		<p:outputLabel value="Razão social: " for="razaoSocial"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}" />
+		<p:inputText id="razaoSocial" size="50" value="#{cadastroAssistidoBean.assistido.pessoaJuridica.ramoNegocio}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}" />
+		
+		<p:outputLabel value="Data de abertura.:" for="dataAbertura"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}"/>
+		<p:calendar id="dataAbertura" pattern="dd/MM/yyyy" value="#{cadastroAssistidoBean.assistido.pessoaJuridica.dataAbertura}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}" />
+		
+		<p:outputLabel value="Ramo de negócio: " for="ramoNegocio"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}"/>
+		<p:inputText id="ramoNegocio" size="50" value="#{cadastroAssistidoBean.assistido.pessoaJuridica.ramoNegocio}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridica}"/>
+			
 	</p:panelGrid>
 </p:panel>
 <p:panel id="panelContato" header="Dados para contato" toggleable="true"  toggleSpeed="500" closeSpeed="500" widgetVar="panel"  >	
@@ -84,19 +88,17 @@
 		columnClasses="rotulo, campo, rotulo, campo">
 		
 		<p:outputLabel value="Logradouro:" for="entregaLogradouro" />
-		<p:inputText id="entregaLogradouro" size="50"
-			value="" required="true" />
+		<p:inputText id="entregaLogradouro" size="50" value="#{cadastroAssistidoBean.assistido.logradouro}"  />
 
 		<p:outputLabel value="Número:" for="numero" />
-		<p:inputText id="numero" size="5" value="" maxlength="15" required="true"/>
+		<p:inputText id="numero" size="5" value="#{cadastroAssistidoBean.assistido.numero}" maxlength="15" />
 		
 		
 		<p:outputLabel value="Complemento:" for="entregaComplemento" />
-		<p:inputText id="entregaComplemento" size="50"
-			value="" />
+		<p:inputText id="entregaComplemento" size="50" value="#{cadastroAssistidoBean.assistido.complemento}" />
 			
 		<p:outputLabel value="Tipo endereço: " for="tipo-endereco" />
-		<p:selectOneMenu id="tipo-endereco" style="width: 200px;" required="true">
+		<p:selectOneMenu id="tipo-endereco" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.tipoEndereco}">
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItem itemLabel="Casa Própria" itemValue="CASA_PROPRIA"/>
 				<f:selectItem itemLabel="ALugado" itemValue="ALUGADO"/>
@@ -105,44 +107,43 @@
 		</p:selectOneMenu>	
 					
 		<p:outputLabel value="Cidade:" for="cidade" />
-		<p:selectOneMenu id="cidade" style="width: 200px;" required="true">
+		<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.cidade}">
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
 				<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
 				<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+				<f:selectItem itemLabel="Pavuna" itemValue="Pavuna"/>
+				<f:selectItem itemLabel="São João de Meriti" itemValue="São João de Meriti"/>
 		</p:selectOneMenu>
 
 		<p:outputLabel value="Estado:" for="estado" />
-		<p:selectOneMenu id="estado" style="width: 200px;" required="true">
+		<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.estado}">
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItem itemLabel="RJ" itemValue="RJ"/>
 				<f:selectItem itemLabel="MG" itemValue="MG"/>
 				<f:selectItem itemLabel="SP" itemValue="SP"/>
+				<f:selectItem itemLabel="AM" itemValue="AM"/>
+				<f:selectItem itemLabel="ES" itemValue="ES"/>
 		</p:selectOneMenu>
 		
-		<p:outputLabel value="Cep:" for="entregaCep" required="true"/>
-		<p:inputMask id="entregaCep" mask="99999-999" size="10"
-			value="" required="true"/>
+		<p:outputLabel value="Cep:" for="cep" required="true"/>
+		<p:inputMask id="cep" mask="99999-999" size="10" value="#{cadastroAssistidoBean.assistido.cep}" />
+		
+		<p:outputLabel value="E-mail: " for="email" />
+		<p:inputText id="email" size="50" value="#{cadastroAssistidoBean.assistido.email}" />	
 		
 		<p:outputLabel value="Telefone: " for="telefone" />
-		<p:inputText id="telefone" size="50"
-			value="" required="true" />
+		<p:inputMask id="telefone" size="50" mask="(99)9999-9999" value="#{cadastroAssistidoBean.telefone.telefoneResidencial}" />
 		
 		<p:outputLabel value="Telefone Trab: " for="telefoneTrab" />
-		<p:inputText id="telefoneTrab" size="50"
-			value="" />
+		<p:inputMask id="telefoneTrab"  mask="(99)9999-9999"  size="50" value="#{cadastroAssistidoBean.telefone.telefoneTrabalho}" />
 		
 		<p:outputLabel value="Celular: " for="celular" />
-		<p:inputText id="celular" size="50"
-			value="" required="true"/>
+		<p:inputMask id="celular" mask="(99)99999-9999" size="50" value="#{cadastroAssistidoBean.telefone.celularPessoal}" />
 		
 		<p:outputLabel value="Celular trab.: " for="celularTrab" />
-		<p:inputText id="celularTrab" size="50"
-			value="" />
-			
-		<p:outputLabel value="E-mail: " for="email" />
-		<p:inputText id="email" size="50"
-			value="" />					
+		<p:inputMask id="celularTrab" mask="(99)99999-9999" size="50" value="#{cadastroAssistidoBean.telefone.celularTrabalho}" />
+						
 	</p:panelGrid>
 </p:panel>
 </ui:composition>

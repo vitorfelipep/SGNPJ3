@@ -29,6 +29,7 @@ public class PessoaFisica implements Serializable {
 	private String cpf;
 	private Date dataNascimento;
 	private String identidade;
+	private String orgao;
 	private String cnh;
 	private String carteiraTrabalho;
 	private String nomePai;
@@ -40,7 +41,10 @@ public class PessoaFisica implements Serializable {
 	private String sexo;
 	private String menorIdade;
 	private Assistido assitido;
-
+	
+	public PessoaFisica() {
+	}
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -190,6 +194,16 @@ public class PessoaFisica implements Serializable {
 
 	public void setAssitido(Assistido assitido) {
 		this.assitido = assitido;
+	}
+	
+	@NotBlank
+	@Column(nullable = false,  length = 10)
+	public String getOrgao() {
+		return orgao;
+	}
+
+	public void setOrgao(String orgao) {
+		this.orgao = orgao;
 	}
 
 	@Override
