@@ -9,19 +9,23 @@
 	<p:panelGrid columns="4" style="width: 100%"
 		columnClasses="rotulo, campo, rotulo, campo">
 		<p:outputLabel value="Qtd de filhos: " for="numFilhos" />
-		<p:inputText id="numFilhos" size="50" value="#{cadastroAssistidoBean.assistido.triagem.qtdFilhos}"/>
+		<p:spinner id="numFilhos" size="20" min="0" max="100" value="#{cadastroAssistidoBean.assistido.triagem.qtdFilhos}"/>
 		
 		<p:outputLabel value="Qtd maior de 14 anos: " for="maior14anos" />
-		<p:inputText id="maior14anos" size="50" value="#{cadastroAssistidoBean.assistido.triagem.maior14}"  />
+		<p:spinner id="maior14anos" size="20" min="0" max="100" value="#{cadastroAssistidoBean.assistido.triagem.maior14}"  />
 		
 		<p:outputLabel value="Qtd menor de 13 anos: " for="menor13anos" />
-		<p:inputText id="menor13anos" size="50" value="#{cadastroAssistidoBean.assistido.triagem.menor14}" />
+		<p:spinner id="menor13anos" size="20" min="0" max="100" value="#{cadastroAssistidoBean.assistido.triagem.menor14}" />
 		
 		<p:outputLabel value="Renda bruta:" for="rendaPessoal" />
-		<p:inputText id="rendaPessoal" size="50" value="#{cadastroAssistidoBean.assistido.triagem.rendaBruta}" />
+		<p:inputText id="rendaPessoal" maxlength="10" size="50" styleClass="moeda" value="#{cadastroAssistidoBean.assistido.triagem.rendaBruta}" >
+			<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+		</p:inputText>
 		
 		<p:outputLabel value="Renda Familiar:" for="rendaFamiliar" />
-		<p:inputText id="rendaFamiliar" size="50" value="#{cadastroAssistidoBean.assistido.triagem.rendaFamiliar}" />
+		<p:inputText id="rendaFamiliar" maxlength="10" size="50" styleClass="moeda" value="#{cadastroAssistidoBean.assistido.triagem.rendaFamiliar}" >
+			<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+		</p:inputText>
 		
 		<p:outputLabel value="Primeiro atendimento?" for="primeiroAtend" />
 		<p:selectOneMenu id="primeiroAtend" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.triagem.primeiroAtendimento}">

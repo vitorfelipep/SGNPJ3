@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -124,7 +123,8 @@ public class Triagem implements Serializable {
 		this.assistidotriagem = assistidotriagem;
 	}
 
-	@Transient
+	@NotBlank
+	@Column(name = "ja_atendido", nullable = true, length = 3)
 	public String getJafoiAtendido() {
 		return jafoiAtendido;
 	}
@@ -133,7 +133,8 @@ public class Triagem implements Serializable {
 		this.jafoiAtendido = jafoiAtendido;
 	}
 
-	@Transient
+	@NotBlank
+	@Column(name = "problema_anterior", nullable = true, length = 60)
 	public String getQualProblemaAnterior() {
 		return qualProblemaAnterior;
 	}

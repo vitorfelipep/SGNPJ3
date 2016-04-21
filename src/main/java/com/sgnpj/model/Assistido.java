@@ -2,6 +2,7 @@ package com.sgnpj.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -180,7 +181,6 @@ public class Assistido implements Serializable {
 		this.email = email;
 	}
 
-	@NotNull
 	@OneToOne
 	public PessoaFisica getPessoaFisica() {
 		return pessoaFisica;
@@ -190,7 +190,6 @@ public class Assistido implements Serializable {
 		this.pessoaFisica = pessoaFisica;
 	}
 
-	@NotNull
 	@OneToOne
 	public PessoaJuridica getPessoaJuridica() {
 		return pessoaJuridica;
@@ -200,7 +199,6 @@ public class Assistido implements Serializable {
 		this.pessoaJuridica = pessoaJuridica;
 	}
 
-	@NotNull
 	@OneToOne
 	public Triagem getTriagem() {
 		return triagem;
@@ -210,7 +208,7 @@ public class Assistido implements Serializable {
 		this.triagem = triagem;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_contraParte", insertable = true, updatable = true, nullable = true)
 	public Assistido getContraParte() {
 		return contraParte;

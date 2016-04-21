@@ -16,8 +16,8 @@
 				<f:convertDateTime pattern="dd/MM/yyyy" />
 			</h:outputText>
 
-			<p:outputLabel value="Status:" />
-			<h:outputText value="Em atendimento" style="color: red;"/>
+			<p:outputLabel value="Status atendimento:" />
+			<h:outputText value="#{cadastroAssistidoBean.atendimento.statusAtendimento.descricao}" style="color: red;"/>
 
 			<p:outputLabel value="Tipo de pessoa: " for="tipoPessoa" />
 			<p:selectOneMenu id="tipoPessoa" style="width: 200px;" value="#{cadastroAssistidoBean.tipoPessoa}" valueChangeListener="#{cadastroAssistidoBean.verificarTipoPessoa}">
@@ -48,8 +48,12 @@
 				var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.usuario.nome}"
 				forceSelection="true"/>
 			
-			<p:outputLabel value=" " />
-			<h:outputText />
+			<p:outputLabel value="Situação do Assistido: " for="situacaoAssistido"  />
+			<p:selectOneMenu id="situacaoAssistido" style="width: 200px;"  value="#{cadastroAssistidoBean.assistido.situacao}"> 
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItems value="#{cadastroAssistidoBean.situacaoAssistido}" var="situacao"
+				   itemValue="#{situacao}"  itemLabel="#{situacao.descricao}" />
+			</p:selectOneMenu>
 					
 		</p:panelGrid>
 	</div>

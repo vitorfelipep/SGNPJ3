@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,6 +31,7 @@ public class Atendimento implements Serializable {
 	private Advogado advogado;
 	private Estagiario estagiario;
 	private Processo processo;
+	private StatusAtendimento statusAtendimento = StatusAtendimento.EM_ATENDIMENTO;
 	private String atendimentoRelato;
 	private Date dataAtendimento;
 	private String areaAtendimento;
@@ -94,6 +97,17 @@ public class Atendimento implements Serializable {
 	public void setAdvogado(Advogado advogado) {
 		this.advogado = advogado;
 	}
+	
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 30)
+	public StatusAtendimento getStatusAtendimento() {
+		return statusAtendimento;
+	}
+
+	public void setStatusAtendimento(StatusAtendimento statusAtendimento) {
+		this.statusAtendimento = statusAtendimento;
+	}
 
 	@Column(columnDefinition = "text", nullable = false)
 	public String getAtendimentoRelato() {
@@ -123,7 +137,7 @@ public class Atendimento implements Serializable {
 	public void setProcessos(List<Processo> processos) {
 		this.processos = processos;
 	}
-	
+
 	@NotNull
 	@Column(nullable = false, length = 50)
 	public String getAreaAtendimento() {
@@ -158,4 +172,6 @@ public class Atendimento implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 }

@@ -21,7 +21,7 @@
 		<p:inputText id="profissao" size="50" value="#{cadastroAssistidoBean.assistido.pessoaFisica.profissao}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
 		<p:outputLabel value="Data de Nasc.:" for="nascimento" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
-		<p:calendar id="nascimento" pattern="dd/MM/yyyy" value="#{cadastroAssistidoBean.assistido.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:calendar id="nascimento" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="de"  navigator="true"  value="#{cadastroAssistidoBean.assistido.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
 		<p:outputLabel value="CPF:" for="cpf" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 		<p:inputMask id="cpf" size="20"  mask="999.999.999-99" title="Digite seu CPF" value="#{cadastroAssistidoBean.assistido.pessoaFisica.cpf}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />
@@ -87,6 +87,15 @@
 	<p:panelGrid columns="4"  style="width: 100%"
 		columnClasses="rotulo, campo, rotulo, campo">
 		
+		<p:outputLabel value="Tipo endereço: " for="tipo-endereco" />
+		<p:selectOneMenu id="tipo-endereco" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.tipoEndereco}">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Casa Própria" itemValue="CASA_PROPRIA"/>
+				<f:selectItem itemLabel="ALugado" itemValue="ALUGADO"/>
+				<f:selectItem itemLabel="Cedido" itemValue="CEDIDO"/>
+				<f:selectItem itemLabel="União" itemValue="UNIAO_CEDIDO"/>
+		</p:selectOneMenu>	
+		
 		<p:outputLabel value="Logradouro:" for="entregaLogradouro" />
 		<p:inputText id="entregaLogradouro" size="50" value="#{cadastroAssistidoBean.assistido.logradouro}"  />
 
@@ -97,14 +106,8 @@
 		<p:outputLabel value="Complemento:" for="entregaComplemento" />
 		<p:inputText id="entregaComplemento" size="50" value="#{cadastroAssistidoBean.assistido.complemento}" />
 			
-		<p:outputLabel value="Tipo endereço: " for="tipo-endereco" />
-		<p:selectOneMenu id="tipo-endereco" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.tipoEndereco}">
-				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="Casa Própria" itemValue="CASA_PROPRIA"/>
-				<f:selectItem itemLabel="ALugado" itemValue="ALUGADO"/>
-				<f:selectItem itemLabel="Cedido" itemValue="CEDIDO"/>
-				<f:selectItem itemLabel="União" itemValue="Uniao"/>
-		</p:selectOneMenu>	
+		<p:outputLabel value="Bairro" for="bairro" />
+		<p:inputText id="bairro" size="50" value="#{cadastroAssistidoBean.assistido.bairro}" />
 					
 		<p:outputLabel value="Cidade:" for="cidade" />
 		<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.cidade}">
