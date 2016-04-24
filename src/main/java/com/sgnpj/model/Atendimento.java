@@ -30,7 +30,6 @@ public class Atendimento implements Serializable {
 	private Assistido assistido;
 	private Advogado advogado;
 	private Estagiario estagiario;
-	private Processo processo;
 	private StatusAtendimento statusAtendimento = StatusAtendimento.EM_ATENDIMENTO;
 	private String atendimentoRelato;
 	private Date dataAtendimento;
@@ -44,6 +43,21 @@ public class Atendimento implements Serializable {
 		this.id = id;
 		this.atendimentoRelato = atendimentoRelato;
 		this.dataAtendimento = dataAtendimento;
+	}
+
+	public Atendimento(Long id, Assistido assistido, Advogado advogado,
+			Estagiario estagiario, StatusAtendimento statusAtendimento,
+			String atendimentoRelato, Date dataAtendimento,
+			String areaAtendimento, List<Processo> processos) {
+		this.id = id;
+		this.assistido = assistido;
+		this.advogado = advogado;
+		this.estagiario = estagiario;
+		this.statusAtendimento = statusAtendimento;
+		this.atendimentoRelato = atendimentoRelato;
+		this.dataAtendimento = dataAtendimento;
+		this.areaAtendimento = areaAtendimento;
+		this.processos = processos;
 	}
 
 	@Id
@@ -77,16 +91,6 @@ public class Atendimento implements Serializable {
 		this.estagiario = estagiario;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "processo_id", nullable = true)
-	public Processo getProcesso() {
-		return processo;
-	}
-
-	public void setProcesso(Processo processo) {
-		this.processo = processo;
-	}
-
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "advogado_id", nullable = false)
@@ -97,7 +101,7 @@ public class Atendimento implements Serializable {
 	public void setAdvogado(Advogado advogado) {
 		this.advogado = advogado;
 	}
-	
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 30)
@@ -172,6 +176,15 @@ public class Atendimento implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Atendimento [id=" + id + ", assistido=" + assistido
+				+ ", advogado=" + advogado + ", estagiario=" + estagiario
+				+ ", statusAtendimento=" + statusAtendimento
+				+ ", atendimentoRelato=" + atendimentoRelato
+				+ ", dataAtendimento=" + dataAtendimento + ", areaAtendimento="
+				+ areaAtendimento + ", processos=" + processos + "]";
+	}
+
 }

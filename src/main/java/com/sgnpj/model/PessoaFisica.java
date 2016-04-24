@@ -41,10 +41,32 @@ public class PessoaFisica implements Serializable {
 	private String sexo;
 	private String menorIdade;
 	private Assistido assitido;
-	
+
 	public PessoaFisica() {
 	}
-	
+
+	public PessoaFisica(String cpf, Date dataNascimento, String identidade,
+			String orgao, String cnh, String carteiraTrabalho, String nomePai,
+			String nomeMae, EstadoCivilAssistido estadoCivil, String profissao,
+			String nacionalidade, String naturalidade, String sexo,
+			String menorIdade, Assistido assitido) {
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.identidade = identidade;
+		this.orgao = orgao;
+		this.cnh = cnh;
+		this.carteiraTrabalho = carteiraTrabalho;
+		this.nomePai = nomePai;
+		this.nomeMae = nomeMae;
+		this.estadoCivil = estadoCivil;
+		this.profissao = profissao;
+		this.nacionalidade = nacionalidade;
+		this.naturalidade = naturalidade;
+		this.sexo = sexo;
+		this.menorIdade = menorIdade;
+		this.assitido = assitido;
+	}
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -57,7 +79,7 @@ public class PessoaFisica implements Serializable {
 
 	@NotEmpty
 	@CPF
-	@Column(nullable = false, length = 12)
+	@Column(nullable = false, length = 15)
 	public String getCpf() {
 		return cpf;
 	}
@@ -78,7 +100,7 @@ public class PessoaFisica implements Serializable {
 	}
 
 	@NotBlank
-	@Column(nullable = false, unique = true, length = 10)
+	@Column(nullable = false, unique = true, length = 15)
 	public String getIdentidade() {
 		return identidade;
 	}
@@ -97,7 +119,7 @@ public class PessoaFisica implements Serializable {
 	}
 
 	@NotBlank
-	@Column(nullable = false, unique = true, length = 10)
+	@Column(nullable = false, unique = true, length = 15)
 	public String getCarteiraTrabalho() {
 		return carteiraTrabalho;
 	}
@@ -105,9 +127,9 @@ public class PessoaFisica implements Serializable {
 	public void setCarteiraTrabalho(String carteiraTrabalho) {
 		this.carteiraTrabalho = carteiraTrabalho;
 	}
-	
+
 	@NotBlank
-	@Column(name = "nome_pai",nullable = false, length = 30)
+	@Column(name = "nome_pai", nullable = false, length = 30)
 	public String getNomePai() {
 		return nomePai;
 	}
@@ -115,9 +137,9 @@ public class PessoaFisica implements Serializable {
 	public void setNomePai(String nomePai) {
 		this.nomePai = nomePai;
 	}
-	
+
 	@NotBlank
-	@Column(name = "nome_mae",nullable = false, length = 30)
+	@Column(name = "nome_mae", nullable = false, length = 30)
 	public String getNomeMae() {
 		return nomeMae;
 	}
@@ -125,7 +147,7 @@ public class PessoaFisica implements Serializable {
 	public void setNomeMae(String nomeMae) {
 		this.nomeMae = nomeMae;
 	}
-	
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 40)
@@ -136,7 +158,7 @@ public class PessoaFisica implements Serializable {
 	public void setEstadoCivil(EstadoCivilAssistido estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 60)
 	public String getProfissao() {
@@ -146,9 +168,9 @@ public class PessoaFisica implements Serializable {
 	public void setProfissao(String profissao) {
 		this.profissao = profissao;
 	}
-	
+
 	@NotBlank
-	@Column(nullable = false,  length = 50)
+	@Column(nullable = false, length = 50)
 	public String getNacionalidade() {
 		return nacionalidade;
 	}
@@ -156,9 +178,9 @@ public class PessoaFisica implements Serializable {
 	public void setNacionalidade(String nacionalidade) {
 		this.nacionalidade = nacionalidade;
 	}
-	
+
 	@NotBlank
-	@Column(nullable = false,  length = 50)
+	@Column(nullable = false, length = 50)
 	public String getNaturalidade() {
 		return naturalidade;
 	}
@@ -166,9 +188,9 @@ public class PessoaFisica implements Serializable {
 	public void setNaturalidade(String naturalidade) {
 		this.naturalidade = naturalidade;
 	}
-	
+
 	@NotBlank
-	@Column(nullable = false,  length = 1)
+	@Column(nullable = false, length = 1)
 	public String getSexo() {
 		return sexo;
 	}
@@ -176,9 +198,9 @@ public class PessoaFisica implements Serializable {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	
+
 	@NotBlank
-	@Column(nullable = true,  length = 1)
+	@Column(nullable = true, length = 1)
 	public String getMenorIdade() {
 		return menorIdade;
 	}
@@ -195,9 +217,9 @@ public class PessoaFisica implements Serializable {
 	public void setAssitido(Assistido assitido) {
 		this.assitido = assitido;
 	}
-	
+
 	@NotBlank
-	@Column(nullable = false,  length = 10)
+	@Column(nullable = false, length = 10)
 	public String getOrgao() {
 		return orgao;
 	}

@@ -38,6 +38,9 @@
 		<p:outputLabel value="Carteira de trabalho:" for="ctb" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 		<p:inputMask id="ctb" size="20" mask="9999999/999-99" value="#{cadastroAssistidoBean.assistido.pessoaFisica.carteiraTrabalho}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 		
+		<p:outputLabel value="Nacionalidade" for="nacionalidade" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputText id="nacionalidade" size="30" value="#{cadastroAssistidoBean.assistido.pessoaFisica.nacionalidade}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		
 		<p:outputLabel value="Naturalidade:" for="naturalidade" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 		<p:inputText id="naturalidade" size="30" value="#{cadastroAssistidoBean.assistido.pessoaFisica.naturalidade}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 			
@@ -87,13 +90,11 @@
 	<p:panelGrid columns="4"  style="width: 100%"
 		columnClasses="rotulo, campo, rotulo, campo">
 		
-		<p:outputLabel value="Tipo endereço: " for="tipo-endereco" />
-		<p:selectOneMenu id="tipo-endereco" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.tipoEndereco}">
+		<p:outputLabel value="Tipo endereço: " for="tipo-endereco" />	
+		<p:selectOneMenu id="tipo-endereco" style="width: 200px;"	value="#{cadastroAssistidoBean.assistido.tipoEndereco}">
 				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="Casa Própria" itemValue="CASA_PROPRIA"/>
-				<f:selectItem itemLabel="ALugado" itemValue="ALUGADO"/>
-				<f:selectItem itemLabel="Cedido" itemValue="CEDIDO"/>
-				<f:selectItem itemLabel="União" itemValue="UNIAO_CEDIDO"/>
+				<f:selectItems value="#{cadastroAssistidoBean.tipoEnderecos}" var="endereco"
+				  	 itemValue="#{endereco}"   itemLabel="#{endereco.descricao}" />
 		</p:selectOneMenu>	
 		
 		<p:outputLabel value="Logradouro:" for="entregaLogradouro" />

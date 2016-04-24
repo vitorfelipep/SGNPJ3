@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -33,8 +34,24 @@ public class Triagem implements Serializable {
 
 	public Triagem() {
 	}
-	
-	
+
+	public Triagem(Integer qtdFilhos, Integer maior14, Integer menor14,
+			BigDecimal rendaBruta, Double rendaFamiliar,
+			String primeiroAtendimento, String jafoiAtendido,
+			String qualProblemaAnterior, String obsTriagem,
+			Assistido assistidotriagem) {
+		this.qtdFilhos = qtdFilhos;
+		this.maior14 = maior14;
+		this.menor14 = menor14;
+		this.rendaBruta = rendaBruta;
+		this.rendaFamiliar = rendaFamiliar;
+		this.primeiroAtendimento = primeiroAtendimento;
+		this.jafoiAtendido = jafoiAtendido;
+		this.qualProblemaAnterior = qualProblemaAnterior;
+		this.obsTriagem = obsTriagem;
+		this.assistidotriagem = assistidotriagem;
+	}
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -115,6 +132,7 @@ public class Triagem implements Serializable {
 	}
 
 	@OneToOne
+	@JoinColumn(name = "id_assistido_triagem")
 	public Assistido getAssistidotriagem() {
 		return assistidotriagem;
 	}

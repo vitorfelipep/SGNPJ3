@@ -38,4 +38,9 @@ public class EstagiarioService implements Serializable{
 		return estagiarios.filtrados(filtro);
 	}
 
+
+	public Estagiario porIdEstagiario(Long id) {
+		return estagiarios.porId(id);
+	}
+
 }

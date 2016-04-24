@@ -9,7 +9,6 @@
 	<p:panelGrid columns="4" style="width: 100%"
 		columnClasses="rotulo, campo, rotulo, campo">
 		
-		
 		<p:outputLabel value="Tipo de pessoa: " for="tipoPessoaContraParte" />
 			<p:selectOneMenu id="tipoPessoaContraParte" style="width: 200px;" value="#{cadastroAssistidoBean.tipoPessoaContraParte}" valueChangeListener="#{cadastroAssistidoBean.verificarTipoPessoaContraParte}">
 				<f:selectItem itemLabel="Selecione" />
@@ -23,65 +22,107 @@
 		
 		<p:outputLabel value="Nome: " for="nomePtContraria" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
 		<p:inputText id="nomePtContraria" size="50" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"
-			value="#{cadastroAssistidoBean.assistido.contraParte.nome}" />
+			value="#{cadastroAssistidoBean.contraParte.nome}" />
+			
+		<p:outputLabel value="Nome do Pai" for="paiContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:inputText id="paiContraparte" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.nomePai}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+
+		<p:outputLabel value="Nome da mãe:" for="maeContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:inputText id="maeContraparte" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.nomeMae}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+			
+		<p:outputLabel value="Data de Nasc.:" for="nascimentoContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:calendar id="nascimentoContraparte" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="de"  navigator="true"  value="#{cadastroAssistidoBean.contraParte.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+
+		<p:outputLabel value="CPF:" for="cpfContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:inputMask id="cpfContraparte" size="20"  mask="999.999.999-99" title="Digite seu CPF" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.cpf}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
+		
+		<p:outputLabel value="RG:" for="rgContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
+		<p:inputMask id="rgContraparte" size="20" mask="99.999.9999" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.identidade}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+			
+		<p:outputLabel value="Orgão Expedidor:" for="orgContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:inputText id="orgContraparte" size="10" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.orgao}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
+			
+		<p:outputLabel value="Carteira de motorista:" for="cnhContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:inputText id="cnhContraparte" size="20" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.cnh}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+			
+		<p:outputLabel value="Carteira de trabalho:" for="ctbContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:inputMask id="ctbContraparte" size="20" mask="9999999/999-99" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.carteiraTrabalho}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+			
+		<p:outputLabel value="Sexo:" for="sexoContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:selectOneMenu id="sexoContraparte" style="width: 100px;" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.sexo}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" >
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Mascuilo" itemValue="M"/>
+				<f:selectItem itemLabel="Feminino" itemValue="F"/>
+		</p:selectOneMenu>	
 
 		<p:outputLabel value="E-mail: " for="emailPt" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
 		<p:inputText id="emailPt" size="50" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"
-			value="#{cadastroAssistidoBean.assistido.contraParte.email}" />
+			value="#{cadastroAssistidoBean.contraParte.email}" />
 
 		<p:outputLabel value="Profissão: " for="profPtCont" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
 		<p:inputText id="profPtCont" size="50" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"
-			value="#{cadastroAssistidoBean.assistido.contraParte.pessoaFisica.profissao}" />
+			value="#{cadastroAssistidoBean.contraParte.pessoaFisica.profissao}" />
 
 		<p:outputLabel value="Estado Cívil:" for="estadoCivilPtContraria" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
 		<p:selectOneMenu id="estadoCivilPtContraria" style="width: 200px;" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"
-			value="#{cadastroAssistidoBean.assistido.contraParte.pessoaFisica.estadoCivil}">
+			value="#{cadastroAssistidoBean.contraParte.pessoaFisica.estadoCivil}">
 			<f:selectItem itemLabel="Selecione" />
 			<f:selectItems value="#{cadastroAssistidoBean.estadoCivil}"
 				var="estadoCivil" itemValue="#{estadoCivil}"
 				itemLabel="#{estadoCivil.descricao}" />
 		</p:selectOneMenu>
-
+		
+		<p:outputLabel value="Nacionalidade" for="nacionalidadePtContraria" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
+		<p:inputText id="nacionalidadePtContraria" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.nacionalidade}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
+		
 		<p:outputLabel value="Naturalidade:" for="naturalPtContraria" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
 		<p:inputText id="naturalPtContraria" size="50"
-			value="#{cadastroAssistidoBean.assistido.contraParte.pessoaFisica.naturalidade}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
+			value="#{cadastroAssistidoBean.contraParte.pessoaFisica.naturalidade}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
 			
 		<p:outputLabel value="CNPJ" for="cnpjParteContraria"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
-		<p:inputMask id="cnpjParteContraria" mask="99.999.999/9999-99" size="20" value="#{cadastroAssistidoBean.assistido.contraParte.pessoaJuridica.cnpj}"
+		<p:inputMask id="cnpjParteContraria" mask="99.999.999/9999-99" size="20" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.cnpj}"
 			rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
 		
 		<p:outputLabel value="Nome fantasia: " for="nomeJuridicoParteContraria"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
-		<p:inputText id="nomeJuridicoParteContraria" size="50" value="#{cadastroAssistidoBean.assistido.contraParte.pessoaJuridica.nomeJuridico}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
+		<p:inputText id="nomeJuridicoParteContraria" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.nomeJuridico}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
 		
 		<p:outputLabel value="Razão social: " for="razaoSocialParteContraria"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
-		<p:inputText id="razaoSocialParteContraria" size="50" value="#{cadastroAssistidoBean.assistido.contraParte.pessoaJuridica.ramoNegocio}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
+		<p:inputText id="razaoSocialParteContraria" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.ramoNegocio}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
 		
 		<p:outputLabel value="Data de abertura.:" for="dataAberturaParteContraria"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
-		<p:calendar id="dataAberturaParteContraria" pattern="dd/MM/yyyy" value="#{cadastroAssistidoBean.assistido.contraParte.pessoaJuridica.dataAbertura}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
+		<p:calendar id="dataAberturaParteContraria" pattern="dd/MM/yyyy" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.dataAbertura}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
 		
 		<p:outputLabel value="Ramo de negócio: " for="ramoNegocioParteContraria"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
-		<p:inputText id="ramoNegocioParteContraria" size="50" value="#{cadastroAssistidoBean.assistido.contraParte.pessoaJuridica.ramoNegocio}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
+		<p:inputText id="ramoNegocioParteContraria" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.ramoNegocio}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
 
+		<p:outputLabel value="Menor de idade?" for="isMenorContraParte"  rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
+		<p:selectOneMenu id="isMenorContraParte" style="width: 100px;"	value="#{cadastroAssistidoBean.contraParte.pessoaFisica.menorIdade}" 
+					rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Sim" itemValue="S"/>
+				<f:selectItem itemLabel="Não" itemValue="N"/>
+		</p:selectOneMenu>	
+		
 		<p:outputLabel value="Logradouro:" for="endPt" />
 		<p:inputText id="endPt" size="50"
-			value="#{cadastroAssistidoBean.assistido.contraParte.logradouro}" />
+			value="#{cadastroAssistidoBean.contraParte.logradouro}" />
 
 		<p:outputLabel value="Número:" for="numeroPt" />
 		<p:inputText id="numeroPt" size="5"
-			value="#{cadastroAssistidoBean.assistido.contraParte.numero}"
+			value="#{cadastroAssistidoBean.contraParte.numero}"
 			maxlength="15" />
 		
 		<p:outputLabel value="Bairro:" for="bairroContraParte" />
 		<p:inputText id="bairroContraParte" size="50"
-			value="#{cadastroAssistidoBean.assistido.contraParte.bairro}" />
+			value="#{cadastroAssistidoBean.contraParte.bairro}" />
 
 		<p:outputLabel value="Complemento:" for="complementoPt" />
 		<p:inputText id="complementoPt" size="50"
-			value="#{cadastroAssistidoBean.assistido.contraParte.complemento}" />
+			value="#{cadastroAssistidoBean.contraParte.complemento}" />
 
 		<p:outputLabel value="Cidade:" for="cidadePt" />
 		<p:selectOneMenu id="cidadePt" style="width: 200px;"
-			value="#{cadastroAssistidoBean.assistido.contraParte.cidade}">
+			value="#{cadastroAssistidoBean.contraParte.cidade}">
 			<f:selectItem itemLabel="Selecione" />
 			<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo" />
 			<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
@@ -90,7 +131,7 @@
 
 		<p:outputLabel value="Estado:" for="estadoPt" />
 		<p:selectOneMenu id="estadoPt" style="width: 200px;"
-			value="#{cadastroAssistidoBean.assistido.contraParte.estado}">
+			value="#{cadastroAssistidoBean.contraParte.estado}">
 			<f:selectItem itemLabel="Selecione" />
 			<f:selectItem itemLabel="RJ" itemValue="RJ" />
 			<f:selectItem itemLabel="MG" itemValue="MG" />
@@ -99,23 +140,23 @@
 
 		<p:outputLabel value="Cep:" for="entregaCepPt" />
 		<p:inputMask id="entregaCepPt" mask="99999-999" size="10"
-			value="#{cadastroAssistidoBean.assistido.contraParte.cep}" />
+			value="#{cadastroAssistidoBean.contraParte.cep}" />
 
 		<p:outputLabel value="Telefone: " for="telefonePt" />
 		<p:inputMask id="telefonePt" mask="(99)9999-9999" size="50"
-			value="#{cadastroAssistidoBean.telefone.telefoneResidencial}" />
+			value="#{cadastroAssistidoBean.contraParte.telefoneResidencial}" />
 
 		<p:outputLabel value="Telefone Trab: " for="telefoneTrabPt" />
 		<p:inputMask id="telefoneTrabPt"  mask="(99)9999-9999" size="50"
-			value="#{cadastroAssistidoBean.telefone.telefoneTrabalho}" />
+			value="#{cadastroAssistidoBean.contraParte.telefoneTrabalho}" />
 
 		<p:outputLabel value="Celular: " for="celularPt" />
 		<p:inputMask id="celularPt" mask="(99)99999-9999" size="50"
-			value="#{cadastroAssistidoBean.telefone.celularPessoal}" />
+			value="#{cadastroAssistidoBean.contraParte.celularPessoal}" />
 
-		<p:outputLabel value="Telefone: " for="celularTrabPt" />
+		<p:outputLabel value="Celular Trab: " for="celularTrabPt" />
 		<p:inputMask id="celularTrabPt" mask="(99)99999-9999" size="50"
-			value="#{cadastroAssistidoBean.telefone.celularTrabalho}" />
+			value="#{cadastroAssistidoBean.contraParte.celularTrabalho}" />
 		
 	</p:panelGrid>
 </ui:composition>

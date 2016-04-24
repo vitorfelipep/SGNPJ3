@@ -1,21 +1,17 @@
 package com.sgnpj.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -23,8 +19,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "assistido")
-public class Assistido implements Serializable {
+@Table(name = "assistido_contra_parte")
+public class AssistidoContraParte implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,23 +36,27 @@ public class Assistido implements Serializable {
 	private String complemento;
 	private TipoEndereco tipoEndereco;
 	private String email;
-	private SituacaoAssitido situacao;
+	private String telefoneResidencial;
+	private String celularPessoal;
+	private String telefoneTrabalho;
+	private String celularTrabalho;
 	private PessoaFisica pessoaFisica;
 	private PessoaJuridica pessoaJuridica;
-	private Triagem triagem;
-	private List<AssistidoContraParte> contraPartes = new ArrayList<AssistidoContraParte>();
+	private Assistido assistidoAutor;
 
-	public Assistido() {
+	public AssistidoContraParte() {
 		this.pessoaFisica = new PessoaFisica();
 		this.pessoaJuridica = new PessoaJuridica();
 	}
 
-	public Assistido(Long id, String nome, String tipoAssistido, String cep,
-			String estado, String cidade, String bairro, String logradouro,
-			Integer numero, String complemento, TipoEndereco tipoEndereco,
-			String email, SituacaoAssitido situacao, PessoaFisica pessoaFisica,
-			PessoaJuridica pessoaJuridica, Triagem triagem,
-			List<AssistidoContraParte> contraPartes) {
+	public AssistidoContraParte(Long id, String nome, String tipoAssistido,
+			String cep, String estado, String cidade, String bairro,
+			String logradouro, Integer numero, String complemento,
+			TipoEndereco tipoEndereco, String email,
+			String telefoneResidencial, String celularPessoal,
+			String telefoneTrabalho, String celularTrabalho,
+			PessoaFisica pessoaFisica, PessoaJuridica pessoaJuridica,
+			Assistido assistidoAutor) {
 		this.id = id;
 		this.nome = nome;
 		this.tipoAssistido = tipoAssistido;
@@ -69,11 +69,13 @@ public class Assistido implements Serializable {
 		this.complemento = complemento;
 		this.tipoEndereco = tipoEndereco;
 		this.email = email;
-		this.situacao = situacao;
+		this.telefoneResidencial = telefoneResidencial;
+		this.celularPessoal = celularPessoal;
+		this.telefoneTrabalho = telefoneTrabalho;
+		this.celularTrabalho = celularTrabalho;
 		this.pessoaFisica = pessoaFisica;
 		this.pessoaJuridica = pessoaJuridica;
-		this.triagem = triagem;
-		this.contraPartes = contraPartes;
+		this.assistidoAutor = assistidoAutor;
 	}
 
 	@Id
@@ -186,17 +188,6 @@ public class Assistido implements Serializable {
 		this.tipoEndereco = tipoEndereco;
 	}
 
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 20)
-	public SituacaoAssitido getSituacao() {
-		return situacao;
-	}
-
-	public void setSituacao(SituacaoAssitido situacao) {
-		this.situacao = situacao;
-	}
-
 	@NotBlank
 	@Email(message = "inválido!")
 	@Column(nullable = false, unique = true, length = 150)
@@ -206,6 +197,44 @@ public class Assistido implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@NotEmpty
+	@Column(nullable = false)
+	public String getTelefoneResidencial() {
+		return telefoneResidencial;
+	}
+
+	public void setTelefoneResidencial(String telefoneResidencial) {
+		this.telefoneResidencial = telefoneResidencial;
+	}
+
+	@NotEmpty
+	@Column(nullable = false)
+	public String getCelularPessoal() {
+		return celularPessoal;
+	}
+
+	public void setCelularPessoal(String celularPessoal) {
+		this.celularPessoal = celularPessoal;
+	}
+
+	@Column(nullable = true)
+	public String getTelefoneTrabalho() {
+		return telefoneTrabalho;
+	}
+
+	public void setTelefoneTrabalho(String telefoneTrabalho) {
+		this.telefoneTrabalho = telefoneTrabalho;
+	}
+
+	@Column(nullable = true)
+	public String getCelularTrabalho() {
+		return celularTrabalho;
+	}
+
+	public void setCelularTrabalho(String celularTrabalho) {
+		this.celularTrabalho = celularTrabalho;
 	}
 
 	@OneToOne
@@ -226,22 +255,14 @@ public class Assistido implements Serializable {
 		this.pessoaJuridica = pessoaJuridica;
 	}
 
-	@OneToOne
-	public Triagem getTriagem() {
-		return triagem;
+	@ManyToOne
+	@JoinColumn(name = "assistido_id", nullable = true)
+	public Assistido getAssistidoAutor() {
+		return assistidoAutor;
 	}
 
-	public void setTriagem(Triagem triagem) {
-		this.triagem = triagem;
-	}
-
-	@OneToMany(mappedBy = "assistidoAutor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	public List<AssistidoContraParte> getContraParte() {
-		return contraPartes;
-	}
-
-	public void setContraParte(List<AssistidoContraParte> contraPartes) {
-		this.contraPartes = contraPartes;
+	public void setAssistidoAutor(Assistido assistidoAutor) {
+		this.assistidoAutor = assistidoAutor;
 	}
 
 	@Override
@@ -260,7 +281,7 @@ public class Assistido implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Assistido other = (Assistido) obj;
+		AssistidoContraParte other = (AssistidoContraParte) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -268,15 +289,5 @@ public class Assistido implements Serializable {
 			return false;
 		return true;
 	}
-	
-	@Transient
-	public void adicionarAssistidoContraParte(AssistidoContraParte acp){
-		if(this.contraPartes == null){
-			this.contraPartes = new ArrayList<AssistidoContraParte>();
-		}
-		
-		this.contraPartes.add(acp);
-	}
-
 
 }

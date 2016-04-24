@@ -43,7 +43,7 @@
 			
 			<p:outputLabel value="Advogado: " for="advogadoAssis" />
 			<p:autoComplete id="advogadoAssis" size="40" dropdown="true" 
-				value="#{cadastroAssistidoBean.atendimento.advogado}" minQueryLength="3"
+				value="#{cadastroAssistidoBean.advogado}" minQueryLength="3"
 				completeMethod="#{cadastroAssistidoBean.completarAdvogado}"
 				var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.usuario.nome}"
 				forceSelection="true"/>
