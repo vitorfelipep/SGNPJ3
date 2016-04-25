@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -30,7 +31,7 @@ public class Atendimento implements Serializable {
 	private Assistido assistido;
 	private Advogado advogado;
 	private Estagiario estagiario;
-	private StatusAtendimento statusAtendimento = StatusAtendimento.EM_ATENDIMENTO;
+	private StatusAtendimento statusAtendimento;
 	private String atendimentoRelato;
 	private Date dataAtendimento;
 	private String areaAtendimento;
@@ -176,7 +177,17 @@ public class Atendimento implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	@Transient
+	public boolean isEmAtendimento(){
+		return StatusAtendimento.EM_ANDAMENTO.equals(this.statusAtendimento);
+	}
+	
+	@Transient
+	public boolean isFinalizarAtendimento(){
+		return !isEmAtendimento();
+	}
+	
 	@Override
 	public String toString() {
 		return "Atendimento [id=" + id + ", assistido=" + assistido

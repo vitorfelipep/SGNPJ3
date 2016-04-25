@@ -1,4 +1,3 @@
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,17 +8,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import com.sgnpj.model.Advogado;
 import com.sgnpj.model.AreaAtuacao;
-import com.sgnpj.model.Assistido;
-import com.sgnpj.model.AssistidoContraParte;
-import com.sgnpj.model.Atendimento;
-import com.sgnpj.model.EstadoCivilAssistido;
-import com.sgnpj.model.PessoaFisica;
-import com.sgnpj.model.Processo;
-import com.sgnpj.model.SituacaoAssitido;
-import com.sgnpj.model.StatusAtendimento;
-import com.sgnpj.model.TipoEndereco;
-import com.sgnpj.model.Triagem;
+import com.sgnpj.model.Perfil;
+import com.sgnpj.model.Situacao;
+import com.sgnpj.model.Usuario;
 
 
 public class Teste {
@@ -27,9 +20,37 @@ public class Teste {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProcessoPU");
 		EntityManager manager = factory.createEntityManager();
 
-		
 		EntityTransaction trx = manager.getTransaction();
-//		trx.begin();
+		trx.begin();
+		
+		Advogado ad = new Advogado(null, "454872458", null, new Date(), AreaAtuacao.TRABALHISTA, Situacao.ATIVO, "Rua Palmerim", 22, "APTO 201", "Piam", "Belford Roxo", "RJ", "26115580", "08312074694", "27581818", "967818840");
+		
+		ad = manager.merge(ad);
+		
+		List<Perfil> perfis = new ArrayList<Perfil>();
+		
+		Perfil p = new Perfil(null, "ADMINITSRADOR", "Administrador");
+		Perfil p2 = new Perfil(null, "ADVOGADO", "Advogado");
+		Perfil p3 = new Perfil(null, "ESTAGIARIO", "Estagiario");
+		
+		p = manager.merge(p);
+		p2 = manager.merge(p2);
+		p3 = manager.merge(p3);
+		
+		perfis.add(p);
+		
+		Usuario usuario = new Usuario(null, "Vitor Felipe", "vitorfelipep@gmail.com", "91067132", perfis, null, null);
+		
+		usuario = manager.merge(usuario);
+		
+		ad.setUsuario(usuario);
+		
+		ad = manager.merge(ad);
+		
+		usuario.setAdvogado(ad);
+		
+		usuario = manager.merge(usuario);
+		
 //		
 //		//Inicio a pessoa Fisica
 //		PessoaFisica pf = new PessoaFisica("08312074694", new Date(), "215648504", "dicrj", "21245454", "215454484", "Fulano", "Cliclana", EstadoCivilAssistido.CASADO, "ANALISTA", "Brasileiro", "RJ", "M", "N", null);
@@ -77,9 +98,9 @@ public class Teste {
 //		Atendimento at = new Atendimento(null, a, null, null,StatusAtendimento.EM_ANDAMENTO, "Teste de atendimento", new Date(), AreaAtuacao.CIVIL.getDescricao(), process);
 //		
 //		at = manager.merge(at);
-//		//Dou comit da transação
-//		trx.commit();
 		
 		
+		//Dou comit da transação
+		trx.commit();
 	}
 }

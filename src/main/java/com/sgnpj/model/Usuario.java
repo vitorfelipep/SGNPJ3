@@ -30,6 +30,21 @@ public class Usuario implements Serializable {
 	private Advogado advogado;
 	private Estagiario estagiario;
 
+	public Usuario() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Usuario(Long id, String nome, String email, String senha,
+			List<Perfil> perfis, Advogado advogado, Estagiario estagiario) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.perfis = perfis;
+		this.advogado = advogado;
+		this.estagiario = estagiario;
+	}
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -39,7 +54,7 @@ public class Usuario implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getNome() {
@@ -49,7 +64,7 @@ public class Usuario implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	@NotBlank
 	@Email(message = "inválido!")
 	@Column(nullable = false, unique = true, length = 255)
@@ -60,7 +75,7 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 20)
 	public String getSenha() {
@@ -70,7 +85,7 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Perfil> getPerfis() {
 		return perfis;

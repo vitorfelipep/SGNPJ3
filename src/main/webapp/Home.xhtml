@@ -5,10 +5,17 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
     
+    
     <ui:define name="titulo">DashBoard</ui:define>
     
     <ui:define name="corpo">
-    	
+	    <p:panel id="painelGrafico" header="Gráfico de atendimentos" toggleable="true" toggleSpeed="500" closeSpeed="500"
+					styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 40px;">
+	    	
+	    	<h:panelGrid columns="1"  style="width:100%; margin-left: 10%;">
+				<p:chart type="line" model="#{graficoAtendimentosGeradosBean.animatedModel1}" style="width:1000px;" />
+			</h:panelGrid>
+		</p:panel>
     </ui:define>
     
  </ui:composition>

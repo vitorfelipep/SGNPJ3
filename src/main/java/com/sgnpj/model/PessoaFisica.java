@@ -109,7 +109,7 @@ public class PessoaFisica implements Serializable {
 		this.identidade = identidade;
 	}
 
-	@Column(nullable = true, unique = true, length = 20)
+	@Column(nullable = true, length = 20)
 	public String getCnh() {
 		return cnh;
 	}

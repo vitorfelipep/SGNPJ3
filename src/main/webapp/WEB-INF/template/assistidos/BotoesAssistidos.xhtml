@@ -13,7 +13,7 @@
     		</p:toolbarGroup>
     			
     		<p:toolbarGroup align="right" styleClass="toobarStyle">
-    			<p:button value="Finalizar Atendimento" disabled="true"/>
+    			<p:button value="Finalizar Atendimento" id="finalizarAtendimento" disabled="#{cadastroAssistidoBean.atendimento.finalizarAtendimento ? 'true' : 'false'}"/>
     			<p:separator />
     			<p:button value="Pesquisa" outcome="/assistido/PesquisaAssistidos"/>
     		</p:toolbarGroup>

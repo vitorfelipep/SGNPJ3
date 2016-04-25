@@ -42,6 +42,32 @@ public class Advogado implements Serializable {
 	private String telefoneContato;
 	private String celularContato;
 
+	public Advogado() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Advogado(Integer id_advogado, String codigo_OAB, Usuario usuario,
+			Date dataCadastro, AreaAtuacao areaAtuacao, Situacao situacao,
+			String endereco, Integer numero, String complemento, String bairro,
+			String cidade, String estado, String cep, String cpf,
+			String telefoneContato, String celularContato) {
+		this.id_advogado = id_advogado;
+		this.codigo_OAB = codigo_OAB;
+		this.usuario = usuario;
+		this.dataCadastro = dataCadastro;
+		this.areaAtuacao = areaAtuacao;
+		this.situacao = situacao;
+		this.endereco = endereco;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.cep = cep;
+		this.cpf = cpf;
+		this.telefoneContato = telefoneContato;
+		this.celularContato = celularContato;
+	}
 
 	@Id
 	@GeneratedValue
@@ -203,7 +229,7 @@ public class Advogado implements Serializable {
 	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

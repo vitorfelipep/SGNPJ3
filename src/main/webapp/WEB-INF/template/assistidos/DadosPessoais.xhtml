@@ -33,7 +33,7 @@
 		<p:inputText id="org" size="10" value="#{cadastroAssistidoBean.assistido.pessoaFisica.orgao}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />
 			
 		<p:outputLabel value="Carteira de motorista:" for="cnh" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
-		<p:inputText id="cnh" size="20" value="#{cadastroAssistidoBean.assistido.pessoaFisica.cnh}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:inputMask id="cnh" size="20" mask="99999999999" value="#{cadastroAssistidoBean.assistido.pessoaFisica.cnh}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 			
 		<p:outputLabel value="Carteira de trabalho:" for="ctb" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 		<p:inputMask id="ctb" size="20" mask="9999999/999-99" value="#{cadastroAssistidoBean.assistido.pessoaFisica.carteiraTrabalho}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
@@ -110,16 +110,6 @@
 		<p:outputLabel value="Bairro" for="bairro" />
 		<p:inputText id="bairro" size="50" value="#{cadastroAssistidoBean.assistido.bairro}" />
 					
-		<p:outputLabel value="Cidade:" for="cidade" />
-		<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.cidade}">
-				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
-				<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
-				<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
-				<f:selectItem itemLabel="Pavuna" itemValue="Pavuna"/>
-				<f:selectItem itemLabel="São João de Meriti" itemValue="São João de Meriti"/>
-		</p:selectOneMenu>
-
 		<p:outputLabel value="Estado:" for="estado" />
 		<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.estado}">
 				<f:selectItem itemLabel="Selecione" />
@@ -130,6 +120,16 @@
 				<f:selectItem itemLabel="ES" itemValue="ES"/>
 		</p:selectOneMenu>
 		
+		<p:outputLabel value="Cidade:" for="cidade" />
+		<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.cidade}">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
+				<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu"/>
+				<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis"/>
+				<f:selectItem itemLabel="Pavuna" itemValue="Pavuna"/>
+				<f:selectItem itemLabel="São João de Meriti" itemValue="São João de Meriti"/>
+		</p:selectOneMenu>
+
 		<p:outputLabel value="Cep:" for="cep" required="true"/>
 		<p:inputMask id="cep" mask="99999-999" size="10" value="#{cadastroAssistidoBean.assistido.cep}" />
 		

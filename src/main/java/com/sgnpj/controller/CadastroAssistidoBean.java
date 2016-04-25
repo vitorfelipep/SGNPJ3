@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
@@ -14,6 +16,7 @@ import javax.inject.Named;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.primefaces.context.RequestContext;
 
 import com.sgnpj.model.Advogado;
 import com.sgnpj.model.AreaAtuacao;
@@ -24,6 +27,7 @@ import com.sgnpj.model.EstadoCivilAssistido;
 import com.sgnpj.model.Estagiario;
 import com.sgnpj.model.Processo;
 import com.sgnpj.model.SituacaoAssitido;
+import com.sgnpj.model.StatusAtendimento;
 import com.sgnpj.model.Telefone;
 import com.sgnpj.model.TipoEndereco;
 import com.sgnpj.model.TipoPessoa;
@@ -64,7 +68,7 @@ public class CadastroAssistidoBean implements Serializable {
 
 	@Inject
 	private CadastrarAtendimentoService cadastrarAtendimentoService;
-	
+
 	@Inject
 	private EstagiarioService estagiarioService;
 
@@ -94,6 +98,11 @@ public class CadastroAssistidoBean implements Serializable {
 
 	private Date dataAtendimento;
 
+	// Desabilita quando inicia o atendimento, após atendimento salvo ele têm
+	// que habilitar
+	// o botão finalizar atendimento
+	private Boolean controleBotaoFinalizar = false;
+
 	// para verificar qual o tipo de pessoa a ser atendida (fisica ou juridica)
 	private TipoPessoa tipoPessoa;
 
@@ -110,7 +119,12 @@ public class CadastroAssistidoBean implements Serializable {
 	private Boolean tipoPessoaJuridicaContraParte;
 
 	private Seguranca usuarioLogado;
-
+	
+	@PostConstruct
+	public void inicializar(){
+		this.atendimento.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
+	}
+	
 	public CadastroAssistidoBean() {
 
 		this.usuarioLogado = new Seguranca();
@@ -120,100 +134,128 @@ public class CadastroAssistidoBean implements Serializable {
 		this.dataAtendimento = new Date();
 		this.assistido = new Assistido();
 		this.assistido.setTriagem(new Triagem());
+		
+		
 	}
 
 	public void salvar() {
 		UsuarioSistema usuario = this.usuarioLogado.getUsuarioLogadoNoSistema();
 		Usuario usu = usuario.getUsuario();
-		
+
 		System.out.println("Usuario sessão: " + usu.getNome());
 		System.out.println("Assistido: " + this.assistido.getNome());
 		System.out.println("Advogado: " + this.advogado.getUsuario().getNome());
-		
-		if(usu.getEstagiario() != null){
+
+		if (usu.getEstagiario() != null) {
 			this.estagiario = estagiarioService.porIdEstagiario(usu.getId());
 		}
-		
+
 		this.assistido.setTipoAssistido(tipoAssistido);
-		
+
 		this.contraParte.setTipoAssistido("REU");
 		this.contraParte.setTipoEndereco(TipoEndereco.CASA_PROPRIA);
 
-		//this.assistido.adicionarAssistidoContraParte(contraParte);
-		if(tipoPessoa.getDescricao().equals("Fisíca")){
+		// this.assistido.adicionarAssistidoContraParte(contraParte);
+		if (tipoPessoa.getDescricao().equals("Fisíca")) {
 			// Salvando a pessoa fisica
 			if (assistido.getPessoaFisica() != null) {
-				this.assistido.setPessoaFisica(pessoaFisicaService.salvar(assistido.getPessoaFisica()));
+				this.assistido.setPessoaFisica(pessoaFisicaService
+						.salvar(assistido.getPessoaFisica()));
 				this.assistido.setPessoaJuridica(null);
 			}
-		}else{
+		} else {
 			if (assistido.getPessoaJuridica() != null) {
-				this.assistido.setPessoaJuridica(pessoaJuridicaService.salvar(assistido.getPessoaJuridica()));
+				this.assistido.setPessoaJuridica(pessoaJuridicaService
+						.salvar(assistido.getPessoaJuridica()));
 				this.assistido.setPessoaFisica(null);
 			}
 		}
-		
-		if(assistido.getTriagem() != null){
-			this.assistido.setTriagem(triagemService.salvar(assistido.getTriagem()));
+
+		if (assistido.getTriagem() != null) {
+			this.assistido.setTriagem(triagemService.salvar(assistido
+					.getTriagem()));
 		}
-		
-		if(contraParte.getPessoaFisica() != null){
-			this.contraParte.setPessoaFisica(pessoaFisicaService.salvar(contraParte.getPessoaFisica()));
+
+		if (contraParte.getPessoaFisica().getCpf() != null) {
+			this.contraParte.setPessoaFisica(pessoaFisicaService
+					.salvar(contraParte.getPessoaFisica()));
 			this.contraParte.setPessoaJuridica(null);
-		}else{
-			this.contraParte.setPessoaJuridica(pessoaJuridicaService.salvar(contraParte.getPessoaJuridica()));
+		} else {
+			this.contraParte.setPessoaJuridica(pessoaJuridicaService
+					.salvar(contraParte.getPessoaJuridica()));
 			this.contraParte.setPessoaFisica(null);
 		}
-		
-		//Salvo o assisitido 
+
+		// Salvo o assisitido
 		this.assistido = assistidoService.salvar(assistido);
-		
+
 		this.contraParte.setAssistidoAutor(assistido);
-		
-		//Coloco relaciono os ultimos objetos
-		if(this.assistido.getPessoaFisica() != null){
+
+		// Coloco relaciono os ultimos objetos
+		if (this.assistido.getPessoaFisica() != null) {
 			this.assistido.getPessoaFisica().setAssitido(assistido);
-			this.assistido.setPessoaFisica(pessoaFisicaService.salvar(this.assistido.getPessoaFisica()));
-		}else{
+			this.assistido.setPessoaFisica(pessoaFisicaService
+					.salvar(this.assistido.getPessoaFisica()));
+		} else {
 			this.assistido.getPessoaJuridica().setAssistido(assistido);
-			this.assistido.setPessoaJuridica(pessoaJuridicaService.salvar(this.assistido.getPessoaJuridica()));
+			this.assistido.setPessoaJuridica(pessoaJuridicaService
+					.salvar(this.assistido.getPessoaJuridica()));
 		}
 		this.assistido.getTriagem().setAssistidotriagem(assistido);
-		this.assistido.setTriagem(triagemService.salvar(this.assistido.getTriagem()));
-		
+		this.assistido.setTriagem(triagemService.salvar(this.assistido
+				.getTriagem()));
+
 		this.contraParte = parteContrariaService.salvar(contraParte);
-		
+
 		this.assistido.adicionarAssistidoContraParte(contraParte);
-		
+
 		this.assistido = assistidoService.salvar(assistido);
-		
-		//String atendimento = atendimento.getAtendimentoRelato();
+
+		// String atendimento = atendimento.getAtendimentoRelato();
 		this.atendimento.setAdvogado(advogado);
-		if(this.atendimento.getEstagiario() == null){
+		if (this.atendimento.getEstagiario() == null) {
 			this.atendimento.setEstagiario(null);
+		} else {
+			this.atendimento.setEstagiario(estagiario);
 		}
 		this.atendimento.setAssistido(assistido);
-		
-		if(this.atendimento.getProcessos() == null){
+
+		if (this.atendimento.getProcessos() == null) {
 			List<Processo> p = new ArrayList<Processo>();
 			this.atendimento.setProcessos(p);
 		}
-		
-		this.atendimento.setDataAtendimento(new Date());
-		
-		this.atendimento = cadastrarAtendimentoService.salvar(atendimento);
-		
-		System.out.println(new SimpleDateFormat("dd/MM/yyyy").format(atendimento.getDataAtendimento()));
 
-		FacesUtil.addInfoMesage("O Assistido Sr(a) " + this.assistido.getNome() + " Salvo com sucesso!");
-		FacesUtil.addInfoMesage("O inicio do atendimento iniciado!");
+		this.atendimento.setDataAtendimento(new Date());
+
+		this.atendimento.setStatusAtendimento(StatusAtendimento.EM_APROVACAO);
+
+		this.atendimento = cadastrarAtendimentoService.salvar(atendimento);
+
+		System.out.println(new SimpleDateFormat("dd/MM/yyyy")
+				.format(atendimento.getDataAtendimento()));
+		
+		this.atendimento.isFinalizarAtendimento();
+		
+		FacesUtil.addInfoMesage("O Assistido Sr(a) " + this.assistido.getNome()
+				+ " Salvo com sucesso!");
+		
+		//Mostra a mensagem final
+		showMessage();
 	}
 
 	public List<Advogado> completarAdvogado(String nome) {
 		List<Advogado> advogado = this.advogados.porNome(nome);
 		return advogado;
 	}
+	
+	
+	public void showMessage() {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Caso queira finalizar o atendimento, clique no botão finalizar atendimento para finalizar o atendimento!");
+         
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
+    }
 
+	
 	// Lista de enums do tipo area de atuação
 	public TipoPessoa[] getTiposPessoa() {
 		return TipoPessoa.values();
@@ -265,6 +307,8 @@ public class CadastroAssistidoBean implements Serializable {
 		}
 
 	}
+	
+	
 
 	/*
 	 * --------------------------------------------------------Getters and
@@ -444,6 +488,14 @@ public class CadastroAssistidoBean implements Serializable {
 
 	public void setEstagiario(Estagiario estagiario) {
 		this.estagiario = estagiario;
+	}
+
+	public Boolean getControleBotaoFinalizar() {
+		return controleBotaoFinalizar;
+	}
+
+	public void setControleBotaoFinalizar(Boolean controleBotaoFinalizar) {
+		this.controleBotaoFinalizar = controleBotaoFinalizar;
 	}
 
 	/*
