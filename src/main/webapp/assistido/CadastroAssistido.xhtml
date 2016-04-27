@@ -6,6 +6,13 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui">
     
+    <f:metadata>
+		<o:viewParam name="assistido" value="#{cadastroAssistidoBean.assistido}"/>
+		<o:viewParam name="pessoaFisica" value="#{cadastroAssistidoBean.assistido.pessoaFisica}"/>
+		<o:viewParam name="Triagem" value="#{cadastroAssistidoBean.assistido.triagem}"/>
+    	<f:event listener="#{cadastroAssistidoBean.inicializar}" type="preRenderView" />
+    </f:metadata>
+    
     <ui:define name="titulo">Cadastro de Assistidos</ui:define>
     
     <ui:define name="corpo">

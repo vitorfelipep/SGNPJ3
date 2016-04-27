@@ -185,7 +185,7 @@ public class Atendimento implements Serializable {
 	
 	@Transient
 	public boolean isFinalizarAtendimento(){
-		return !isEmAtendimento();
+		return isEmAtendimento();
 	}
 	
 	@Override

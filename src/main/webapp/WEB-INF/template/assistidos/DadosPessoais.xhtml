@@ -2,7 +2,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
 
 <p:panel id="panelDadosPessoais" header="Dados Pessoais" toggleable="true" toggleSpeed="500" closeSpeed="500"  >
 	<p:panelGrid columns="4" style="width: 100%"
@@ -21,7 +23,7 @@
 		<p:inputText id="profissao" size="50" value="#{cadastroAssistidoBean.assistido.pessoaFisica.profissao}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
 		<p:outputLabel value="Data de Nasc.:" for="nascimento" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
-		<p:calendar id="nascimento" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="de"  navigator="true"  value="#{cadastroAssistidoBean.assistido.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:calendar id="nascimento" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{cadastroAssistidoBean.assistido.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
 		<p:outputLabel value="CPF:" for="cpf" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 		<p:inputMask id="cpf" size="20"  mask="999.999.999-99" title="Digite seu CPF" value="#{cadastroAssistidoBean.assistido.pessoaFisica.cpf}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />

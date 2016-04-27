@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
@@ -25,6 +26,7 @@ import com.sgnpj.model.AssistidoContraParte;
 import com.sgnpj.model.Atendimento;
 import com.sgnpj.model.EstadoCivilAssistido;
 import com.sgnpj.model.Estagiario;
+import com.sgnpj.model.Perfil;
 import com.sgnpj.model.Processo;
 import com.sgnpj.model.SituacaoAssitido;
 import com.sgnpj.model.StatusAtendimento;
@@ -101,7 +103,7 @@ public class CadastroAssistidoBean implements Serializable {
 	// Desabilita quando inicia o atendimento, após atendimento salvo ele têm
 	// que habilitar
 	// o botão finalizar atendimento
-	private Boolean controleBotaoFinalizar = false;
+	private Boolean controleBotaoFinalizar = true;
 
 	// para verificar qual o tipo de pessoa a ser atendida (fisica ou juridica)
 	private TipoPessoa tipoPessoa;
@@ -120,22 +122,21 @@ public class CadastroAssistidoBean implements Serializable {
 
 	private Seguranca usuarioLogado;
 	
-	@PostConstruct
-	public void inicializar(){
-		this.atendimento.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
-	}
-	
 	public CadastroAssistidoBean() {
-
+		
+		this.assistido = new Assistido();
+		this.assistido.setTriagem(new Triagem());
 		this.usuarioLogado = new Seguranca();
 		this.setTipoPessoaFisica(true);
 		this.setTipoPessoaFisicaContraParte(true);
 		this.setTipoPessoaJuridica(false);
 		this.dataAtendimento = new Date();
-		this.assistido = new Assistido();
-		this.assistido.setTriagem(new Triagem());
-		
-		
+	}
+	
+	public void inicializar(){
+		if (FacesUtil.isNotPostBack()) {
+			this.atendimento.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
+		}
 	}
 
 	public void salvar() {
@@ -147,7 +148,7 @@ public class CadastroAssistidoBean implements Serializable {
 		System.out.println("Advogado: " + this.advogado.getUsuario().getNome());
 
 		if (usu.getEstagiario() != null) {
-			this.estagiario = estagiarioService.porIdEstagiario(usu.getId());
+			this.estagiario = estagiarioService.porIdEstagiario(usu.getEstagiario().getId());
 		}
 
 		this.assistido.setTipoAssistido(tipoAssistido);
@@ -213,7 +214,8 @@ public class CadastroAssistidoBean implements Serializable {
 
 		// String atendimento = atendimento.getAtendimentoRelato();
 		this.atendimento.setAdvogado(advogado);
-		if (this.atendimento.getEstagiario() == null) {
+		
+		if (this.estagiario == null) {
 			this.atendimento.setEstagiario(null);
 		} else {
 			this.atendimento.setEstagiario(estagiario);
@@ -234,13 +236,20 @@ public class CadastroAssistidoBean implements Serializable {
 		System.out.println(new SimpleDateFormat("dd/MM/yyyy")
 				.format(atendimento.getDataAtendimento()));
 		
-		this.atendimento.isFinalizarAtendimento();
+		controleBotaoFinalizar = this.atendimento.isFinalizarAtendimento();
 		
 		FacesUtil.addInfoMesage("O Assistido Sr(a) " + this.assistido.getNome()
-				+ " Salvo com sucesso!");
+				+ " foi salvo com sucesso!");
 		
 		//Mostra a mensagem final
 		showMessage();
+	}
+	
+
+	// Atualizar o advogado quando ele for emitido, para o novo status
+	// Essa  anotation observes do javax é o observador do evento que fará a atualização do novo objeto pedido.
+	public void assistidoAlterado(@Observes AssistidoAlteradoEvent event){
+		this.assistido = event.getAssistido();
 	}
 
 	public List<Advogado> completarAdvogado(String nome) {

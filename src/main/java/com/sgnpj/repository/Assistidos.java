@@ -15,7 +15,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.sgnpj.model.Advogado;
 import com.sgnpj.model.Assistido;
-import com.sgnpj.repository.filter.AdvogadoFilter;
+import com.sgnpj.repository.filter.AssistidoFilter;
 
 /**
  * 
@@ -40,20 +40,26 @@ public class Assistidos implements Serializable{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Assistido> filtrados(AdvogadoFilter filtro) {
+	public List<Assistido> filtrados(AssistidoFilter filtro) {
+		
 		Session session = manager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Advogado.class)
-				//INNER JOIN COM A TABELA USUÁRIO
-				.createAlias("usuario", "u");
 		
-		if(StringUtils.isNotBlank(filtro.getCodigo_OAB())){
-			criteria.add(Restrictions.eq("codigo_OAB", filtro.getCodigo_OAB()));
+		Criteria criteria = session.createCriteria(Assistido.class)
+				//INNER JOIN COM 
+				.createAlias("pessoaFisica", "pf")
+				
+				//.createAlias("pessoaJuridica", "pj")
+				
+				.createAlias("triagem", "tr");
+		
+//		if(StringUtils.isNotBlank(filtro.getProcesso())){
+//			criteria.add(Restrictions.eq("codigo_OAB", filtro.getCodigo_OAB()));
+//		}
+		
+		if(StringUtils.isNotBlank(filtro.getNomeAssistido())){
+			criteria.add(Restrictions.ilike("nome", filtro.getNomeAssistido(), MatchMode.ANYWHERE));
 		}
 		
-		if(StringUtils.isNotBlank(filtro.getNome())){
-			criteria.add(Restrictions.ilike("u.nome", filtro.getNome(), MatchMode.ANYWHERE));
-		}
-		
-		return criteria.addOrder(Order.asc("u.nome")).list(); 
+		return criteria.addOrder(Order.asc("nome")).list(); 
 	}
 }

@@ -6,7 +6,7 @@
 
 	<div class="ui-fluid">
 		<p:panelGrid id="capaAssistido" columns="4" style="width:100%; margin-top:20px;"
-			columnClasses="rotulo, campo, rotulo, campo">
+			columnClasses="rotulo, campo, rotulo, campo"  >
 
 			<p:outputLabel value="Número processo:"/>
 			<h:outputText value="Sem processo" style="color: red;"/>
@@ -42,7 +42,7 @@
 			</p:selectOneMenu>
 			
 			<p:outputLabel value="Advogado: " for="advogadoAssis" />
-			<p:autoComplete id="advogadoAssis" size="40" dropdown="true" 
+			<p:autoComplete id="advogadoAssis" style="width:300px;" dropdown="true" 
 				value="#{cadastroAssistidoBean.advogado}" minQueryLength="3"
 				completeMethod="#{cadastroAssistidoBean.completarAdvogado}"
 				var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.usuario.nome}"

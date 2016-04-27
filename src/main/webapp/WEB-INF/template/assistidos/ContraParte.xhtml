@@ -30,7 +30,7 @@
 		<p:inputText id="maeContraparte" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.nomeMae}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
 			
 		<p:outputLabel value="Data de Nasc.:" for="nascimentoContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
-		<p:calendar id="nascimentoContraparte" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="de"  navigator="true"  value="#{cadastroAssistidoBean.contraParte.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
+		<p:calendar id="nascimentoContraparte" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{cadastroAssistidoBean.contraParte.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
 
 		<p:outputLabel value="CPF:" for="cpfContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
 		<p:inputMask id="cpfContraparte" size="20"  mask="999.999.999-99" title="Digite seu CPF" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.cpf}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" />
@@ -88,7 +88,7 @@
 		<p:inputText id="razaoSocialParteContraria" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.razaoSocial}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
 		
 		<p:outputLabel value="Data de abertura.:" for="dataAberturaParteContraria"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
-		<p:calendar id="dataAberturaParteContraria" pattern="dd/MM/yyyy" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.dataAbertura}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
+		<p:calendar id="dataAberturaParteContraria" pattern="dd/MM/yyyy" locale="pt" navigator="true" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.dataAbertura}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}" />
 		
 		<p:outputLabel value="Ramo de negócio: " for="ramoNegocioParteContraria"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
 		<p:inputText id="ramoNegocioParteContraria" size="50" value="#{cadastroAssistidoBean.contraParte.pessoaJuridica.ramoNegocio}"  rendered="#{cadastroAssistidoBean.tipoPessoaJuridicaContraParte}"/>
@@ -106,9 +106,10 @@
 			value="#{cadastroAssistidoBean.contraParte.logradouro}" />
 
 		<p:outputLabel value="Número:" for="numeroPt" />
-		<p:inputText id="numeroPt" size="5"
+		<p:inputMask id="numeroPt" size="5" mask="999999999999999"
 			value="#{cadastroAssistidoBean.contraParte.numero}"
 			maxlength="15" />
+		
 		
 		<p:outputLabel value="Bairro:" for="bairroContraParte" />
 		<p:inputText id="bairroContraParte" size="50"
