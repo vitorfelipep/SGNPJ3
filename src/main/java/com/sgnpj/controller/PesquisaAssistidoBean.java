@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.sgnpj.model.Assistido;
+import com.sgnpj.model.AssistidoContraParte;
 import com.sgnpj.model.SituacaoAssitido;
 import com.sgnpj.repository.Assistidos;
 import com.sgnpj.repository.filter.AssistidoFilter;
@@ -43,7 +44,13 @@ public class PesquisaAssistidoBean implements Serializable {
 	
 	public void pesquisar() {
 		this.assistidosFiltrados = assistidos.filtrados(filtro);
-		System.out.println(this.assistidosFiltrados);
+		
+		for(Assistido a : assistidosFiltrados){
+			for(AssistidoContraParte cp : a.getContraPartes()){
+				a.setContraParte(cp);
+			}
+		}
+		System.out.println(this.assistidosFiltrados.get(5));
 	}
 
 	public Assistidos getAssistidos() {

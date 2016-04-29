@@ -21,4 +21,9 @@ public class AssistidoPartesContrarias implements Serializable{
 	public AssistidoContraParte porId(Long id){
 		return manager.find(AssistidoContraParte.class, id);
 	}
+
+	public AssistidoContraParte porFkAssistido(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

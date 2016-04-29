@@ -50,7 +50,7 @@
 		<p:outputLabel value="Sexo:" for="sexoContraparte" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}"/>
 		<p:selectOneMenu id="sexoContraparte" style="width: 100px;" value="#{cadastroAssistidoBean.contraParte.pessoaFisica.sexo}" rendered="#{cadastroAssistidoBean.tipoPessoaFisicaContraParte}" >
 				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="Mascuilo" itemValue="M"/>
+				<f:selectItem itemLabel="Masculino" itemValue="M"/>
 				<f:selectItem itemLabel="Feminino" itemValue="F"/>
 		</p:selectOneMenu>	
 
@@ -106,9 +106,11 @@
 			value="#{cadastroAssistidoBean.contraParte.logradouro}" />
 
 		<p:outputLabel value="Número:" for="numeroPt" />
-		<p:inputMask id="numeroPt" size="5" mask="999999999999999"
+		<p:inputText id="numeroPt" size="5" 
 			value="#{cadastroAssistidoBean.contraParte.numero}"
-			maxlength="15" />
+			maxlength="15" >
+				<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+		</p:inputText>
 		
 		
 		<p:outputLabel value="Bairro:" for="bairroContraParte" />

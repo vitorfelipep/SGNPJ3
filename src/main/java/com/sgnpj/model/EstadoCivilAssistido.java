@@ -2,7 +2,7 @@ package com.sgnpj.model;
 
 public enum EstadoCivilAssistido {
 	
-	SOLTEIRO("Solteiro"), CASADO("Casado"), VIUVO("Viúvo(a)");
+	SOLTEIRO("Solteiro(a)"), CASADO("Casado(a)"), VIUVO("Viúvo(a)"), DIVORCIADO("Divorciado(a)");
 	
 	private String descricao;
 	

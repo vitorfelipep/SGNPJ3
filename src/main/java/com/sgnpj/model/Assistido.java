@@ -45,10 +45,12 @@ public class Assistido implements Serializable {
 	private PessoaJuridica pessoaJuridica;
 	private Triagem triagem;
 	private List<AssistidoContraParte> contraPartes = new ArrayList<AssistidoContraParte>();
+	private AssistidoContraParte contraParte;
 
 	public Assistido() {
 		this.pessoaFisica = new PessoaFisica();
 		this.pessoaJuridica = new PessoaJuridica();
+		this.contraPartes = new ArrayList<AssistidoContraParte>();
 	}
 
 	public Assistido(Long id, String nome, String tipoAssistido, String cep,
@@ -236,12 +238,21 @@ public class Assistido implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "assistidoAutor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	public List<AssistidoContraParte> getContraParte() {
+	public List<AssistidoContraParte> getContraPartes() {
 		return contraPartes;
 	}
 
-	public void setContraParte(List<AssistidoContraParte> contraPartes) {
+	public void setContraPartes(List<AssistidoContraParte> contraPartes) {
 		this.contraPartes = contraPartes;
+	}
+	
+	@Transient
+	public AssistidoContraParte getContraParte() {
+		return contraParte;
+	}
+
+	public void setContraParte(AssistidoContraParte contraParte) {
+		this.contraParte = contraParte;
 	}
 
 	@Override
@@ -278,5 +289,5 @@ public class Assistido implements Serializable {
 		this.contraPartes.add(acp);
 	}
 
-
+	
 }

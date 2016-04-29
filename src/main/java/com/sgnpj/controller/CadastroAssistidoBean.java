@@ -150,101 +150,128 @@ public class CadastroAssistidoBean implements Serializable {
 		if (usu.getEstagiario() != null) {
 			this.estagiario = estagiarioService.porIdEstagiario(usu.getEstagiario().getId());
 		}
-
-		this.assistido.setTipoAssistido(tipoAssistido);
-
-		this.contraParte.setTipoAssistido("REU");
-		this.contraParte.setTipoEndereco(TipoEndereco.CASA_PROPRIA);
-
-		// this.assistido.adicionarAssistidoContraParte(contraParte);
-		if (tipoPessoa.getDescricao().equals("Fisíca")) {
-			// Salvando a pessoa fisica
-			if (assistido.getPessoaFisica() != null) {
-				this.assistido.setPessoaFisica(pessoaFisicaService
-						.salvar(assistido.getPessoaFisica()));
-				this.assistido.setPessoaJuridica(null);
+		
+		if(this.assistido.getId() == null){
+			try{
+				this.assistido.setTipoAssistido(tipoAssistido);
+		
+				this.contraParte.setTipoAssistido("REU");
+				this.contraParte.setTipoEndereco(TipoEndereco.CASA_PROPRIA);
+		
+				// this.assistido.adicionarAssistidoContraParte(contraParte);
+				if (tipoPessoa.getDescricao().equals("Fisíca")) {
+					// Salvando a pessoa fisica
+					if (assistido.getPessoaFisica() != null) {
+						this.assistido.setPessoaFisica(pessoaFisicaService
+								.salvar(assistido.getPessoaFisica()));
+						this.assistido.setPessoaJuridica(null);
+					}
+				} else {
+					if (assistido.getPessoaJuridica() != null) {
+						this.assistido.setPessoaJuridica(pessoaJuridicaService
+								.salvar(assistido.getPessoaJuridica()));
+						this.assistido.setPessoaFisica(null);
+					}
+				}
+		
+				if (assistido.getTriagem() != null) {
+					this.assistido.setTriagem(triagemService.salvar(assistido
+							.getTriagem()));
+				}
+		
+				if (contraParte.getPessoaFisica().getCpf() != null) {
+					this.contraParte.setPessoaFisica(pessoaFisicaService
+							.salvar(contraParte.getPessoaFisica()));
+					this.contraParte.setPessoaJuridica(null);
+				} else {
+					this.contraParte.setPessoaJuridica(pessoaJuridicaService
+							.salvar(contraParte.getPessoaJuridica()));
+					this.contraParte.setPessoaFisica(null);
+				}
+		
+				// Salvo o assisitido
+				this.assistido = assistidoService.salvar(assistido);
+		
+				this.contraParte.setAssistidoAutor(assistido);
+		
+				// Coloco relaciono os ultimos objetos
+				if (this.assistido.getPessoaFisica() != null) {
+					this.assistido.getPessoaFisica().setAssitido(assistido);
+					this.assistido.setPessoaFisica(pessoaFisicaService
+							.salvar(this.assistido.getPessoaFisica()));
+				} else {
+					this.assistido.getPessoaJuridica().setAssistido(assistido);
+					this.assistido.setPessoaJuridica(pessoaJuridicaService
+							.salvar(this.assistido.getPessoaJuridica()));
+				}
+				this.assistido.getTriagem().setAssistidotriagem(assistido);
+				this.assistido.setTriagem(triagemService.salvar(this.assistido
+						.getTriagem()));
+		
+				this.contraParte = parteContrariaService.salvar(contraParte);
+		
+				this.assistido.adicionarAssistidoContraParte(contraParte);
+		
+				this.assistido = assistidoService.salvar(assistido);
+		
+				// String atendimento = atendimento.getAtendimentoRelato();
+				this.atendimento.setAdvogado(advogado);
+				
+				if (this.estagiario.getNome() == null) {
+					this.atendimento.setEstagiario(null);
+				} else {
+					this.atendimento.setEstagiario(estagiario);
+				}
+				this.atendimento.setAssistido(assistido);
+		
+				if (this.atendimento.getProcessos() == null) {
+					List<Processo> p = new ArrayList<Processo>();
+					this.atendimento.setProcessos(p);
+				}
+		
+				this.atendimento.setDataAtendimento(new Date());
+		
+				this.atendimento.setStatusAtendimento(StatusAtendimento.EM_APROVACAO);
+		
+				this.atendimento = cadastrarAtendimentoService.salvar(atendimento);
+		
+				System.out.println(new SimpleDateFormat("dd/MM/yyyy")
+						.format(atendimento.getDataAtendimento()));
+				
+				controleBotaoFinalizar = this.atendimento.isFinalizarAtendimento();
+				
+				FacesUtil.addInfoMesage("O Assistido Sr(a) " + this.assistido.getNome()
+						+ " foi salvo com sucesso!");
+				
+				//Mostra a mensagem final
+				showMessage();
+				
+			}finally{
+				
+				limparForm();
 			}
-		} else {
-			if (assistido.getPessoaJuridica() != null) {
-				this.assistido.setPessoaJuridica(pessoaJuridicaService
-						.salvar(assistido.getPessoaJuridica()));
-				this.assistido.setPessoaFisica(null);
+		}else{
+			try{
+				this.assistido = this.assistidoService.salvar(assistido);
+				this.contraParte = parteContrariaService.salvar(contraParte);
+				
+				FacesUtil.addInfoMesage("O Assistido Sr(a) " + this.assistido.getNome()
+						+ " foi atualizado com sucesso!");
+			}finally{
+				
+				limparForm();
 			}
+			
 		}
-
-		if (assistido.getTriagem() != null) {
-			this.assistido.setTriagem(triagemService.salvar(assistido
-					.getTriagem()));
-		}
-
-		if (contraParte.getPessoaFisica().getCpf() != null) {
-			this.contraParte.setPessoaFisica(pessoaFisicaService
-					.salvar(contraParte.getPessoaFisica()));
-			this.contraParte.setPessoaJuridica(null);
-		} else {
-			this.contraParte.setPessoaJuridica(pessoaJuridicaService
-					.salvar(contraParte.getPessoaJuridica()));
-			this.contraParte.setPessoaFisica(null);
-		}
-
-		// Salvo o assisitido
-		this.assistido = assistidoService.salvar(assistido);
-
-		this.contraParte.setAssistidoAutor(assistido);
-
-		// Coloco relaciono os ultimos objetos
-		if (this.assistido.getPessoaFisica() != null) {
-			this.assistido.getPessoaFisica().setAssitido(assistido);
-			this.assistido.setPessoaFisica(pessoaFisicaService
-					.salvar(this.assistido.getPessoaFisica()));
-		} else {
-			this.assistido.getPessoaJuridica().setAssistido(assistido);
-			this.assistido.setPessoaJuridica(pessoaJuridicaService
-					.salvar(this.assistido.getPessoaJuridica()));
-		}
-		this.assistido.getTriagem().setAssistidotriagem(assistido);
-		this.assistido.setTriagem(triagemService.salvar(this.assistido
-				.getTriagem()));
-
-		this.contraParte = parteContrariaService.salvar(contraParte);
-
-		this.assistido.adicionarAssistidoContraParte(contraParte);
-
-		this.assistido = assistidoService.salvar(assistido);
-
-		// String atendimento = atendimento.getAtendimentoRelato();
-		this.atendimento.setAdvogado(advogado);
-		
-		if (this.estagiario == null) {
-			this.atendimento.setEstagiario(null);
-		} else {
-			this.atendimento.setEstagiario(estagiario);
-		}
-		this.atendimento.setAssistido(assistido);
-
-		if (this.atendimento.getProcessos() == null) {
-			List<Processo> p = new ArrayList<Processo>();
-			this.atendimento.setProcessos(p);
-		}
-
-		this.atendimento.setDataAtendimento(new Date());
-
-		this.atendimento.setStatusAtendimento(StatusAtendimento.EM_APROVACAO);
-
-		this.atendimento = cadastrarAtendimentoService.salvar(atendimento);
-
-		System.out.println(new SimpleDateFormat("dd/MM/yyyy")
-				.format(atendimento.getDataAtendimento()));
-		
-		controleBotaoFinalizar = this.atendimento.isFinalizarAtendimento();
-		
-		FacesUtil.addInfoMesage("O Assistido Sr(a) " + this.assistido.getNome()
-				+ " foi salvo com sucesso!");
-		
-		//Mostra a mensagem final
-		showMessage();
 	}
 	
+
+	private void limparForm() {
+		this.assistido = new Assistido();
+		this.contraParte = new AssistidoContraParte();
+		this.atendimento = new Atendimento();
+		
+	}
 
 	// Atualizar o advogado quando ele for emitido, para o novo status
 	// Essa  anotation observes do javax é o observador do evento que fará a atualização do novo objeto pedido.

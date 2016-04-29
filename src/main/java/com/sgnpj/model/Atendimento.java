@@ -188,6 +188,7 @@ public class Atendimento implements Serializable {
 		return isEmAtendimento();
 	}
 	
+	@Transient
 	@Override
 	public String toString() {
 		return "Atendimento [id=" + id + ", assistido=" + assistido

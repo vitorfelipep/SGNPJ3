@@ -72,6 +72,10 @@
 	    			</h:outputText>
 	    		</p:column>
 	    		
+	    		<p:column headerText="Contra-parte" style="text-align: center; width: 120px">
+	    			<h:outputText value="#{assistido.contraParte.nome}" />
+	    		</p:column>
+	    		
 	    		<p:column headerText="Situação" style="text-align: center; width: 120px">
 	    			<h:outputText value="#{assistido.situacao}" />
 	    		</p:column>
@@ -83,7 +87,7 @@
 	    		<p:column style="text-align: center; width: 50px">
 	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/assistido/CadastroAssistido">
 	    				<f:param name="assistido" value="#{assistido.id}"/>
-	    				<f:param name="pessoaFisica" value="#{assistido.pessoaFisica.id}" />
+	    				<f:param name="contraParte" value="#{assistido.contraParte.id}" />
 						<f:param name="Triagem" value="#{assistido.triagem.id}" />
 	    			</p:button>
 	    		</p:column>
