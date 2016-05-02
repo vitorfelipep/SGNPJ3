@@ -29,6 +29,7 @@ public class Atendimento implements Serializable {
 
 	private Long id;
 	private Assistido assistido;
+	private AssistidoContraParte contraParte;
 	private Advogado advogado;
 	private Estagiario estagiario;
 	private StatusAtendimento statusAtendimento;
@@ -80,6 +81,16 @@ public class Atendimento implements Serializable {
 
 	public void setAssistido(Assistido assistido) {
 		this.assistido = assistido;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "contraParte_id", nullable = true)
+	public AssistidoContraParte getContraParte() {
+		return contraParte;
+	}
+
+	public void setContraParte(AssistidoContraParte contraParte) {
+		this.contraParte = contraParte;
 	}
 
 	@ManyToOne
@@ -177,17 +188,17 @@ public class Atendimento implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	@Transient
-	public boolean isEmAtendimento(){
+	public boolean isEmAtendimento() {
 		return StatusAtendimento.EM_ANDAMENTO.equals(this.statusAtendimento);
 	}
-	
+
 	@Transient
-	public boolean isFinalizarAtendimento(){
+	public boolean isFinalizarAtendimento() {
 		return isEmAtendimento();
 	}
-	
+
 	@Transient
 	@Override
 	public String toString() {

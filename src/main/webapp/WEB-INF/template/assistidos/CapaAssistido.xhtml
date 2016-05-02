@@ -20,7 +20,7 @@
 			<h:outputText value="#{cadastroAssistidoBean.atendimento.statusAtendimento.descricao}" style="color: red;"/>
 
 			<p:outputLabel value="Tipo de pessoa: " for="tipoPessoa" />
-			<p:selectOneMenu id="tipoPessoa" style="width: 200px;" value="#{cadastroAssistidoBean.tipoPessoa}" valueChangeListener="#{cadastroAssistidoBean.verificarTipoPessoa}">
+			<p:selectOneMenu id="tipoPessoa" style="width: 200px;" value="#{cadastroAssistidoBean.tipoPessoa}" valueChangeListener="#{cadastroAssistidoBean.verificarTipoPessoa}" disabled="#{cadastroAssistidoBean.atendimentoFinalizado}">
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItems value="#{cadastroAssistidoBean.tiposPessoa}" var="tipoPessoa"
 				   itemValue="#{tipoPessoa}"   itemLabel="#{tipoPessoa.descricao}" /> 
@@ -28,28 +28,28 @@
 			</p:selectOneMenu>
 			
 			<p:outputLabel value="Tipo Assistido: " for="tipoAssitido" />
-			<p:selectOneMenu id="tipoAssitido" style="width: 200px;" value="#{cadastroAssistidoBean.tipoAssistido}">
+			<p:selectOneMenu id="tipoAssitido" style="width: 200px;" value="#{cadastroAssistidoBean.tipoAssistido}" disabled="#{cadastroAssistidoBean.atendimentoFinalizado}">
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItem itemLabel="Autor" itemValue="AUTOR"/>
 				<f:selectItem itemLabel="Réu" itemValue="REU"/>
 			</p:selectOneMenu>
 			
 			<p:outputLabel value="Área de atendimento: " for="areaAtendimento"  />
-			<p:selectOneMenu id="areaAtendimento" style="width: 200px;"   value="#{cadastroAssistidoBean.atendimento.areaAtendimento}">
+			<p:selectOneMenu id="areaAtendimento" style="width: 200px;"   value="#{cadastroAssistidoBean.atendimento.areaAtendimento}" disabled="#{cadastroAssistidoBean.atendimentoFinalizado}">
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItems value="#{cadastroAssistidoBean.areaAtendimento}" var="area"
 				   itemValue="#{area}"  itemLabel="#{area.descricao}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel value="Advogado: " for="advogadoAssis" />
-			<p:autoComplete id="advogadoAssis" style="width:300px;" dropdown="true" 
+			<p:autoComplete id="advogadoAssis" size="40" dropdown="true" disabled="#{cadastroAssistidoBean.atendimentoFinalizado}"
 				value="#{cadastroAssistidoBean.advogado}" minQueryLength="3"
 				completeMethod="#{cadastroAssistidoBean.completarAdvogado}"
 				var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.usuario.nome}"
 				forceSelection="true"/>
 			
 			<p:outputLabel value="Situação do Assistido: " for="situacaoAssistido"  />
-			<p:selectOneMenu id="situacaoAssistido" style="width: 200px;"  value="#{cadastroAssistidoBean.assistido.situacao}"> 
+			<p:selectOneMenu id="situacaoAssistido" style="width: 200px;"  value="#{cadastroAssistidoBean.assistido.situacao}" disabled="#{cadastroAssistidoBean.atendimentoFinalizado}"> 
 				<f:selectItem itemLabel="Selecione" />
 				<f:selectItems value="#{cadastroAssistidoBean.situacaoAssistido}" var="situacao"
 				   itemValue="#{situacao}"  itemLabel="#{situacao.descricao}" />

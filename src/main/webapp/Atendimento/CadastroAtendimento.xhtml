@@ -6,56 +6,258 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui">
     
-    <ui:define name="titulo">Cadastro de Atendimento</ui:define>
+    
+     <f:metadata>
+		<o:viewParam name="assistido" value="#{cadastroAtendimentoBean.assistido}"/>
+ 		<o:viewParam name="contraParte" value="#{cadastroAtendimentoBean.contraParte}"/> 
+    	<f:event listener="#{cadastroAtendimentoBean.inicializar}" type="preRenderView" /> 
+    </f:metadata>
+    
+    <ui:define name="titulo">Cadastrar Atendimento</ui:define>
     
     <ui:define name="corpo">
-    	<h:form>
+    	<h:form id="frmCadastroAtendimento">
 			<h1>Novo Atendimento</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
-					<p:button value="Novo" outcome="/assistido/CadastroAssistido" />
-					<p:commandButton value="Salvar" id="botaoSalvar"
+					<p:button value="Novo" outcome="/Atendimento/CadastroAtendimento" />
+					<p:commandButton id="botaoSalvar" value="Salvar" action="#{cadastroAtendimentoBean.salvarAssistido}" 
 						 ajax="false" />
 				</p:toolbarGroup>
-
+ 
 				<p:toolbarGroup align="right" styleClass="toobarStyle">
-					<p:button value="Pesquisa" outcome="/Advogado/PesquisaAdvogados" />
+					<p:button value="Pesquisa" outcome="/Atendimento/PesquisaAtendimento" />
 				</p:toolbarGroup>
 			</p:toolbar>
-
-			<p:panelGrid columns="2" id="painel"
-				style="width: 100%;margin-top:20px;" columnClasses="rotulo, campo">
-
-				<p:outputLabel value="Assitido: " for="nome" />
-				<p:selectOneMenu id="Assistido" value="" required="true"	>	
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItem itemLabel="José Manuel" itemValue="José Manuel"/>
-					<f:selectItem itemLabel="Maria Rafaela" itemValue="Maria Rafaela"/>
-					<f:selectItem itemLabel="Ricardo Manoel" itemValue="Ricardo Manoel"/>
-					<f:selectItem itemLabel="Rafaela becker" itemValue="Rafaela becker"/>
-				</p:selectOneMenu>
-
-				<p:outputLabel value="Advogado: " for="advogado" />
-				<p:selectOneMenu id="advogado" value="" required="true"	>	
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItem itemLabel="Luciano Alves" itemValue="Luciano Alves"/>
-					<f:selectItem itemLabel="Marcelo Roberto" itemValue="Marcelo Roberto"/>
-					<f:selectItem itemLabel="Lucia Alburques" itemValue="Lucia Alburques"/>
-				</p:selectOneMenu>
-
-				<p:outputLabel value="Estagiário: " for="estagiario" />
-				<p:selectOneMenu id="estagiario" value="" required="true"	>	
-					<f:selectItem itemLabel="Selecione" />
-					<f:selectItem itemLabel="Alves Nunes" itemValue="Alves Nunes"/>
-					<f:selectItem itemLabel="Rebeca Castro" itemValue="Rebeca Castro"/>
-				</p:selectOneMenu>
-
-				<p:outputLabel value="Observacao Atendimento: " for="obsAtend" />
-				<p:inputTextarea id="obsAtend" value="" />
-			</p:panelGrid>
+			
+			<p:panel id="painelAtendimento" header="Cadastro de atendimentos" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-top: 20px;" >
+				
+				<p:panelGrid columns="4" id="painel"
+					style="width: 90%;margin-left: 100px;margin-top:20px;" columnClasses="rotulo, campo">
+	
+					<p:outputLabel value="Assistido: " for="nome" style="text-align: right;" />
+					<p:autoComplete id="nome" value="#{cadastroAtendimentoBean.assistido}"  minQueryLength="3"
+						completeMethod="#{cadastroAtendimentoBean.completarAssistido}" 
+						var="assistido" itemValue="#{assistido}" itemLabel="#{assistido.nome}"
+						forceSelection="true" dropdown="true"	>	
+					</p:autoComplete>
+					
+					
+					<p:outputLabel value="Area de atendimento: " for="atendimentoArea"/>
+					<p:selectOneMenu  id="atendimentoArea" value="#{cadastroAtendimentoBean.atendimento.areaAtendimento}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{cadastroAssistidoBean.areaAtendimento}" var="area"
+						   itemValue="#{area}"  itemLabel="#{area.descricao}" />
+					</p:selectOneMenu>
+	
+					<p:outputLabel value="Advogado: " for="advogado" />
+					<p:autoComplete id="advogado" value="#{cadastroAtendimentoBean.advogado}" minQueryLength="3"	
+							completeMethod="#{cadastroAtendimentoBean.completarAdvogado}" 
+							var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.usuario.nome}"
+							forceSelection="true" dropdown="true">	
+							
+					</p:autoComplete>
+	
+					<p:outputLabel value="Estagiário: " for="estagiario" />
+					<p:autoComplete id="estagiario" value="#{cadastroAtendimentoBean.estagiario}" minQueryLength="3"	
+							completeMethod="#{cadastroAtendimentoBean.completarEstagiario}" 
+							var="estagiario" itemValue="#{estagiario}" itemLabel="#{estagiario.usuario.nome}"
+							forceSelection="true" dropdown="true">	
+					
+					</p:autoComplete>
+					
+					<p:outputLabel value="Status do atendimento: " for="atendimentoStatus"/>
+					<p:selectOneMenu  id="atendimentoStatus" value="#{cadastroAtendimentoBean.atendimento.statusAtendimento}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{cadastroAtendimentoBean.statusAtendimento}" var="status"
+						   itemValue="#{status}"  itemLabel="#{status.descricao}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Cadastrar contra-parte?: " for="cadastroContraParte"/>
+					<p:selectOneMenu id="cadastroContraParte" value="#{cadastroAtendimentoBean.opcaoContraParte}" valueChangeListener="#{cadastroAtendimentoBean.verificarOpcaoContraParte}">
+						<f:selectItem itemLabel="--Selecione--"/>
+						<f:selectItem itemLabel="Sim" itemValue="SIM"/>
+						<f:selectItem itemLabel="Não" itemValue="NAO"/>
+						<f:ajax event="change" render=":frmCadastroAtendimento" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Contra-parte: " for="contraParte" rendered="#{cadastroAtendimentoBean.renderizarAutoCompleteContraParte}" />
+					<p:autoComplete id="contraParte" value="#{cadastroAtendimentoBean.contraParte}" minQueryLength="3"	
+							completeMethod="#{cadastroAtendimentoBean.completarContraParte}"  rendered="#{cadastroAtendimentoBean.renderizarAutoCompleteContraParte}"
+							var="contraParte" itemValue="#{contraParte}" itemLabel="#{contraParte.nome}"
+							forceSelection="true" dropdown="true">	
+					
+					</p:autoComplete>
+		
+				</p:panelGrid>
+				
+				
+				
+				<p:panel id="painelAtendimentoContraparte" header="Cadastrar Contra parte" toggleable="true" toggleSpeed="500" closeSpeed="500" style="margin-top: 20px;" rendered="#{cadastroAtendimentoBean.painelCadastroNewContraParte}" >
+					<p:panelGrid columns="4" style="width: 100%"
+							columnClasses="rotulo, campo, rotulo, campo">
+							
+							<p:outputLabel value="Tipo de pessoa: " for="tipoPessoaContraParte" />
+								<p:selectOneMenu id="tipoPessoaContraParte" style="width: 200px;" value="#{cadastroAtendimentoBean.tipoPessoaContraParte}" valueChangeListener="#{cadastroAtendimentoBean.verificarTipoPessoaContraParte}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{cadastroAtendimentoBean.tiposPessoa}" var="tipoPessoa" 
+									   itemValue="#{tipoPessoa}"   itemLabel="#{tipoPessoa.descricao}" /> 
+									   <f:ajax event="change" render=":frmCadastroAtendimento" />
+								</p:selectOneMenu>
+							
+							<p:outputLabel />
+							<h:outputText value=""/>
+							
+							<p:outputLabel value="Nome: " for="nomePtContraria" />
+							<p:inputText id="nomePtContraria" size="50" value="#{cadastroAtendimentoBean.contraParte.nome}" />
+								
+							<p:outputLabel value="Nome do Pai" for="paiContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:inputText id="paiContraparte" size="50" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.nomePai}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+					
+							<p:outputLabel value="Nome da mãe:" for="maeContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:inputText id="maeContraparte" size="50" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.nomeMae}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+								
+							<p:outputLabel value="Data de Nasc.:" for="nascimentoContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:calendar id="nascimentoContraparte" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.dataNascimento}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+					
+							<p:outputLabel value="CPF:" for="cpfContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:inputMask id="cpfContraparte" size="20"  mask="999.999.999-99" title="Digite seu CPF" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.cpf}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" />
+							
+							<p:outputLabel value="RG:" for="rgContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" />
+							<p:inputMask id="rgContraparte" size="20" mask="99.999.9999" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.identidade}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+								
+							<p:outputLabel value="Orgão Expedidor:" for="orgContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:inputText id="orgContraparte" size="10" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.orgao}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" />
+								
+							<p:outputLabel value="Carteira de motorista:" for="cnhContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:inputText id="cnhContraparte" size="20" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.cnh}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+								
+							<p:outputLabel value="Carteira de trabalho:" for="ctbContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:inputMask id="ctbContraparte" size="20" mask="9999999/999-99" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.carteiraTrabalho}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+								
+							<p:outputLabel value="Sexo:" for="sexoContraparte" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:selectOneMenu id="sexoContraparte" style="width: 100px;" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.sexo}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" >
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItem itemLabel="Masculino" itemValue="M"/>
+									<f:selectItem itemLabel="Feminino" itemValue="F"/>
+							</p:selectOneMenu>	
+					
+							<p:outputLabel value="E-mail: " for="emailPt" />
+							<p:inputText id="emailPt" size="50" value="#{cadastroAtendimentoBean.contraParte.email}" />
+					
+							<p:outputLabel value="Profissão: " for="profPtCont" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:inputText id="profPtCont" size="50" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"
+								value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.profissao}" />
+					
+							<p:outputLabel value="Estado Cívil:" for="estadoCivilPtContraria" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"/>
+							<p:selectOneMenu id="estadoCivilPtContraria" style="width: 200px;" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}"
+								value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.estadoCivil}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{cadastroAtendimentoBean.estadoCivil}"
+									var="estadoCivil" itemValue="#{estadoCivil}"
+									itemLabel="#{estadoCivil.descricao}" />
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="Nacionalidade" for="nacionalidadePtContraria" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" />
+							<p:inputText id="nacionalidadePtContraria" size="50" value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.nacionalidade}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" />
+							
+							<p:outputLabel value="Naturalidade:" for="naturalPtContraria" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" />
+							<p:inputText id="naturalPtContraria" size="50"
+								value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.naturalidade}" rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" />
+								
+							<p:outputLabel value="CNPJ" for="cnpjParteContraria"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}"/>
+							<p:inputMask id="cnpjParteContraria" mask="99.999.999/9999-99" size="20" value="#{cadastroAtendimentoBean.contraParte.pessoaJuridica.cnpj}"
+								rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}" />
+							
+							<p:outputLabel value="Nome fantasia: " for="nomeJuridicoParteContraria"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}"/>
+							<p:inputText id="nomeJuridicoParteContraria" size="50" value="#{cadastroAtendimentoBean.contraParte.pessoaJuridica.nomeJuridico}"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}" />
+							
+							<p:outputLabel value="Razão social: " for="razaoSocialParteContraria"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}" />
+							<p:inputText id="razaoSocialParteContraria" size="50" value="#{cadastroAtendimentoBean.contraParte.pessoaJuridica.razaoSocial}"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}" />
+							
+							<p:outputLabel value="Data de abertura.:" for="dataAberturaParteContraria"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}"/>
+							<p:calendar id="dataAberturaParteContraria" pattern="dd/MM/yyyy" locale="pt" navigator="true" value="#{cadastroAtendimentoBean.contraParte.pessoaJuridica.dataAbertura}"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}" />
+							
+							<p:outputLabel value="Ramo de negócio: " for="ramoNegocioParteContraria"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}"/>
+							<p:inputText id="ramoNegocioParteContraria" size="50" value="#{cadastroAtendimentoBean.contraParte.pessoaJuridica.ramoNegocio}"  rendered="#{cadastroAtendimentoBean.tipoPessoaJuridicaContraParte}"/>
+					
+							<p:outputLabel value="Menor de idade?" for="isMenorContraParte"  rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}" />
+							<p:selectOneMenu id="isMenorContraParte" style="width: 100px;"	value="#{cadastroAtendimentoBean.contraParte.pessoaFisica.menorIdade}" 
+										rendered="#{cadastroAtendimentoBean.tipoPessoaFisicaContraParte}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItem itemLabel="Sim" itemValue="S"/>
+									<f:selectItem itemLabel="Não" itemValue="N"/>
+							</p:selectOneMenu>	
+							
+							<p:outputLabel value="Logradouro:" for="endPt" />
+							<p:inputText id="endPt" size="50"
+								value="#{cadastroAtendimentoBean.contraParte.logradouro}" />
+					
+							<p:outputLabel value="Número:" for="numeroPt" />
+							<p:inputText id="numeroPt" size="5" 
+								value="#{cadastroAtendimentoBean.contraParte.numero}"
+								maxlength="15" >
+									<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+							</p:inputText>
+							
+							
+							<p:outputLabel value="Bairro:" for="bairroContraParte" />
+							<p:inputText id="bairroContraParte" size="50"
+								value="#{cadastroAtendimentoBean.contraParte.bairro}" />
+					
+							<p:outputLabel value="Complemento:" for="complementoPt" />
+							<p:inputText id="complementoPt" size="50"
+								value="#{cadastroAtendimentoBean.contraParte.complemento}" />
+					
+							<p:outputLabel value="Estado:" for="estadoPt" />
+							<p:selectOneMenu id="estadoPt" style="width: 200px;"
+								value="#{cadastroAtendimentoBean.contraParte.estado}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItem itemLabel="RJ" itemValue="RJ" />
+								<f:selectItem itemLabel="MG" itemValue="MG" />
+								<f:selectItem itemLabel="SP" itemValue="SP" />
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="Cidade:" for="cidadePt" />
+							<p:selectOneMenu id="cidadePt" style="width: 200px;"
+								value="#{cadastroAtendimentoBean.contraParte.cidade}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo" />
+								<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
+								<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis" />
+							</p:selectOneMenu>
+					
+					
+							<p:outputLabel value="Cep:" for="entregaCepPt" />
+							<p:inputMask id="entregaCepPt" mask="99999-999" size="10"
+								value="#{cadastroAtendimentoBean.contraParte.cep}" />
+					
+							<p:outputLabel value="Telefone: " for="telefonePt" />
+							<p:inputMask id="telefonePt" mask="(99)9999-9999" size="50"
+								value="#{cadastroAtendimentoBean.contraParte.telefoneResidencial}" />
+					
+							<p:outputLabel value="Telefone Trab: " for="telefoneTrabPt" />
+							<p:inputMask id="telefoneTrabPt"  mask="(99)9999-9999" size="50"
+								value="#{cadastroAtendimentoBean.contraParte.telefoneTrabalho}" />
+					
+							<p:outputLabel value="Celular: " for="celularPt" />
+							<p:inputMask id="celularPt" mask="(99)99999-9999" size="50"
+								value="#{cadastroAtendimentoBean.contraParte.celularPessoal}" />
+					
+							<p:outputLabel value="Celular Trab: " for="celularTrabPt" />
+							<p:inputMask id="celularTrabPt" mask="(99)99999-9999" size="50"
+								value="#{cadastroAtendimentoBean.contraParte.celularTrabalho}" />
+							
+						</p:panelGrid>
+					</p:panel>
+				<h:panelGroup layout="block" style="padding-right: 10px">
+					<p:outputLabel value="Relato do atendimento:" for="editor"/>		
+					<p:editor id="editor" widgetVar="editorWidget" value="#{cadastroAtendimentoBean.atendimento.atendimentoRelato}"  style="width: 100%"/>
+				</h:panelGroup>
+			</p:panel>
 		</h:form>
     </ui:define>
  </ui:composition>

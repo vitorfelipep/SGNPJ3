@@ -8,7 +8,14 @@
 	<ui:define name="titulo">Acesso negado</ui:define>
 	
 	<ui:define name="corpo">
-		<h1>Você não possui permissão para acessar esta página.</h1>
+		<p:panel id="painelPermissao" header="Acesso Negado!" toggleable="true" toggleSpeed="500" closeSpeed="500"
+					styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 40px; height: 200px;">
+			<div style="font-family: Arial; text-align: center; margin-top: 40px;">
+				<h1>Você não possui permissão para acessar esta página!</h1>
+				<br/>
+				<h:graphicImage library="imagens" name="UNIABEU.jpeg" style="width: 242px;"/>
+			</div>
+		</p:panel>
 	</ui:define>
 	
 </ui:composition>

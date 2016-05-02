@@ -9,14 +9,14 @@
     <f:metadata>
 		<o:viewParam name="assistido" value="#{cadastroAssistidoBean.assistido}"/>
  		<o:viewParam name="contraParte" value="#{cadastroAssistidoBean.contraParte}"/> 
-    	<f:event listener="#{cadastroAssistidoBean.inicializar}" type="preRenderView" />
+    	<f:event listener="#{cadastroAssistidoBean.inicializar}" type="preRenderView" /> 
     </f:metadata>
     
-    <ui:define name="titulo">Cadastro de Assistidos</ui:define>
+    <ui:define name="titulo">#{cadastroAssistidoBean.editando ? 'Edição de assistido' : 'Cadastro de Assistido'}</ui:define>
     
     <ui:define name="corpo">
     	<h:form id="frmCadastro">
-	    	<h1>Cadastro de assistido e atendimento</h1>
+	    	<h1>#{cadastroAssistidoBean.editando ? 'Edição do assistido' : 'Cadastrar novo assistido'}</h1>
 	    	
 	    	<p:messages autoUpdate="true" closable="true"/>
 	    	

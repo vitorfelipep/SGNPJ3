@@ -27,10 +27,10 @@
 						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
 		    		
 		    	    <p:outputLabel value="Nome do assistido: " for="nomeAssistido"/>
-		    	    <p:inputText id="nomeAssistido" size="10" value="#{pesquisaAssistidoBean.filtro.nomeAssistido}" />
+		    	    <p:inputText id="nomeAssistido" size="30" value="#{pesquisaAssistidoBean.filtro.nomeAssistido}" />
 		    			    	
 		    		<p:outputLabel value="CPF: " for="cpf"/>
-		    		<p:inputText id="cpf" value="#{pesquisaAssistidoBean.filtro.cpf}"/>
+		    		<p:inputMask id="cpf" mask="999.999.999-99" value="#{pesquisaAssistidoBean.filtro.cpf}"/>
 		    		
 		    		<p:outputLabel value="Situação do Assistido: " for="situacaoAssistido"/>
 		    		<p:selectOneMenu id="situacaoAssistido" style="width: 200px;"  value="#{pesquisaAssistidoBean.filtro.situacaoAssistido}"> 
@@ -40,7 +40,7 @@
 		    		</p:selectOneMenu>
 		    		
 		    		<p:outputLabel value="RG: " for="rgAssistido"/>
-		    		<p:inputText id="rgAssistido" value="#{pesquisaAssistidoBean.filtro.rg}"/>
+		    		<p:inputMask id="rgAssistido" mask="99.999.9999" value="#{pesquisaAssistidoBean.filtro.rg}"/>
 		    		
 		    	</p:panelGrid>
 	    	</div>

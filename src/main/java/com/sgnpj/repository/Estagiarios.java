@@ -57,4 +57,18 @@ public class Estagiarios implements Serializable{
 		return criteria.addOrder(Order.asc("u.nome")).list(); 
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Estagiario> porNome(String nome) {
+		Session session = manager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Estagiario.class)
+				//INNER JOIN COM A TABELA USUÁRIO
+				.createAlias("usuario", "u");
+		
+		if(StringUtils.isNotBlank(nome)){
+			criteria.add(Restrictions.ilike("u.nome", nome.toUpperCase(), MatchMode.ANYWHERE));
+		}
+		
+		return criteria.addOrder(Order.asc("u.nome")).list();
+	}
+
 }

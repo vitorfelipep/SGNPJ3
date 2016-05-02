@@ -29,5 +29,5 @@ public class CadastrarAtendimentoService implements Serializable{
 		
 		return atendimentos.armazenar(atendimento);
 	}
-
+	
 }

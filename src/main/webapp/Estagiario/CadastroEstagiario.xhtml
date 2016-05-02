@@ -100,10 +100,10 @@
 							</p:selectOneMenu>
 							
 							<p:outputLabel value="Data Nascimento: " for="datNasc" />
-							<p:calendar id="datNasc" pattern="dd/MM/yyyy" locale="pt" size="10" value="#{cadastroEstagiarioBean.estagiario.dataNascimento}"/>
+							<p:calendar id="datNasc" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true" size="10" value="#{cadastroEstagiarioBean.estagiario.dataNascimento}"/>
 							
 							<p:outputLabel value="Data ínicio estágio: " for="datInicio" />
-							<p:calendar id="datInicio" pattern="dd/MM/yyyy"  locale="pt" size="10" value="#{cadastroEstagiarioBean.estagiario.dataInicio}"/>
+							<p:calendar id="datInicio" pattern="dd/MM/yyyy"  locale="pt" size="10" yearRange="c-100:c+1" navigator="true" value="#{cadastroEstagiarioBean.estagiario.dataInicio}"/>
 							
 							<p:outputLabel value="Data termino estágio: " for="datTermino" />
 							<p:calendar id="datTermino" pattern="dd/MM/yyyy"  locale="pt" navigator="true"  size="10" value="#{cadastroEstagiarioBean.estagiario.dataTerminoEstagio}"/>

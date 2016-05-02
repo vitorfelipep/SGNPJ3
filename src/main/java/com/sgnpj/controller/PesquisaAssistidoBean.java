@@ -50,7 +50,7 @@ public class PesquisaAssistidoBean implements Serializable {
 				a.setContraParte(cp);
 			}
 		}
-		System.out.println(this.assistidosFiltrados.get(5));
+		//System.out.println(this.assistidosFiltrados.get(5));
 	}
 
 	public Assistidos getAssistidos() {

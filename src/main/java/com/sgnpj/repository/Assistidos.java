@@ -60,6 +60,30 @@ public class Assistidos implements Serializable{
 			criteria.add(Restrictions.ilike("nome", filtro.getNomeAssistido(), MatchMode.ANYWHERE));
 		}
 		
+		if(StringUtils.isNotBlank(filtro.getCpf())){
+			criteria.add(Restrictions.ilike("pf.cpf", filtro.getCpf()));
+		}
+		
+//		if(filtro.getSituacaoAssistido() != null){
+//			criteria.add(Restrictions.ilike("situacao", filtro.getSituacaoAssistido(), MatchMode.ANYWHERE));
+//		}
+		
+		if(StringUtils.isNotBlank(filtro.getRg())){
+			criteria.add(Restrictions.eq("pf.identidade", filtro.getRg()));
+		}
+		
 		return criteria.addOrder(Order.asc("nome")).list(); 
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Assistido> porNome(String nome) {
+		Session session = manager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Assistido.class);
+		
+		if(StringUtils.isNotBlank(nome)){
+			criteria.add(Restrictions.ilike("nome", nome.toUpperCase(), MatchMode.ANYWHERE));
+		}
+		
+		return criteria.addOrder(Order.asc("nome")).list();
 	}
 }

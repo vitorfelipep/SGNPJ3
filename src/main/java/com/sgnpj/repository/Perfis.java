@@ -22,7 +22,7 @@ public class Perfis implements Serializable {
 	}
 	
 	public List<Perfil> listarPerfisEstagirio() {
-		return manager.createQuery("from Perfil where descricao not in ('Administrador', 'Advogado') ",
+		return manager.createQuery("from Perfil where nome not in ('Administrador', 'Advogado') ",
 				Perfil.class).getResultList();
 	}
 	

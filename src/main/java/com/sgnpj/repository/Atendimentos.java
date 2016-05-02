@@ -13,12 +13,14 @@ import javax.persistence.EntityManager;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 
+import com.sgnpj.model.Assistido;
 import com.sgnpj.model.Atendimento;
 import com.sgnpj.model.Usuario;
 import com.sgnpj.model.vo.DataValor;
@@ -96,6 +98,12 @@ public class Atendimentos implements Serializable{
 		}
 		
 		return mapaInicial;
+	}
+
+	public Atendimento PorIdAssistido(Assistido a) {	
+		return manager.createQuery("from Atendimento at where at.assistido.id = :idAssistido", Atendimento.class)
+				.setParameter("idAssistido", a.getId())
+				.getSingleResult();
 	}
 
 }

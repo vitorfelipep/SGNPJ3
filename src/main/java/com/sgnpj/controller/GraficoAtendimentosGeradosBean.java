@@ -83,7 +83,7 @@ public class GraficoAtendimentosGeradosBean implements Serializable{
 		// animatedModel1.addSeries(series2);
 
 		animatedModel1.addSeries(series);
-		animatedModel1.setTitle("Line Chart");
+		animatedModel1.setTitle("Relatório periódico de atendimentos");
 		animatedModel1.setAnimate(true);
 		animatedModel1.setLegendPosition("se");
 		Axis xAxis = animatedModel1.getAxis(AxisType.X);
