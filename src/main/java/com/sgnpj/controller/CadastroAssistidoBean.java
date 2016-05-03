@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
@@ -26,7 +25,6 @@ import com.sgnpj.model.AssistidoContraParte;
 import com.sgnpj.model.Atendimento;
 import com.sgnpj.model.EstadoCivilAssistido;
 import com.sgnpj.model.Estagiario;
-import com.sgnpj.model.Perfil;
 import com.sgnpj.model.Processo;
 import com.sgnpj.model.SituacaoAssitido;
 import com.sgnpj.model.StatusAtendimento;
@@ -37,6 +35,7 @@ import com.sgnpj.model.Triagem;
 import com.sgnpj.model.Usuario;
 import com.sgnpj.repository.Advogados;
 import com.sgnpj.repository.Atendimentos;
+import com.sgnpj.repository.Telefones;
 import com.sgnpj.security.Seguranca;
 import com.sgnpj.security.UsuarioSistema;
 import com.sgnpj.service.CadastrarAssisistidoService;
@@ -97,6 +96,9 @@ public class CadastroAssistidoBean implements Serializable {
 
 	@Inject
 	private Atendimentos atendimentos;
+	
+	@Inject
+	private Telefones telefones;
 
 	@Inject
 	private AssistidoContraParte contraParte;
@@ -150,7 +152,10 @@ public class CadastroAssistidoBean implements Serializable {
 		}
 
 		if (assistido.getId() != null) {
-			this.atendimento = atendimentos.PorIdAssistido(assistido);
+			
+			this.telefone = telefones.porIdAssistido(assistido);
+			
+			this.atendimento = atendimentos.PorIdAssistido(this.assistido, this.contraParte);
 			if (this.atendimento.getId() == null) {
 				FacesUtil
 						.addInfoMesage("Este assistido não está vinculado a nenhum atendimento!");
@@ -339,6 +344,9 @@ public class CadastroAssistidoBean implements Serializable {
 	}
 
 	private void limparForm() {
+		this.telefone = new Telefone();
+		this.advogado = new Advogado();
+		this.tipoPessoa = null;
 		this.assistido = new Assistido();
 		this.contraParte = new AssistidoContraParte();
 		this.atendimento = new Atendimento();

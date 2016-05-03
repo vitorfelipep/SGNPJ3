@@ -10,9 +10,11 @@ import java.util.TreeMap;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -21,9 +23,11 @@ import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 
 import com.sgnpj.model.Assistido;
+import com.sgnpj.model.AssistidoContraParte;
 import com.sgnpj.model.Atendimento;
 import com.sgnpj.model.Usuario;
 import com.sgnpj.model.vo.DataValor;
+import com.sgnpj.repository.filter.AtendimentoFilter;
 
 public class Atendimentos implements Serializable{
 
@@ -100,10 +104,49 @@ public class Atendimentos implements Serializable{
 		return mapaInicial;
 	}
 
-	public Atendimento PorIdAssistido(Assistido a) {	
-		return manager.createQuery("from Atendimento at where at.assistido.id = :idAssistido", Atendimento.class)
+	public Atendimento PorIdAssistido(Assistido a, AssistidoContraParte ac) {	
+		return manager.createQuery("from Atendimento at where at.assistido.id = :idAssistido and at.statusAtendimento = 'EM_APROVACAO' and at.contraParte.id = :idContraParte", Atendimento.class)
 				.setParameter("idAssistido", a.getId())
+				.setParameter("idContraParte", ac.getId())
 				.getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Atendimento> filtrados(AtendimentoFilter atendimentoFilter) {
+		Session session = manager.unwrap(Session.class);
+		
+		Criteria criteria = session.createCriteria(Atendimento.class)
+				//INNER JOIN COM 
+				.createAlias("assistido", "cliente")
+				
+				.createAlias("advogado", "ad")
+				
+				.createAlias("estagiario", "es")
+				
+				.createAlias("contraParte", "cp");
+		
+		if (atendimentoFilter.getDataInicial() != null) {
+			criteria.add(Restrictions.ge("dataAtendimento", atendimentoFilter.getDataInicial()));
+		}
+		
+		if (atendimentoFilter.getDataFinal() != null) {
+			criteria.add(Restrictions.le("dataAtendimento", atendimentoFilter.getDataFinal()));
+		}
+		
+		if(StringUtils.isNotBlank(atendimentoFilter.getAdvogado().getUsuario().getNome())){
+			criteria.add(Restrictions.ilike("ad.usuario.nome", atendimentoFilter.getAdvogado().getUsuario().getNome(), MatchMode.ANYWHERE));
+		}
+		
+		if(StringUtils.isNotBlank(atendimentoFilter.getAssistido().getNome())){
+			criteria.add(Restrictions.ilike("cliente.nome", atendimentoFilter.getAssistido().getNome()));
+		}
+		
+		if (atendimentoFilter.getStatusAtendimento() != null && atendimentoFilter.getStatusAtendimento().length > 0) {
+			// adicionamos uma restrição "in", passando um array de constantes da enum StatusPedido
+			criteria.add(Restrictions.in("statusAtendimento", atendimentoFilter.getStatusAtendimento()));
+		}
+		
+		return criteria.addOrder(Order.asc("cliente.nome")).list(); 
 	}
 
 }
