@@ -1,13 +1,17 @@
 package com.sgnpj.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -28,8 +32,10 @@ public class Comarca implements Serializable {
 	private String cidade;
 	private String bairro;
 	private String complemento;
+	private String logradouro;
 	private Integer numero;
-	
+	private List<TipoVara> varas;
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -39,7 +45,7 @@ public class Comarca implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 60)
 	public String getNome() {
@@ -49,7 +55,7 @@ public class Comarca implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "tribunal_id", nullable = false)
@@ -60,7 +66,7 @@ public class Comarca implements Serializable {
 	public void setTribunal(Tribunal tribunal) {
 		this.tribunal = tribunal;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 10)
 	public String getCep() {
@@ -70,7 +76,7 @@ public class Comarca implements Serializable {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 2)
 	public String getUf() {
@@ -80,7 +86,7 @@ public class Comarca implements Serializable {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 80)
 	public String getCidade() {
@@ -90,7 +96,7 @@ public class Comarca implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 70)
 	public String getBairro() {
@@ -101,6 +107,17 @@ public class Comarca implements Serializable {
 		this.bairro = bairro;
 	}
 	
+	
+	@NotBlank
+	@Column(nullable = true, length = 120)
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
 	@Column(nullable = true, length = 120)
 	public String getComplemento() {
 		return complemento;
@@ -109,7 +126,7 @@ public class Comarca implements Serializable {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false)
 	public Integer getNumero() {
@@ -118,6 +135,15 @@ public class Comarca implements Serializable {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
+	}
+
+	@OneToMany(mappedBy = "cormarca", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	public List<TipoVara> getVaras() {
+		return varas;
+	}
+
+	public void setVaras(List<TipoVara> varas) {
+		this.varas = varas;
 	}
 
 	@Override

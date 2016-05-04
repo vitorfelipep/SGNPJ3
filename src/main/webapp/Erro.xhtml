@@ -9,7 +9,13 @@
     <ui:define name="titulo">Erro</ui:define>
     
     <ui:define name="corpo">
-    	<h1>Erro ao processar sua requisição!</h1>
+    	 <p:panel id="painelGrafico" header="Ops, erro ao processar sua requisição!" toggleable="true" toggleSpeed="500" closeSpeed="500"
+					styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 40px;">
+    			
+    			<center><h1>Erro ao processar sua requisição!</h1></center>
+    			<br/>
+    			<center><h4>Não se preocupe, o sistema esta seguro. Apenas contate o desenvolvedor reportanto hora e dia deste incoveniente. Este sistema possui log de erros!</h4></center>
+    	</p:panel>
     </ui:define>
     
  </ui:composition>

@@ -53,8 +53,7 @@
 			</p:panelGrid>
 
 			<p:dataTable id="produtosTable" value="#{pesquisaEstagiarioBean.estagiariosFiltrados}"
-				 var="estagiario"
-				style="margin-top:20px;" emptyMessage="Nenhum produto encontrado"
+				 var="estagiario" style="margin-top:20px;" emptyMessage="Nenhum produto encontrado"
 				rows="20" paginator="true" paginatorAlwaysVisible="false">
 
 				<p:column headerText="Numero OAB" style="text-align:center; width: 100px;">
@@ -102,6 +101,7 @@
 							value="" />
 					</p:commandButton>
 				</p:column>
+				
 			</p:dataTable>
 			
 			<p:confirmDialog header="Excluir Estagiário"

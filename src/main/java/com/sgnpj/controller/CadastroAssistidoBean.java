@@ -317,6 +317,12 @@ public class CadastroAssistidoBean implements Serializable {
 			try {
 				this.assistido = this.assistidoService.salvar(assistido);
 				this.contraParte = parteContrariaService.salvar(contraParte);
+				this.atendimento.setAssistido(assistido);
+				this.atendimento.setContraParte(contraParte);
+				this.telefone = telefoneService.salvar(this.telefone);
+
+				this.atendimento = cadastrarAtendimentoService
+						.salvar(atendimento);
 
 				FacesUtil.addInfoMesage("O Assistido Sr(a) "
 						+ this.assistido.getNome()

@@ -1,0 +1,81 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+	
+	
+	<ui:define name="titulo">Cadastro de tribunal</ui:define>
+
+	<ui:define name="corpo">
+		<h:form  >
+			<h1>Cadastro de tribunal</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top:20px;">
+				<p:toolbarGroup styleClass="toobarStyle">
+					<p:button value="Novo" outcome="/Tribunal/CadastroTribunal" />
+					<p:commandButton value="Salvar" id="botaoSalvar" update="panelTribunal"  ajax="false" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right" styleClass="toobarStyle">
+					<p:button value="Pesquisa" outcome="/Tribunal/PesquisaTribunal" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<!-- Dados do usuário -->
+			<p:panel id="panelTribunal" header="Dados do tribunal"
+				toggleable="true" toggleSpeed="500" closeSpeed="500"
+				styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 10px;"
+				widgetVar="panelGridUsuario">
+				<div class="ui-fluid">
+					<p:panelGrid columns="4" id="panelGridUsuario" layout="grid" 
+						style="margin-top:20px;" 
+						styleClass="panelgrid-noborder" 
+						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+		
+						
+						<p:outputLabel value="Nome do tribunal: " for="nomeTribunal" />
+						<p:inputText id="nomeTribunal" size="50" maxlength="80" value="" />
+						
+						<p:outputLabel value="Descrição do tribunal: " for="descTribunal" />
+						<p:inputText id="descTribunal" size="50" maxlength="80" value="" />
+		
+						<p:outputLabel value="Cep: " for="Cep" />
+						<p:inputMask id="Cep" mask="99.999-999" size="20" value="" />							
+						
+						<p:outputLabel value="UF: " for="uf"/>
+						<p:selectOneMenu id="uf" value="">
+							<f:selectItem itemLabel="--Selecione--" />
+							<f:selectItem itemLabel="RJ" itemValue="RJ" />
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Cidade: " for="cidade"/>
+						<p:selectOneMenu id="cidade" value="">
+							<f:selectItem itemLabel="--Selecione--" />
+							<f:selectItem itemLabel="Rio de Janeiro" itemValue="Rio de Janeiro" />
+							<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Bairro: " for="bairro" />
+						<p:inputText id="bairro" size="20" maxlength="20" value="" />
+						
+						<p:outputLabel value="Logradouro: " for="logradouro" />
+						<p:inputText id="logradouro" size="50" maxlength="80" value="" />	
+						
+						<p:outputLabel value="Número: " for="numero" />
+						<p:inputText id="numero" size="20" maxlength="20" value="" />	
+						
+						<p:outputLabel value="Complemento: " for="complemento" />
+						<p:inputText id="complemento" size="50" maxlength="80" value="" />
+							
+					</p:panelGrid>
+				</div>
+			</p:panel>
+			
+			
+		</h:form>
+	</ui:define>
+</ui:composition>

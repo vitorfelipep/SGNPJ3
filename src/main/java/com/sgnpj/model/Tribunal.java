@@ -1,11 +1,15 @@
 package com.sgnpj.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -27,7 +31,8 @@ public class Tribunal implements Serializable {
 	private String logradouro;
 	private String complemento;
 	private Integer numero;
-	
+	private List<Comarca> comarcas;
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -37,7 +42,7 @@ public class Tribunal implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@NotBlank
 	@Column(name = "desc_tribunal", nullable = false, length = 80)
 	public String getDescTribunal() {
@@ -47,7 +52,7 @@ public class Tribunal implements Serializable {
 	public void setDescTribunal(String descTribunal) {
 		this.descTribunal = descTribunal;
 	}
-	
+
 	@NotBlank
 	@Column(name = "nome", nullable = false, length = 60)
 	public String getNome() {
@@ -57,7 +62,7 @@ public class Tribunal implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false, length = 10)
 	public String getCep() {
@@ -67,7 +72,7 @@ public class Tribunal implements Serializable {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false, length = 2)
 	public String getUf() {
@@ -77,7 +82,7 @@ public class Tribunal implements Serializable {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false, length = 80)
 	public String getCidade() {
@@ -87,7 +92,7 @@ public class Tribunal implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false, length = 80)
 	public String getBairro() {
@@ -97,7 +102,7 @@ public class Tribunal implements Serializable {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false, length = 80)
 	public String getLogradouro() {
@@ -107,7 +112,7 @@ public class Tribunal implements Serializable {
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
-	
+
 	@Column(nullable = true, length = 10)
 	public String getComplemento() {
 		return complemento;
@@ -116,7 +121,7 @@ public class Tribunal implements Serializable {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-	
+
 	@NotEmpty
 	@Column(nullable = false)
 	public Integer getNumero() {
@@ -125,6 +130,15 @@ public class Tribunal implements Serializable {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
+	}
+
+	@OneToMany(mappedBy = "tribunal", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	public List<Comarca> getComarcas() {
+		return comarcas;
+	}
+
+	public void setComarcas(List<Comarca> comarcas) {
+		this.comarcas = comarcas;
 	}
 
 	@Override

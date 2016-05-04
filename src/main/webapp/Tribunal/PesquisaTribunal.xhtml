@@ -1,0 +1,113 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="titulo">Pesquisa de tribunais</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmPesquisa" enctype="multipart/form-data" acceptcharset="utf-8">
+			
+			<h1>Pesquisa de Tribunal</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top:20px;">
+				<p:toolbarGroup styleClass="toobarStyle">
+					<p:commandButton value="Pesquisar" id="pesquisar" update="@form" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right" styleClass="toobarStyle">
+					<p:button value="Novo" outcome="/Tribunal/CadastroTribunal" >
+					</p:button>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<div class="ui-fluid ">
+				<p:panelGrid columns="2" id="painel"
+					style="width: 100%;margin-top:20px;"
+					styleClass="panelgrid-noborder" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+
+
+					<p:outputLabel value="ID Tribunal: " for="idTribunal" />
+					<p:inputText id="idTribunal" size="20" value="" />
+
+					<p:outputLabel value="Nome do Tribunal: " for="nomeTribunal" />
+					<p:inputText id="nomeTribunal" size="20" value="" />
+
+				</p:panelGrid>
+			</div>
+
+			<p:dataTable id="tribunalTable" value="" var="tribunal"
+				style="margin-top:20px;" emptyMessage="Nenhum vara encontrada"
+				rows="20" paginator="true" paginatorAlwaysVisible="false"
+				reflow="true">
+
+				<p:column headerText="Id" style="text-align:center; width: 100px;">
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Tribunal">
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Descrição do tribunal">
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Cidade" style="width:250px;">
+					<h:outputText value="" />
+				</p:column>
+
+				<p:column headerText="Bairro" style="text-align:rigth; width:120px;">
+					<h:outputText value="">
+
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Logradouro"
+					style="text-align:rigth; width:120px;">
+					<h:outputText value="">
+
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="numero" style="text-align:rigth; width:120px;">
+					<h:outputText value="">
+
+					</h:outputText>
+				</p:column>
+
+				<p:column style="width:80px; text-align: center;">
+					<p:button outcome="/Tribunal/CadastroTribunal"
+						icon="ui-icon-pencil" title="Editar">
+					</p:button>
+
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":frmPesquisa:confirmacaoExclusaoDialog">
+
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog header="Exclusão de produto"
+				message="Tem certeza que deseja excluir o tribunal?"
+				showEffect="fade" hideEffect="fade" widgetVar="confirmacaoExclusao"
+				id="confirmacaoExclusaoDialog">
+				<p:button value="Não"
+					onclick="PF('confirmacaoExclusao').hide(); return false;" />
+				<p:commandButton value="Sim"
+					oncomplete="PF('confirmacaoExclusao').hide();" process="@this"
+					update=":frmPesquisa:tribunalTable" id="yesButton" />
+			</p:confirmDialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

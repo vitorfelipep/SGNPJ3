@@ -1,0 +1,55 @@
+<ui:composition template="/WEB-INF/template/layoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+	
+	
+	<ui:define name="titulo">Cadastro de tipo de vara</ui:define>
+
+	<ui:define name="corpo">
+		<h:form  >
+			<h1>Cadastro de tipo de vara</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top:20px;">
+				<p:toolbarGroup styleClass="toobarStyle">
+					<p:button value="Novo" outcome="/vara/CadastroTipoVara" />
+					<p:commandButton value="Salvar" id="botaoSalvar" update="panelTipoVara"  ajax="false" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right" styleClass="toobarStyle">
+					<p:button value="Pesquisa" outcome="/vara/PesquisaTipoVara" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<!-- Dados do usuário -->
+			<p:panel id="panelTipoVara" header="Dados vara judicial"
+				toggleable="true" toggleSpeed="500" closeSpeed="500"
+				styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 10px;"
+				widgetVar="panelGridUsuario">
+				<div class="ui-fluid">
+					<p:panelGrid columns="4" id="panelGridUsuario" layout="grid" 
+						style="margin-top:20px;" 
+						styleClass="panelgrid-noborder" 
+						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+		
+		
+						<p:outputLabel value="Nome da vara: " for="nomeVara" />
+						<p:inputText id="nomeVara" size="50" maxlength="80" value="" />
+						
+						<p:outputLabel value="Comarca: " for="comarca" style="text-align: right;" />
+						<p:autoComplete id="comarca" value=""  minQueryLength="3"
+							forceSelection="true" dropdown="true"	>	
+						</p:autoComplete>							
+		
+					</p:panelGrid>
+				</div>
+			</p:panel>
+			
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
