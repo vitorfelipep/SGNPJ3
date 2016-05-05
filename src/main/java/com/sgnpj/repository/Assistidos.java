@@ -13,7 +13,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.sgnpj.model.Advogado;
 import com.sgnpj.model.Assistido;
 import com.sgnpj.repository.filter.AssistidoFilter;
 

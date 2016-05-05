@@ -1,6 +1,7 @@
 package com.sgnpj.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -34,7 +35,7 @@ public class Comarca implements Serializable {
 	private String complemento;
 	private String logradouro;
 	private Integer numero;
-	private List<TipoVara> varas;
+	private List<TipoVara> varas = new ArrayList<TipoVara>();
 
 	@Id
 	@GeneratedValue

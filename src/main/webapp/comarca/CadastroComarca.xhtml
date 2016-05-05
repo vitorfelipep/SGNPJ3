@@ -37,12 +37,14 @@
 						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
 		
 		
-						<p:outputLabel value="Nome Comarca: " for="nomeVara" />
-						<p:inputText id="nomeVara" size="50" maxlength="80" value="" />
+						<p:outputLabel value="Nome Comarca: " for="nomeComarca" />
+						<p:inputText id="nomeComarca" size="50" maxlength="80" value="#{cadastroComarcaBean.comarca.nome}" />
 						
 						<p:outputLabel value="Tribunal " for="tribunal" style="text-align: right;" />
-						<p:autoComplete id="tribunal" value=""  minQueryLength="3"
-							forceSelection="true" dropdown="true"	>	
+						<p:autoComplete id="tribunal" value="#{cadastroComarcaBean.tribunal}"  minQueryLength="3"
+							completeMethod="#{cadastroComarcaBean.completarTribunal}"  
+							var="tribunal" itemValue="#{tribunal}" itemLabel="#{tribunal.nome}"
+							forceSelection="true" dropdown="true">	
 						</p:autoComplete>
 						
 						<p:outputLabel value="logradouro " for="logradouro" />

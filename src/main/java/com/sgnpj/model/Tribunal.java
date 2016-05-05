@@ -1,6 +1,7 @@
 package com.sgnpj.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -32,6 +34,10 @@ public class Tribunal implements Serializable {
 	private String complemento;
 	private Integer numero;
 	private List<Comarca> comarcas;
+	
+	public Tribunal() {
+		this.comarcas = new ArrayList<Comarca>();
+	}
 
 	@Id
 	@GeneratedValue
@@ -122,7 +128,7 @@ public class Tribunal implements Serializable {
 		this.complemento = complemento;
 	}
 
-	@NotEmpty
+	@NotNull
 	@Column(nullable = false)
 	public Integer getNumero() {
 		return numero;

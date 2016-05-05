@@ -1,7 +1,6 @@
 package com.sgnpj.model.vo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class DataValor implements Serializable{
