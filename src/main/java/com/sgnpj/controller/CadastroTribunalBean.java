@@ -29,25 +29,41 @@ public class CadastroTribunalBean implements Serializable {
 		this.tribunal = new Tribunal();
 	}
 
-	public void cadastrar() {
-		System.out.println(tribunal.getNome());
-		try{
-			this.tribunal = cadastroService.salvar(tribunal);
-		}finally{
-			FacesUtil.addInfoMesage("Tribunal Cadastrado com sucesso!");
-			limparForm();
+	public void inicializar() {
+		if (FacesUtil.isNotPostBack()) {
+			
 		}
 	}
-	
+
+	public void cadastrar() {
+		System.out.println(tribunal.getNome());
+		
+		if(tribunal.getId() == null){
+			try {
+				this.tribunal = cadastroService.salvar(tribunal);
+			} finally {
+				FacesUtil.addInfoMesage("Tribunal Cadastrado com sucesso!");
+				limparForm();
+			}
+		}else{
+			try {
+				this.tribunal = cadastroService.salvar(tribunal);
+			} finally {
+				FacesUtil.addInfoMesage("Tribunal Alterado com sucesso!");
+				limparForm();
+			}
+		}
+	}
+
 	private void limparForm() {
 		this.tribunal = new Tribunal();
 	}
 
-	//Atualizar o estagiario quando ele for alterado
-	public void tribunalAlterado(@Observes TribunalAlteradoEvent event){
+	// Atualizar o estagiario quando ele for alterado
+	public void tribunalAlterado(@Observes TribunalAlteradoEvent event) {
 		this.tribunal = event.getTribunal();
 	}
-	
+
 	public Tribunal getTribunal() {
 		return tribunal;
 	}

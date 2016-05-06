@@ -119,7 +119,7 @@ public class Tribunal implements Serializable {
 		this.logradouro = logradouro;
 	}
 
-	@Column(nullable = true, length = 10)
+	@Column(nullable = true, length = 80)
 	public String getComplemento() {
 		return complemento;
 	}

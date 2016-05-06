@@ -18,7 +18,7 @@
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
 					<p:commandButton value="Pesquisar" id="pesquisar"
-						 update="@form" />
+						 update="@form"  action="#{pesquisaComarcaBean.pesquisar}"/>
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right" styleClass="toobarStyle">
@@ -34,47 +34,49 @@
 	
 					
 					<p:outputLabel value="ID  comarca: " for="idComarca" />
-					<p:inputText id="idComarca" size="20"
-						value="" />
+					<p:inputText id="idComarca" size="20" value="#{pesquisaComarcaBean.filtro.id}" />
 					
 					<p:outputLabel value="Nome da comarca: " for="nomeComarca" />
-					<p:inputText id="nomeComarca" size="20"
-						value="" />
+					<p:inputText id="nomeComarca" size="20" value="#{pesquisaComarcaBean.filtro.nome}" />
 							
-					<p:outputLabel value="Tribunal: " for="tribunal" style="text-align: right;" />
-					<p:autoComplete id="tribunal" value=""  minQueryLength="3" forceSelection="true" dropdown="true"	/>
+					<p:outputLabel value="Tribunal " for="tribunal" style="text-align: right;" />
+					<p:autoComplete id="tribunal" value="#{pesquisaComarcaBean.filtro.tribunal}"  minQueryLength="3"
+						completeMethod="#{pesquisaComarcaBean.completarTribunal}"  
+						var="tribunal" itemValue="#{tribunal}" itemLabel="#{tribunal.nome}"
+						forceSelection="true" dropdown="true">	
+					</p:autoComplete>
 					
 				</p:panelGrid>
 			</div>
 			
 			<p:dataTable id="comarcaTable"
-				value=""  var="comarca"
+				value="#{pesquisaComarcaBean.listaComarcas}"  var="comarca"
 				style="margin-top:20px;" emptyMessage="Nenhum vara encontrada"
 				rows="20" paginator="true" paginatorAlwaysVisible="false" reflow="true">
 
 				<p:column headerText="Id" style="text-align:center; width: 100px;">
-					<h:outputText value="" />
+					<h:outputText value="#{comarca.id}" />
 				</p:column>
 
 				<p:column headerText="Comarca">
-					<h:outputText value="" />
+					<h:outputText value="#{comarca.nome}" />
 				</p:column>
 				
 				<p:column headerText="Tribunal"
 					style="text-align:rigth; width:120px;">
-					<h:outputText value="">
+					<h:outputText value="#{comarca.tribunal.nome}">
 						
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Cidade" style="width:250px;">
+				<p:column headerText="Cidade" style="text-align: center;width:250px;">
 					<h:outputText
-						value="" />
+						value="#{comarca.cidade}" />
 				</p:column>
 
 				<p:column headerText="Bairro"
-					style="text-align:rigth; width:120px;">
-					<h:outputText value="">
+					style="text-align:center; width:120px;">
+					<h:outputText value="#{comarca.bairro}">
 						
 					</h:outputText>
 				</p:column>
@@ -82,14 +84,14 @@
 				
 				<p:column headerText="Logradouro"
 					style="text-align:rigth; width:120px;">
-					<h:outputText value="">
+					<h:outputText value="#{comarca.logradouro}">
 						
 					</h:outputText>
 				</p:column>
 				
 				<p:column headerText="numero"
-					style="text-align:rigth; width:120px;">
-					<h:outputText value="">
+					style="text-align:center; width:120px;">
+					<h:outputText value="#{comarca.numero}">
 						
 					</h:outputText>
 				</p:column>
@@ -97,7 +99,9 @@
 				<p:column style="width:80px; text-align: center;">
 					<p:button outcome="/comarca/CadastroComarca" icon="ui-icon-pencil"
 						title="Editar">
-											</p:button>
+						<f:param name="comarca" value="#{comarca.id}" />
+						<f:param name="tribunal" value="#{comarca.tribunal.id}" />
+					</p:button>
 					<p:commandButton icon="ui-icon-trash" title="Excluir"
 						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
 						update=":frmPesquisa:confirmacaoExclusaoDialog">

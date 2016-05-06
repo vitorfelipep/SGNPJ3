@@ -10,19 +10,21 @@
 
 	<ui:define name="corpo">
 
-		<h:form id="frmPesquisa" enctype="multipart/form-data" acceptcharset="utf-8">
-			
+		<h:form id="frmPesquisa" enctype="multipart/form-data"
+			acceptcharset="utf-8">
+
 			<h1>Pesquisa de Tribunal</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
-					<p:commandButton value="Pesquisar" id="pesquisar" update="@form" />
+					<p:commandButton value="Pesquisar" id="pesquisar" update="@form"
+						action="#{pesquisaTribunalBean.pesquisar}" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right" styleClass="toobarStyle">
-					<p:button value="Novo" outcome="/Tribunal/CadastroTribunal" >
+					<p:button value="Novo" outcome="/Tribunal/CadastroTribunal">
 					</p:button>
 				</p:toolbarGroup>
 			</p:toolbar>
@@ -35,57 +37,62 @@
 
 
 					<p:outputLabel value="ID Tribunal: " for="idTribunal" />
-					<p:inputText id="idTribunal" size="20" value="" />
+					<p:inputText id="idTribunal" size="20"
+						value="#{pesquisaTribunalBean.filtro.idTribunal}" />
 
 					<p:outputLabel value="Nome do Tribunal: " for="nomeTribunal" />
-					<p:inputText id="nomeTribunal" size="20" value="" />
+					<p:inputText id="nomeTribunal" size="20"
+						value="#{pesquisaTribunalBean.filtro.nome}" />
 
 				</p:panelGrid>
 			</div>
 
-			<p:dataTable id="tribunalTable" value="" var="tribunal"
-				style="margin-top:20px;" emptyMessage="Nenhum vara encontrada"
+			<p:dataTable id="tribunalTable"
+				value="#{pesquisaTribunalBean.tribunaisLista}" var="tribunal"
+				style="margin-top:20px;" emptyMessage="Nenhum tribunal encontrado"
 				rows="20" paginator="true" paginatorAlwaysVisible="false"
 				reflow="true">
 
 				<p:column headerText="Id" style="text-align:center; width: 100px;">
-					<h:outputText value="" />
+					<h:outputText value="#{tribunal.id}" />
 				</p:column>
 
 				<p:column headerText="Tribunal">
-					<h:outputText value="" />
+					<h:outputText value="#{tribunal.nome}" />
 				</p:column>
 
 				<p:column headerText="Descrição do tribunal">
-					<h:outputText value="" />
-				</p:column>
-
-				<p:column headerText="Cidade" style="width:250px;">
-					<h:outputText value="" />
-				</p:column>
-
-				<p:column headerText="Bairro" style="text-align:rigth; width:120px;">
-					<h:outputText value="">
-
-					</h:outputText>
+					<h:outputText value="#{tribunal.descTribunal}" />
 				</p:column>
 
 				<p:column headerText="Logradouro"
 					style="text-align:rigth; width:120px;">
-					<h:outputText value="">
+					<h:outputText value="#{tribunal.logradouro}">
 
 					</h:outputText>
 				</p:column>
 
 				<p:column headerText="numero" style="text-align:rigth; width:120px;">
-					<h:outputText value="">
+					<h:outputText value="#{tribunal.numero}">
 
 					</h:outputText>
 				</p:column>
 
+				<p:column headerText="Cidade" style="width:250px;">
+					<h:outputText value="#{tribunal.cidade}" />
+				</p:column>
+
+				<p:column headerText="Bairro" style="text-align:rigth; width:120px;">
+					<h:outputText value="#{tribunal.bairro}">
+
+					</h:outputText>
+				</p:column>
+
+
 				<p:column style="width:80px; text-align: center;">
 					<p:button outcome="/Tribunal/CadastroTribunal"
 						icon="ui-icon-pencil" title="Editar">
+						<f:param name="tribunal" value="#{tribunal.id}" />
 					</p:button>
 
 					<p:commandButton icon="ui-icon-trash" title="Excluir"

@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "comarca")
@@ -36,7 +35,11 @@ public class Comarca implements Serializable {
 	private String logradouro;
 	private Integer numero;
 	private List<TipoVara> varas = new ArrayList<TipoVara>();
-
+	
+	public Comarca() {
+		
+	}
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -128,7 +131,7 @@ public class Comarca implements Serializable {
 		this.complemento = complemento;
 	}
 
-	@NotEmpty
+	@NotNull
 	@Column(nullable = false)
 	public Integer getNumero() {
 		return numero;

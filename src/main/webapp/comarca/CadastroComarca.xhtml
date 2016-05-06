@@ -5,6 +5,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 	
+	<f:metadata>
+		<o:viewParam name="comarca" value="#{cadastroComarcaBean.comarca}"/>
+		<o:viewParam name="tribunal" value="#{cadastroComarcaBean.tribunal}"/>
+    	<f:event listener="#{cadastroTribunalBean.inicializar}" type="preRenderView" />
+    </f:metadata>
 	
 	<ui:define name="titulo">Cadastro de Comarca</ui:define>
 
@@ -17,7 +22,7 @@
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
 					<p:button value="Novo" outcome="/comarca/CadastroComarca" />
-					<p:commandButton value="Salvar" id="botaoSalvar" update="panelComarca"  ajax="false" />
+					<p:commandButton value="Salvar" id="botaoSalvar" update="panelComarca"  ajax="false" action="#{cadastroComarcaBean.cadastrar}" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right" styleClass="toobarStyle">
@@ -48,25 +53,28 @@
 						</p:autoComplete>
 						
 						<p:outputLabel value="logradouro " for="logradouro" />
-						<p:inputText id="logradouro" size="50" maxlength="80" value="" />							
+						<p:inputText id="logradouro" size="50" maxlength="80" value="#{cadastroComarcaBean.comarca.logradouro}" />							
 	
 						<p:outputLabel value="Número: " for="numero" />
-						<p:inputText id="numero" size="20" maxlength="20" value="" />	
+						<p:inputText id="numero" size="20" maxlength="20" value="#{cadastroComarcaBean.comarca.numero}" />	
 						
 						<p:outputLabel value="Complemento: " for="complemento" />
-						<p:inputText id="complemento" size="50" maxlength="80" value="" />
+						<p:inputText id="complemento" size="50" maxlength="80" value="#{cadastroComarcaBean.comarca.complemento}" />
+						
+						<p:outputLabel value="Bairro: " for="bairro" />
+						<p:inputText id="bairro" size="50" maxlength="80" value="#{cadastroComarcaBean.comarca.bairro}" />
 							
 						<p:outputLabel value="Cep: " for="cep" />
-						<p:inputMask id="cep" mask="99.999-999" size="50"  value="" />
+						<p:inputMask id="cep" mask="99.999-999" size="50"  value="#{cadastroComarcaBean.comarca.cep}" />
 						
 						<p:outputLabel value="UF: " for="uf"/>
-						<p:selectOneMenu id="uf" value="">
+						<p:selectOneMenu id="uf" value="#{cadastroComarcaBean.comarca.uf}">
 							<f:selectItem itemLabel="--Selecione--" />
 							<f:selectItem itemLabel="RJ" itemValue="RJ" />
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Cidade: " for="cidade"/>
-						<p:selectOneMenu id="cidade" value="">
+						<p:selectOneMenu id="cidade" value="#{cadastroComarcaBean.comarca.cidade}">
 							<f:selectItem itemLabel="--Selecione--" />
 							<f:selectItem itemLabel="Rio de Janeiro" itemValue="Rio de Janeiro" />
 							<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />

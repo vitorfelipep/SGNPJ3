@@ -4,7 +4,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
-
+	
+	
+	<f:metadata>
+		<o:viewParam name="tribunal" value="#{cadastroTribunalBean.tribunal}"/>
+    	<f:event listener="#{cadastroTribunalBean.inicializar}" type="preRenderView" />
+    </f:metadata>
 
 	<ui:define name="titulo">Cadastro de tribunal</ui:define>
 

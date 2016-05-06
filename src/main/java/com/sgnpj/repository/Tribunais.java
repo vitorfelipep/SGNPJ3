@@ -14,6 +14,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.sgnpj.model.Tribunal;
+import com.sgnpj.repository.filter.TribunalFilter;
 
 public class Tribunais implements Serializable{
 
@@ -40,6 +41,22 @@ public class Tribunais implements Serializable{
 		}
 		
 		return criteria.addOrder(Order.asc("nome")).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Tribunal> filtrados(TribunalFilter filtro) {
+		Session session = manager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Tribunal.class);
+		
+		if(filtro.getIdTribunal() != null){
+			criteria.add(Restrictions.eq("id", filtro.getIdTribunal()));
+		}
+		
+		if(StringUtils.isNotBlank(filtro.getNome())){
+			criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
+		}
+				
+		return criteria.addOrder(Order.asc("nome")).list(); 
 	}
 
 }

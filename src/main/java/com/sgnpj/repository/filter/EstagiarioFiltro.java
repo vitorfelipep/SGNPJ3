@@ -18,7 +18,6 @@ public class EstagiarioFiltro implements Serializable{
 
 	public EstagiarioFiltro(String numOab, Integer matricula, String nome,
 			Date dataInicial, Date dataFinal) {
-		super();
 		this.numOab = numOab;
 		this.matricula = matricula;
 		this.nome = nome;
