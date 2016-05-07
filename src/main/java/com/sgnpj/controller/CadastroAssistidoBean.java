@@ -147,8 +147,9 @@ public class CadastroAssistidoBean implements Serializable {
 
 	public void inicializar() {
 		if (FacesUtil.isNotPostBack()) {
-			this.atendimento
-					.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
+			if(this.atendimento.getId() == null) {
+				this.atendimento.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
+			}
 		}
 
 		if (assistido.getId() != null) {
@@ -157,8 +158,7 @@ public class CadastroAssistidoBean implements Serializable {
 			
 			this.atendimento = atendimentos.PorIdAssistido(this.assistido, this.contraParte);
 			if (this.atendimento.getId() == null) {
-				FacesUtil
-						.addInfoMesage("Este assistido não está vinculado a nenhum atendimento!");
+				FacesUtil.addInfoMesage("Este assistido não está vinculado a nenhum atendimento!");
 			} else {
 				if (this.atendimento.getStatusAtendimento().equals(
 						StatusAtendimento.EM_APROVACAO)) {

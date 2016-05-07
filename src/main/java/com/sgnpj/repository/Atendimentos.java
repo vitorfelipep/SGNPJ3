@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -105,8 +104,9 @@ public class Atendimentos implements Serializable{
 	}
 
 	public Atendimento PorIdAssistido(Assistido a, AssistidoContraParte ac) {	
-		return manager.createQuery("from Atendimento at where at.assistido.id = :idAssistido and at.statusAtendimento = 'EM_APROVACAO' and at.contraParte.id = :idContraParte", Atendimento.class)
+		return manager.createQuery("from Atendimento at where at.assistido.id = :idAssistido and at.assistido.situacao = :situacaoAssistido and at.contraParte.id = :idContraParte", Atendimento.class)
 				.setParameter("idAssistido", a.getId())
+				.setParameter("situacaoAssistido", a.getSituacao())
 				.setParameter("idContraParte", ac.getId())
 				.getSingleResult();
 	}
@@ -133,12 +133,17 @@ public class Atendimentos implements Serializable{
 			criteria.add(Restrictions.le("dataAtendimento", atendimentoFilter.getDataFinal()));
 		}
 		
-		if(StringUtils.isNotBlank(atendimentoFilter.getAdvogado().getUsuario().getNome())){
-			criteria.add(Restrictions.ilike("ad.usuario.nome", atendimentoFilter.getAdvogado().getUsuario().getNome(), MatchMode.ANYWHERE));
+		if(atendimentoFilter.getAdvogado() != null){
+			if(StringUtils.isNotBlank(atendimentoFilter.getAdvogado().getUsuario().getNome())){
+				criteria.add(Restrictions.eq("ad.id", atendimentoFilter.getAdvogado().getId_advogado()));
+			}
 		}
 		
-		if(StringUtils.isNotBlank(atendimentoFilter.getAssistido().getNome())){
-			criteria.add(Restrictions.ilike("cliente.nome", atendimentoFilter.getAssistido().getNome()));
+		
+		if(atendimentoFilter.getAssistido() != null){
+			if(StringUtils.isNotBlank(atendimentoFilter.getAssistido().getNome())){
+				criteria.add(Restrictions.ilike("cliente.nome", atendimentoFilter.getAssistido().getNome()));
+			}
 		}
 		
 		if (atendimentoFilter.getStatusAtendimento() != null && atendimentoFilter.getStatusAtendimento().length > 0) {

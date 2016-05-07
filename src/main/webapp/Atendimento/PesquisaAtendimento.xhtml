@@ -13,8 +13,7 @@
 	    	
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
-	    			<p:commandButton value="Pesquisar" 
-	    				update="@form" />
+	    			<p:commandButton value="Pesquisar" update="@form" action="#{pesquisaAtendimentoBean.pesquisar}"/>
 	    		</p:toolbarGroup>
 	    		<p:toolbarGroup align="right">
 	    			<p:button value="Novo Atendimento" outcome="/Atendimento/CadastroAtendimento" />
@@ -26,54 +25,68 @@
 	    		
 	    		<p:outputLabel value="Data de Atendimento" />
 	    		<h:panelGroup>
-	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
-	    				 />
+	    			<p:calendar id="dataInicial" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{pesquisaAtendimentoBean.atendimentoFilter.dataInicial}"	 />
 	    			a
-	    			<p:calendar size="10" pattern="dd/MM/yyyy"
-	    				/>
+	    			<p:calendar id="dataFinal" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{pesquisaAtendimentoBean.atendimentoFilter.dataFinal}"	/>
 	    		</h:panelGroup>
 	    		
-	    		<p:outputLabel value="Atendente" />
-	    		<p:inputText size="40" value="" required="true"/>
+	    		<p:outputLabel value="Advogado: " for="advogado"/>
+	    		<p:autoComplete id="advogado" value="#{pesquisaAtendimentoBean.atendimentoFilter.advogado}" minQueryLength="3"	
+							completeMethod="#{cadastroAtendimentoBean.completarAdvogado}" 
+							var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.usuario.nome}"
+							forceSelection="true" dropdown="true" />
 	    		
-	    		<p:outputLabel value="Cliente (Assistido): " />
-	    		<p:inputText size="40" value="" />
+	    		<p:outputLabel value="Cliente (Assistido): " for="assistido"/>
+	    		<p:autoComplete id="assistido" value="#{pesquisaAtendimentoBean.atendimentoFilter.assistido}"  minQueryLength="3"
+						completeMethod="#{cadastroAtendimentoBean.completarAssistido}" 
+						var="assistido" itemValue="#{assistido}" itemLabel="#{assistido.nome}"
+						forceSelection="true" dropdown="true"	>	
+				</p:autoComplete>
 	    		
-	    		<p:outputLabel value="Status atendimento" />
-	    		<p:selectManyCheckbox >
-	    			<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
-	    			<f:selectItem itemValue="Cancelado" itemLabel="Cancelado" />
-	    			<f:selectItem itemValue="Fechado" itemLabel="Fechado" />
+	    		<p:outputLabel value="Situação do atendimento: " for="situacaoAtendimento"/>
+	    		<p:selectManyCheckbox id="situacaoAtendimento" value="#{pesquisaAtendimentoBean.atendimentoFilter.statusAtendimento}">
+	    			<f:selectItems  value="#{pesquisaAtendimentoBean.statusAtendimento}" var="situacao"
+	    					itemLabel="#{situacao.descricao}" itemValue="#{situacao}"/>
 	    		</p:selectManyCheckbox>
 	    	</p:panelGrid>
 	    	
-	    	<p:dataTable id="tabelaAssistido"  var="assistido"
+	    	<p:dataTable id="tabelaAssistido"  var="atendimento" value="#{pesquisaAtendimentoBean.atendimentoFiltrados}" 
 		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
 		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 		    		
-	    		<p:column headerText="Número" style="text-align: center; width: 100px">
-	    			<h:outputText value="232"/>
+	    		<p:column headerText="ID" style="text-align: center;">
+	    			<h:outputText value="#{atendimento.id}"/>
 	    		</p:column>
 	    		<p:column headerText="Autor">
-	    			<h:outputText value="gfgsfg"/>
+	    			<h:outputText value="#{atendimento.assistido.nome}"/>
 	    		</p:column>
-	    		<p:column headerText="Relato">
-	    			<h:outputText value="sdfgdfg"/>
-	    		</p:column>
+	    		
 	    		<p:column headerText="Data de criação" style="text-align: center; width: 140px">
-	    			<h:outputText value="05/02/1988">
+	    			<h:outputText value="#{atendimento.dataAtendimento}">
 	    				<f:convertDateTime pattern="dd/MM/yyyy" />
 	    			</h:outputText>
 	    		</p:column>
-	    		<p:column headerText="Réu: " style="text-align: center; width: 120px">
-	    			<h:outputText value="" />
+	    		<p:column headerText="Réu: " style="width: 120px">
+	    			<h:outputText value="#{atendimento.contraParte.nome}" />
 	    		</p:column>
-	    		<p:column headerText="Area atendimento:" style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		<p:column headerText="Area atendimento:" style="text-align: center;width: 100px">
+	    			<h:outputText value="#{atendimento.areaAtendimento}"/>
 	    		</p:column>
+	    		
+	    		<p:column headerText="Advogado responsável" style="text-align: center;width: 150px;">
+	    			<h:outputText value="#{atendimento.advogado.usuario.nome}"/>
+	    		</p:column>
+	    		
+	    		<p:column headerText="Situação do atendimento" style="text-align: center;">
+	    			<h:outputText value="#{atendimento.statusAtendimento.descricao}"/>
+	    		</p:column>
+	    		
 	    		<p:column style="text-align: center; width: 50px">
-	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/assistido/CadastroAssistido">
-	    				<f:param name="assistido" value="12"/>
+	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/Atendimento/CadastroAtendimento">
+	    				<f:param name="atendimento" value="#{atendimento.id}"/>
+	    				<f:param name="assistido" value="#{atendimento.assistido.id}"/>
+	    				<f:param name="advogado" value="#{atendimento.advogado.id}"/>
+	    				<f:param name="estagiario" value="#{atendimento.estagiario.id}"/>
 	    			</p:button>
 	    		</p:column>
 	    	</p:dataTable>

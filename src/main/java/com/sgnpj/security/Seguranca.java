@@ -33,6 +33,7 @@ public class Seguranca implements Serializable {
 	@Inject
 	private Usuarios usuarios;
 	
+	@Inject
 	private Usuario usuario;
 
 	private String perfil;
@@ -44,9 +45,9 @@ public class Seguranca implements Serializable {
 	
 	public Seguranca() {
 		this.usuario = new Usuario();
-		//UsuarioSistema usu = null;
-		//usu = getUsuarioLogado();
-		//this.usuario = usu.getUsuario();
+//		UsuarioSistema usu = null;
+//		usu = getUsuarioLogado();
+//		this.usuario = usu.getUsuario();
 	}
 	
 	public void inicializar() {
@@ -64,7 +65,9 @@ public class Seguranca implements Serializable {
 		boolean verificador = false;
 		try{
 			verificador = usuarios.verficarSenha(usuario, usuario.getSenha());
+			
 			if(verificador){
+				this.usuario = usuarios.porEmail(this.usuario.getEmail());
 				if(novaSenha.equals(novaSenha2)){
 					this.usuario.setSenha(novaSenha);
 					this.usuario = usuarioService.salvar(usuario);
