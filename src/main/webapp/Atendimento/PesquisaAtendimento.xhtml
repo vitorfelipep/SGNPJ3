@@ -85,7 +85,8 @@
 	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/Atendimento/CadastroAtendimento">
 	    				<f:param name="atendimento" value="#{atendimento.id}"/>
 	    				<f:param name="assistido" value="#{atendimento.assistido.id}"/>
-	    				<f:param name="advogado" value="#{atendimento.advogado.id}"/>
+	    				<f:param name="contraParte" value="#{atendimento.contraParte.id}"/>
+	    				<f:param name="advogado" value="#{atendimento.advogado.id_advogado}"/>
 	    				<f:param name="estagiario" value="#{atendimento.estagiario.id}"/>
 	    			</p:button>
 	    		</p:column>
