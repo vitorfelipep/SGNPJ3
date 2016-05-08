@@ -1,7 +1,6 @@
 package com.sgnpj.controller;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +33,7 @@ public class GraficoAtendimentosGeradosBean implements Serializable{
 	private BarChartModel animatedModel2;
 
 	private static DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd");
+	@SuppressWarnings("unused")
 	private static DateFormat DATE_FORMAT2 = new SimpleDateFormat("dd/MM");
 	
 	@Inject
@@ -55,6 +55,7 @@ public class GraficoAtendimentosGeradosBean implements Serializable{
 		//adicionarSerie("Meus pedidos", usuarioLogado.getUsuario());
 	}
 	
+	@SuppressWarnings("unused")
 	private void adicionarSerie(String rotulo, Usuario criadoPor) {
 
 		Map<Date, Long> valoresPorData = this.atendimentos

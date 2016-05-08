@@ -6,6 +6,12 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 	
 	
+	<f:metadata>
+		<o:viewParam name="vara" value="#{cadastroTipoVaraBean.vara}"/>
+		<o:viewParam name="comarca" value="#{cadastroTipoVaraBean.comarca}"/>
+    	<f:event listener="#{cadastroTipoVaraBean.inicializar}" type="preRenderView" />
+    </f:metadata>
+	
 	<ui:define name="titulo">Cadastro de tipo de vara</ui:define>
 
 	<ui:define name="corpo">
@@ -17,7 +23,7 @@
 			<p:toolbar style="margin-top:20px;">
 				<p:toolbarGroup styleClass="toobarStyle">
 					<p:button value="Novo" outcome="/vara/CadastroTipoVara" />
-					<p:commandButton value="Salvar" id="botaoSalvar" update="panelTipoVara"  ajax="false" />
+					<p:commandButton value="Salvar" id="botaoSalvar" update="panelTipoVara" action="#{cadastroTipoVaraBean.cadastrar}" ajax="false" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right" styleClass="toobarStyle">
@@ -31,19 +37,21 @@
 				styleClass="panelgrid-noborder" style="border: 1px solid  #a8a8a8 !important; margin-top: 10px;"
 				widgetVar="panelGridUsuario">
 				<div class="ui-fluid">
-					<p:panelGrid columns="4" id="panelGridUsuario" layout="grid" 
+					<p:panelGrid columns="2" id="panelGridUsuario" layout="grid" 
 						style="margin-top:20px;" 
 						styleClass="panelgrid-noborder" 
 						columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
 		
 		
-						<p:outputLabel value="Nome da vara: " for="nomeVara" />
-						<p:inputText id="nomeVara" size="50" maxlength="80" value="" />
+						<p:outputLabel value="Nome da vara: " for="nomeVara" style="text-align: right;"/>
+						<p:inputText id="nomeVara" size="50" maxlength="80" value="#{cadastroTipoVaraBean.vara.nome}" />
 						
 						<p:outputLabel value="Comarca: " for="comarca" style="text-align: right;" />
-						<p:autoComplete id="comarca" value=""  minQueryLength="3"
-							forceSelection="true" dropdown="true"	>	
-						</p:autoComplete>							
+						<p:autoComplete id="comarca" value="#{cadastroTipoVaraBean.vara.cormarca}"  minQueryLength="3"
+							completeMethod="#{cadastroTipoVaraBean.completarComarca}"  size="50"
+							var="comarca" itemValue="#{comarca}" itemLabel="#{comarca.nome}"
+							forceSelection="true" dropdown="true">	
+						</p:autoComplete>						
 		
 					</p:panelGrid>
 				</div>

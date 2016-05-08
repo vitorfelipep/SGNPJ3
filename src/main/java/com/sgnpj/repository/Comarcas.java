@@ -54,5 +54,17 @@ public class Comarcas implements Serializable{
 		return criteria.addOrder(Order.asc("nome")).list(); 
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Comarca> porNome(String nome) {
+		Session session = manager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Comarca.class);
+		
+		if(StringUtils.isNotBlank(nome)){
+			criteria.add(Restrictions.ilike("nome", nome.toUpperCase(), MatchMode.ANYWHERE));
+		}
+		
+		return criteria.addOrder(Order.asc("nome")).list();
+	}
+
 
 }

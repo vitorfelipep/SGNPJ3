@@ -27,6 +27,10 @@ public class TipoVara implements Serializable {
 	private Date dataCadastro;
 	private Comarca cormarca;
 	
+	public TipoVara() {
+		this.cormarca = new Comarca();
+	}
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -93,5 +97,4 @@ public class TipoVara implements Serializable {
 			return false;
 		return true;
 	}
-
 }

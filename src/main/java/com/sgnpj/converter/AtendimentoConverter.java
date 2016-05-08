@@ -3,10 +3,12 @@ package com.sgnpj.converter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
 import com.sgnpj.model.Atendimento;
 import com.sgnpj.repository.Atendimentos;
 
+@FacesConverter(forClass = Atendimento.class)
 public class AtendimentoConverter implements Converter{
 	
 	private Atendimentos atendimentos;

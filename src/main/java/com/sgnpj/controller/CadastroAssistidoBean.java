@@ -306,12 +306,10 @@ public class CadastroAssistidoBean implements Serializable {
 				FacesUtil.addInfoMesage("O Assistido Sr(a) "
 						+ this.assistido.getNome() + " foi salvo com sucesso!");
 
+			} finally {
 				// Mostra a mensagem final
 				showMessage();
-
-			} finally {
-
-				limparForm();
+				//limparForm();
 			}
 		} else {
 			try {

@@ -116,38 +116,75 @@ public class CadastroAtendimentoBean implements Serializable {
 
 	public void salvarAssistido() {
 		
-		try{
-			System.out.println(this.assistido);
-			this.contraParte.setAssistidoAutor(assistido);
-			this.atendimento.setAdvogado(advogado);
-			this.atendimento.setAssistido(assistido);
-			if(this.contraParte.getId() != null){
-				this.atendimento.setContraParte(contraParte);
-			}else{
-				if(this.contraParte.getTipoAssistido() == null){
-					this.contraParte.setTipoAssistido("REU");
-					this.contraParte.setTipoEndereco(TipoEndereco.CASA_PROPRIA);
-					if (contraParte.getPessoaFisica().getCpf() != null) {
-						this.contraParte.setPessoaFisica(pessoaFisicaService
-								.salvar(contraParte.getPessoaFisica()));
-						this.contraParte.setPessoaJuridica(null);
-					} else {
-						this.contraParte.setPessoaJuridica(pessoaJuridicaService
-								.salvar(contraParte.getPessoaJuridica()));
-						this.contraParte.setPessoaFisica(null);
+		if(this.atendimento.getId() == null){
+		
+			try{
+				
+				this.contraParte.setAssistidoAutor(assistido);
+				this.atendimento.setAdvogado(advogado);
+				this.atendimento.setAssistido(assistido);
+				if(this.contraParte.getId() != null){
+					this.atendimento.setContraParte(contraParte);
+				}else{
+					if(this.contraParte.getTipoAssistido() == null){
+						this.contraParte.setTipoAssistido("REU");
+						this.contraParte.setTipoEndereco(TipoEndereco.CASA_PROPRIA);
+						if (contraParte.getPessoaFisica().getCpf() != null) {
+							this.contraParte.setPessoaFisica(pessoaFisicaService
+									.salvar(contraParte.getPessoaFisica()));
+							this.contraParte.setPessoaJuridica(null);
+						} else {
+							this.contraParte.setPessoaJuridica(pessoaJuridicaService
+									.salvar(contraParte.getPessoaJuridica()));
+							this.contraParte.setPessoaFisica(null);
+						}
 					}
+					this.contraParte = cadastrarParteContrariaService.salvar(contraParte);
+					this.atendimento.setContraParte(contraParte);
 				}
-				this.contraParte = cadastrarParteContrariaService.salvar(contraParte);
-				this.atendimento.setContraParte(contraParte);
+				this.atendimento.setEstagiario(estagiario);
+				
+				this.atendimento = cadastrarAtendimentoService.salvar(atendimento);
+				
+				FacesUtil.addInfoMesage("Atendimento cadastrado com sucesso!");
+				
+			}finally{
+				limparForm();
 			}
-			this.atendimento.setEstagiario(estagiario);
-			
-			this.atendimento = cadastrarAtendimentoService.salvar(atendimento);
-			
-			FacesUtil.addInfoMesage("Atendimento cadastrado com sucesso!");
-			
-		}finally{
-			limparForm();
+		
+		}else{
+			try{
+				
+				this.contraParte.setAssistidoAutor(assistido);
+				this.atendimento.setAdvogado(advogado);
+				this.atendimento.setAssistido(assistido);
+				if(this.contraParte.getId() != null){
+					this.atendimento.setContraParte(contraParte);
+				} else {
+					if(this.contraParte.getTipoAssistido() == null){
+						this.contraParte.setTipoAssistido("REU");
+						this.contraParte.setTipoEndereco(TipoEndereco.CASA_PROPRIA);
+						if (contraParte.getPessoaFisica().getCpf() != null) {
+							this.contraParte.setPessoaFisica(pessoaFisicaService
+									.salvar(contraParte.getPessoaFisica()));
+							this.contraParte.setPessoaJuridica(null);
+						} else {
+							this.contraParte.setPessoaJuridica(pessoaJuridicaService
+									.salvar(contraParte.getPessoaJuridica()));
+							this.contraParte.setPessoaFisica(null);
+						}
+					}
+					this.contraParte = cadastrarParteContrariaService.salvar(contraParte);
+					this.atendimento.setContraParte(contraParte);
+				}
+				this.atendimento.setEstagiario(estagiario);
+				
+				this.atendimento = cadastrarAtendimentoService.salvar(atendimento);
+
+			}finally{
+				FacesUtil.addInfoMesage("Atendimento de nº "+ this.atendimento.getId() +" alterado com sucesso!");
+				limparForm();
+			}
 		}
 	}
 
@@ -155,6 +192,7 @@ public class CadastroAtendimentoBean implements Serializable {
 		
 		this.assistido = new Assistido();
 		this.advogado = new Advogado();
+		this.estagiario = new Estagiario();
 		this.contraParte = new AssistidoContraParte();
 		this.atendimento = new Atendimento();
 		
