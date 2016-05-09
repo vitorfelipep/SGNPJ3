@@ -197,6 +197,14 @@ public class CadastroAtendimentoBean implements Serializable {
 		this.atendimento = new Atendimento();
 		
 	}
+	
+	public boolean isEditando() {
+		return this.atendimento.getId() != null;
+	}
+
+	public boolean isNaoEditando() {
+		return this.atendimento.getId() == null;
+	}
 
 	public List<Assistido> completarAssistido(String nome) {
 		List<Assistido> assistidos = this.assistidos.porNome(nome);

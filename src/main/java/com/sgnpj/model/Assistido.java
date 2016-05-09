@@ -51,6 +51,8 @@ public class Assistido implements Serializable {
 		this.pessoaFisica = new PessoaFisica();
 		this.pessoaJuridica = new PessoaJuridica();
 		this.contraPartes = new ArrayList<AssistidoContraParte>();
+		this.triagem = new Triagem();
+		this.triagem.setJafoiAtendido("NÂO");
 	}
 
 	public Assistido(Long id, String nome, String tipoAssistido, String cep,

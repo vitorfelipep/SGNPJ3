@@ -1,20 +1,29 @@
 package com.sgnpj.controller;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 import javax.persistence.Transient;
+import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.primefaces.context.RequestContext;
 
@@ -47,6 +56,7 @@ import com.sgnpj.service.CadastrarTelefoneService;
 import com.sgnpj.service.CadastrarTriagemService;
 import com.sgnpj.service.EstagiarioService;
 import com.sgnpj.util.jsf.FacesUtil;
+import com.sgnpj.util.report.ExecutorRelatorio;
 
 @Named
 @ViewScoped
@@ -68,7 +78,7 @@ public class CadastroAssistidoBean implements Serializable {
 
 	@Inject
 	private CadastrarTriagemService triagemService;
-	
+
 	@Inject
 	private CadastrarTelefoneService telefoneService;
 
@@ -96,7 +106,7 @@ public class CadastroAssistidoBean implements Serializable {
 
 	@Inject
 	private Atendimentos atendimentos;
-	
+
 	@Inject
 	private Telefones telefones;
 
@@ -105,6 +115,16 @@ public class CadastroAssistidoBean implements Serializable {
 
 	@Inject
 	private Telefone telefone;
+
+	// Injeção para emitir relatórios do jasper Reports
+	@Inject
+	private FacesContext facesContext;
+
+	@Inject
+	private HttpServletResponse response;
+
+	@Inject
+	private EntityManager manager;
 
 	private String tipoAssistido;
 
@@ -147,34 +167,37 @@ public class CadastroAssistidoBean implements Serializable {
 
 	public void inicializar() {
 		if (FacesUtil.isNotPostBack()) {
-			if(this.atendimento.getId() == null) {
-				this.atendimento.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
+			if (this.atendimento.getId() == null) {
+				this.atendimento
+						.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
 			}
 		}
 
 		if (assistido.getId() != null) {
-			
+
 			this.telefone = telefones.porIdAssistido(assistido);
-			
-			this.atendimento = atendimentos.PorIdAssistido(this.assistido, this.contraParte);
+
+			this.atendimento = atendimentos.PorIdAssistido(this.assistido,
+					this.contraParte);
 			if (this.atendimento.getId() == null) {
-				FacesUtil.addInfoMesage("Este assistido não está vinculado a nenhum atendimento!");
+				FacesUtil
+						.addInfoMesage("Este assistido não está vinculado a nenhum atendimento!");
 			} else {
 				if (this.atendimento.getStatusAtendimento().equals(
 						StatusAtendimento.EM_APROVACAO)) {
 					this.controleBotaoFinalizar = false;
-				}else{
+				} else {
 					this.atendimentoFinalizado = true;
 				}
-				
-				if(this.atendimento.getAssistido().getPessoaFisica() == null){
+
+				if (this.atendimento.getAssistido().getPessoaFisica() == null) {
 					this.tipoPessoa = TipoPessoa.JURIDICA;
-				}else{
+				} else {
 					this.tipoPessoa = TipoPessoa.FISICA;
 				}
-				
-				if(this.contraParte.getId() != null){
-					if(this.contraParte.getPessoaFisica() != null){
+
+				if (this.contraParte.getId() != null) {
+					if (this.contraParte.getPessoaFisica() != null) {
 						this.setTipoPessoaFisicaContraParte(true);
 						this.setTipoPessoaJuridicaContraParte(false);
 					} else {
@@ -182,7 +205,7 @@ public class CadastroAssistidoBean implements Serializable {
 						this.setTipoPessoaJuridicaContraParte(true);
 					}
 				}
-				
+
 				this.dataAtendimento = atendimento.getDataAtendimento();
 				this.tipoAssistido = atendimento.getAssistido()
 						.getTipoAssistido();
@@ -242,15 +265,14 @@ public class CadastroAssistidoBean implements Serializable {
 							.salvar(contraParte.getPessoaJuridica()));
 					this.contraParte.setPessoaFisica(null);
 				}
-				
-				
+
 				// Salvo o assisitido
 				this.assistido = assistidoService.salvar(assistido);
-				
+
 				this.telefone.setAssistido(assistido);
-				
+
 				this.telefone = telefoneService.salvar(this.telefone);
-				
+
 				this.contraParte.setAssistidoAutor(assistido);
 
 				// Coloco relaciono os ultimos objetos
@@ -309,7 +331,7 @@ public class CadastroAssistidoBean implements Serializable {
 			} finally {
 				// Mostra a mensagem final
 				showMessage();
-				//limparForm();
+				// limparForm();
 			}
 		} else {
 			try {
@@ -326,15 +348,17 @@ public class CadastroAssistidoBean implements Serializable {
 						+ this.assistido.getNome()
 						+ " foi atualizado com sucesso!");
 			} finally {
-				limparForm();
+				// limparForm();
 			}
 
 		}
 	}
 
 	public void finalizarAtendimento() {
+
 		try {
-			this.atendimento.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
+			this.atendimento
+					.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
 			this.atendimentoFinalizado = true;
 			this.assistido = this.assistidoService.salvar(assistido);
 			this.contraParte = parteContrariaService.salvar(contraParte);
@@ -342,8 +366,26 @@ public class CadastroAssistidoBean implements Serializable {
 
 			FacesUtil.addInfoMesage("Atendimento finalizado com sucesso!");
 		} finally {
+
 			this.controleBotaoFinalizar = true;
 			limparForm();
+		}
+	}
+
+	public void gerarRelatorios() {
+
+		Session session = manager.unwrap(Session.class);
+		Map<String, Object> parametros = new HashMap<>();
+		
+		if(this.assistido.getId() != null){
+			parametros.put("idAssistido", this.assistido.getId());
+	
+			ExecutorRelatorio executor = new ExecutorRelatorio(
+					"/relatorios/Relatorio_hipossuficiencia.jasper", this.response,
+					parametros, "Relatorio Hipossuficiencia.pdf");
+	
+			session.doWork(executor);
+			facesContext.responseComplete();
 		}
 	}
 
@@ -378,7 +420,7 @@ public class CadastroAssistidoBean implements Serializable {
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 	}
 	
-	
+
 	public boolean isEditando() {
 		return this.assistido.getId() != null;
 	}
@@ -386,7 +428,7 @@ public class CadastroAssistidoBean implements Serializable {
 	public boolean isNaoEditando() {
 		return this.assistido.getId() == null;
 	}
-	
+
 	// Lista de enums do tipo area de atuação
 	public TipoPessoa[] getTiposPessoa() {
 		return TipoPessoa.values();
@@ -634,9 +676,7 @@ public class CadastroAssistidoBean implements Serializable {
 	public void setAtendimentoFinalizado(Boolean atendimentoFinalizado) {
 		this.atendimentoFinalizado = atendimentoFinalizado;
 	}
-	
-	
-	
+
 	/*
 	 * -------------------------------------------------------- Fim Getters and
 	 * Setters ------------------------------------------------------------

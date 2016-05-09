@@ -38,6 +38,21 @@
 	    			<ui:include src="/WEB-INF/template/assistidos/ObservacaoAssistido.xhtml" /> 
 	    		</p:tab>
 	    	</p:tabView>
+	    	
+	    	<p:confirmDialog header="Confirmação de relatórios"
+				message="Deseja gerar os relatórios agora?"
+				showEffect="fade" hideEffect="fade"
+				widgetVar="confirmacaoRelatorio" id="confirmacaoRelatorio">
+				<p:button value="Não"
+					onclick="PF('confirmacaoRelatorio').hide(); return false;" />
+				<p:commandButton value="Sim"
+					oncomplete="PF('confirmacaoExclusao').hide();"
+					ajax="true"
+					action="#{cadastroAssistidoBean.gerarRelatorios}"
+					process="@this"
+					update="@form" id="yesButton" />
+			</p:confirmDialog>
+	    	
     	</h:form>
     </ui:define>
  </ui:composition>
