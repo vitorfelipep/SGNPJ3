@@ -67,13 +67,15 @@ public class Atendimentos implements Serializable{
 										new Type[] {StandardBasicTypes.DATE})
 									)
 								.add(Projections.count("areaAtendimento").as("valor"))
-							  ).add(Restrictions.ge("dataAtendimento", dataInicial.getTime()));
+							  ).add(Restrictions.ge("dataAtendimento", dataInicial.getTime()))
+							  .createAlias("advogado", "ad")
+							  .createAlias("estagiario", "es");
 		
 		if(criadoPor != null){
 			if(criadoPor.getAdvogado() != null){
-				criteria.add(Restrictions.eq("advogado", criadoPor));
+				criteria.add(Restrictions.eq("ad.id_advogado", criadoPor.getAdvogado().getId_advogado()));
 			}else if(criadoPor.getEstagiario() != null){
-				criteria.add(Restrictions.eq("estagiario", criadoPor));
+				criteria.add(Restrictions.eq("es.id", criadoPor.getEstagiario().getId()));
 			}
 		}
 		

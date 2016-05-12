@@ -46,10 +46,9 @@
 				<p:button value="Não"
 					onclick="PF('confirmacaoRelatorio').hide(); return false;" />
 				<p:commandButton value="Sim"
-					oncomplete="PF('confirmacaoExclusao').hide();"
-					ajax="true"
+					oncomplete="PF('confirmacaoExclusao').hide();  "
+					ajax="false"
 					action="#{cadastroAssistidoBean.gerarRelatorios}"
-					process="@this"
 					update="@form" id="yesButton" />
 			</p:confirmDialog>
 	    	

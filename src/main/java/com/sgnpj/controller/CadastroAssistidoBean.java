@@ -1,8 +1,6 @@
 package com.sgnpj.controller;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,7 +21,6 @@ import javax.persistence.Transient;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
-import org.hibernate.jdbc.Work;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.primefaces.context.RequestContext;
 
@@ -335,7 +332,11 @@ public class CadastroAssistidoBean implements Serializable {
 			}
 		} else {
 			try {
+				this.assistido.setTriagem(triagemService.salvar(this.assistido
+						.getTriagem()));
 				this.assistido = this.assistidoService.salvar(assistido);
+				this.assistido.setTriagem(triagemService.salvar(this.assistido
+						.getTriagem()));
 				this.contraParte = parteContrariaService.salvar(contraParte);
 				this.atendimento.setAssistido(assistido);
 				this.atendimento.setContraParte(contraParte);
@@ -360,6 +361,7 @@ public class CadastroAssistidoBean implements Serializable {
 			this.atendimento
 					.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
 			this.atendimentoFinalizado = true;
+			this.assistido.setSituacao(SituacaoAssitido.APROVADO);
 			this.assistido = this.assistidoService.salvar(assistido);
 			this.contraParte = parteContrariaService.salvar(contraParte);
 			this.atendimento = cadastrarAtendimentoService.salvar(atendimento);
@@ -368,7 +370,7 @@ public class CadastroAssistidoBean implements Serializable {
 		} finally {
 
 			this.controleBotaoFinalizar = true;
-			limparForm();
+			//limparForm();
 		}
 	}
 
@@ -383,10 +385,14 @@ public class CadastroAssistidoBean implements Serializable {
 			ExecutorRelatorio executor = new ExecutorRelatorio(
 					"/relatorios/Relatorio_hipossuficiencia.jasper", this.response,
 					parametros, "Relatorio Hipossuficiencia.pdf");
-	
+			
+			
 			session.doWork(executor);
+			
 			facesContext.responseComplete();
 		}
+		
+		limparForm();
 	}
 
 	private void limparForm() {

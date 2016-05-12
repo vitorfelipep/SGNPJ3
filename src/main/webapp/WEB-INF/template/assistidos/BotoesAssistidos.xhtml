@@ -13,7 +13,7 @@
     		</p:toolbarGroup>
     			
     		<p:toolbarGroup align="right" styleClass="toobarStyle">
-    			<p:commandButton value="Finalizar Atendimento" id="finalizarAtendimento" oncomplete="PF('confirmacaoRelatorio').show()"  update="@form" process="@this" action="#{cadastroAssistidoBean.finalizarAtendimento}" disabled="#{cadastroAssistidoBean.controleBotaoFinalizar}"/>
+    			<p:commandButton value="Finalizar Atendimento" id="finalizarAtendimento" oncomplete="PF('confirmacaoRelatorio').show()"   process="@this" action="#{cadastroAssistidoBean.finalizarAtendimento}" disabled="#{cadastroAssistidoBean.controleBotaoFinalizar}"/>
     			<p:separator />
     			<p:button value="Pesquisa" outcome="/assistido/PesquisaAssistidos"/>
     		</p:toolbarGroup>

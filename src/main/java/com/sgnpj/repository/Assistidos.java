@@ -64,7 +64,7 @@ public class Assistidos implements Serializable{
 		}
 		
 //		if(filtro.getSituacaoAssistido() != null){
-//			criteria.add(Restrictions.ilike("situacao", filtro.getSituacaoAssistido(), MatchMode.ANYWHERE));
+//			criteria.add(Restrictions.ilike("situacao", filtro.getSituacaoAssistido().getDescricao(), MatchMode.ANYWHERE));
 //		}
 		
 		if(StringUtils.isNotBlank(filtro.getRg())){

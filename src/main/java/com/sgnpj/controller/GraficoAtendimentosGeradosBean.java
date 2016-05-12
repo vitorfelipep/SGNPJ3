@@ -52,7 +52,7 @@ public class GraficoAtendimentosGeradosBean implements Serializable{
 		this.animatedModel1 = new LineChartModel();
 		this.animatedModel2 = new BarChartModel();
 		adicionarSerie("Todos os Atendimentos", null);
-		//adicionarSerie("Meus pedidos", usuarioLogado.getUsuario());
+		adicionarSerie("Meus atendimentos", usuarioLogado.getUsuario());
 	}
 	
 	@SuppressWarnings("unused")

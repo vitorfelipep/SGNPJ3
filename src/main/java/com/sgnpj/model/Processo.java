@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +33,7 @@ public class Processo implements Serializable {
 	private Date dataAbertura;
 	private Date dataConclusao;
 	private String observacao;
+	private TipoVara vara;
 
 	@Id
 	@GeneratedValue
@@ -42,7 +44,7 @@ public class Processo implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Column(nullable = true, unique = true, length = 20)
 	public Integer getNumeroProcesso() {
 		return numeroProcesso;
@@ -52,7 +54,6 @@ public class Processo implements Serializable {
 		this.numeroProcesso = numeroProcesso;
 	}
 
-	
 	@ManyToOne
 	@JoinColumn(name = "atendimento_id", nullable = false)
 	public Atendimento getAtendimento() {
@@ -73,7 +74,7 @@ public class Processo implements Serializable {
 	public void setSituacao(StatusProcesso situacao) {
 		this.situacao = situacao;
 	}
-	
+
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_abertura", nullable = false)
@@ -84,7 +85,7 @@ public class Processo implements Serializable {
 	public void setDataAbertura(Date dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
-	
+
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_conclusao", nullable = false)
@@ -95,7 +96,7 @@ public class Processo implements Serializable {
 	public void setDataConclusao(Date dataConclusao) {
 		this.dataConclusao = dataConclusao;
 	}
-	
+
 	@NotBlank
 	@Column(columnDefinition = "text", nullable = false)
 	public String getObservacao() {
@@ -104,6 +105,15 @@ public class Processo implements Serializable {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	@OneToOne
+	public TipoVara getVara() {
+		return vara;
+	}
+
+	public void setVara(TipoVara vara) {
+		this.vara = vara;
 	}
 
 	@Override

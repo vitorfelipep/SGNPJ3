@@ -29,14 +29,14 @@
 		
 		<p:outputLabel value="Primeiro atendimento?" for="primeiroAtend" />
 		<p:selectOneMenu id="primeiroAtend" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.triagem.primeiroAtendimento}">
-				<f:selectItem itemLabel="Sim" itemValue="Sim"/>
-				<f:selectItem itemLabel="Não" itemValue="Não"/>
+				<f:selectItem itemLabel="Sim" itemValue="SIM"/>
+				<f:selectItem itemLabel="Não" itemValue="NAO"/>
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Já foi atendido por esta serviço judiciário?" for="verificacaAtend" />
 		<p:selectOneRadio id="verificacaAtend" value="#{cadastroAssistidoBean.assistido.triagem.jafoiAtendido}" >
-			<f:selectItem itemLabel="Sim" itemValue="Sim" />
-			<f:selectItem itemLabel="Não" itemValue="Não" />
+			<f:selectItem itemLabel="Sim" itemValue="SIM" />
+			<f:selectItem itemLabel="Não" itemValue="NAO" />
 		</p:selectOneRadio>
 		
 		<p:outputLabel value="Sobre que problema?" for="problemaTriagem" />

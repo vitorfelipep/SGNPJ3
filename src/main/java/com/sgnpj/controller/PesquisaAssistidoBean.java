@@ -33,7 +33,7 @@ public class PesquisaAssistidoBean implements Serializable {
 		this.filtro = new AssistidoFilter();
 		this.assistidosFiltrados = new ArrayList<Assistido>();
 	}
-	
+	 
 	
 	// Lista de enums do tipo area de atuação
 	public SituacaoAssitido[] getSituacaoAssistido() {
