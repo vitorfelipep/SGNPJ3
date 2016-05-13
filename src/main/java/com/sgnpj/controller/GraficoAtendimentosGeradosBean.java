@@ -86,9 +86,10 @@ public class GraficoAtendimentosGeradosBean implements Serializable{
 		animatedModel1.addSeries(series);
 		animatedModel1.setTitle("Relatório periódico de atendimentos");
 		animatedModel1.setAnimate(true);
-		animatedModel1.setLegendPosition("se");
+		animatedModel1.setLegendPosition("nw");
 		Axis xAxis = animatedModel1.getAxis(AxisType.X);
 		xAxis.setLabel("Dia");
+		xAxis.setMin(0);
 		Axis yAxis = animatedModel1.getAxis(AxisType.Y);
 		yAxis.setLabel("Atendimentos");
 		yAxis.setMin(0);

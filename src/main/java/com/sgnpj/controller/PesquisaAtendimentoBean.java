@@ -34,6 +34,7 @@ public class PesquisaAtendimentoBean implements Serializable {
 	//oesquisa de atendimento
 	public void pesquisar(){
 		this.atendimentoFiltrados = atendimentos.filtrados(atendimentoFilter);
+		
 	}
 	
 	// Lista de enums do tipo area de atuação

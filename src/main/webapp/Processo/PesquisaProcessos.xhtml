@@ -14,64 +14,136 @@
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
 	    			<p:commandButton value="Pesquisar" 
-	    				update="@form" />
+	    				update="@form"  action="#{pesquisaAtendimentoVinculoProcessoBean.pesquisar}"/>
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
 	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
 	    			columnClasses="rotulo, campo">
 	    		
-	    		<p:outputLabel value="Data de Atendimento" />
-	    		<h:panelGroup>
-	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
-	    				 />
+	    		<p:outputLabel value="Data de Atendimento" for="datas"/>
+	    		<h:panelGroup id="datas">
+	    			<p:calendar id="dataInicial" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{pesquisaAtendimentoVinculoProcessoBean.atendimentoFilter.dataInicial}"/>
 	    			a
-	    			<p:calendar size="10" pattern="dd/MM/yyyy"
-	    				/>
+	    			<p:calendar id="dataFinal" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{pesquisaAtendimentoVinculoProcessoBean.atendimentoFilter.dataFinal}"	/>
 	    		</h:panelGroup>
 	    		
-	    		<p:outputLabel value="Atendente" />
-	    		<p:inputText size="40" value="" required="true"/>
+	    		<p:outputLabel value="Advogado: " for="advogado"/>
+	    		<p:autoComplete id="advogado" value="#{pesquisaAtendimentoVinculoProcessoBean.atendimentoFilter.advogado}" minQueryLength="3"	
+							completeMethod="#{cadastroAtendimentoBean.completarAdvogado}" 
+							var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.usuario.nome}"
+							forceSelection="true" dropdown="true" />
 	    		
-	    		<p:outputLabel value="Cliente (Assistido): " />
-	    		<p:inputText size="40" value="" />
-	    		
-	    		<p:outputLabel value="Status atendimento" />
-	    		<p:selectManyCheckbox >
-	    			<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
-	    		</p:selectManyCheckbox>
+	    		<p:outputLabel value="Cliente (Assistido): " for="assistido"/>
+	    		<p:autoComplete id="assistido" value="#{pesquisaAtendimentoVinculoProcessoBean.atendimentoFilter.assistido}"  minQueryLength="3"
+						completeMethod="#{cadastroAtendimentoBean.completarAssistido}" 
+						var="assistido" itemValue="#{assistido}" itemLabel="#{assistido.nome}"
+						forceSelection="true" dropdown="true"	>	
+				</p:autoComplete>
 	    	</p:panelGrid>
 	    	
-	    	<p:dataTable id="tabelaAssistido"  var="assistido"
+	    	<p:dataTable id="tabelaAtendimento"  var="atendimento" value="#{pesquisaAtendimentoVinculoProcessoBean.atendimentos}" 
 		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
 		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 		    		
-	    		<p:column headerText="Número" style="text-align: center; width: 100px">
-	    			<h:outputText value="232"/>
+	    		<p:column headerText="ID" style="text-align: center;">
+	    			<h:outputText value="#{atendimento.id}"/>
 	    		</p:column>
 	    		<p:column headerText="Autor">
-	    			<h:outputText value="gfgsfg"/>
+	    			<h:outputText value="#{atendimento.assistido.nome}"/>
 	    		</p:column>
-	    		<p:column headerText="Relato">
-	    			<h:outputText value="sdfgdfg"/>
-	    		</p:column>
+	    		
 	    		<p:column headerText="Data de criação" style="text-align: center; width: 140px">
-	    			<h:outputText value="05/02/1988">
+	    			<h:outputText value="#{atendimento.dataAtendimento}">
 	    				<f:convertDateTime pattern="dd/MM/yyyy" />
 	    			</h:outputText>
 	    		</p:column>
-	    		<p:column headerText="Réu " style="text-align: center; width: 120px">
-	    			<h:outputText value="" />
+	    		<p:column headerText="Réu: " style="width: 120px">
+	    			<h:outputText value="#{atendimento.contraParte.nome}" />
 	    		</p:column>
-	    		<p:column headerText="Area atendimento:" style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		<p:column headerText="Area atendimento:" style="text-align: center;width: 100px">
+	    			<h:outputText value="#{atendimento.areaAtendimento}"/>
 	    		</p:column>
+	    		
+	    		<p:column headerText="Advogado responsável" style="text-align: center;width: 150px;">
+	    			<h:outputText value="#{atendimento.advogado.usuario.nome}"/>
+	    		</p:column>
+	    		
+	    		<p:column headerText="Situação do atendimento" style="text-align: center;">
+	    			<h:outputText value="#{atendimento.statusAtendimento.descricao}"/>
+	    		</p:column>
+	    		
 	    		<p:column style="text-align: center; width: 50px">
-	    			<p:button icon="ui-icon-pencil" title="Alterar" outcome="/assistido/CadastroAssistido">
-	    				<f:param name="assistido" value="12"/>
-	    			</p:button>
+	    			<p:commandButton id="vincularProcesso" icon="ui-icon-pencil"
+							title="Editar Regra" oncomplete="PF('dlg3').show();"
+							update=":formModal:vincularProcess">
+							
+						</p:commandButton>
 	    		</p:column>
 	    	</p:dataTable>
+
     	</h:form>
+    	
+    	<h:form id="formModal">
+			<p:dialog id="vincularProcess" styleClass="modalProcesso"
+				header="Vincular Processo" widgetVar="dlg3" modal="true"
+				showEffect="fade" hideEffect="slide" resizable="false"
+				draggable="false">
+
+				<p:panelGrid columns="2" id="painelAlterar"
+					style="width: 100%;margin-top:10px;" columnClasses="rotulo, campo">
+	
+					<p:outputLabel value="Processo: " for="numeroProcesso"/>
+					<p:inputText id="numeroProcesso" size="50" maxlength="80"/>
+
+					<p:outputLabel value="Situação da Processo: " for="sitProcesso"  />
+					<p:selectOneMenu id="sitProcesso">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="PENDENTE" itemValue="PENDENTE" />
+						<f:selectItem itemLabel="ATIVO" itemValue="ATIVO" />
+						<f:selectItem itemLabel="INATIVO" itemValue="INATIVO" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Data Abertura: " for="dataAbertura"  />
+					<p:calendar id="dataAbertura" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"   />
+					
+					<p:outputLabel value="Data de fechamento: " for="dataFechamento"  />
+					<p:calendar id="dataFechamento" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"   />
+					
+					<p:outputLabel value="Vara do processo: " for="varaProcesso"  />
+					<p:selectOneMenu id="varaProcesso">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="PENDENTE" itemValue="PENDENTE" />
+						<f:selectItem itemLabel="ATIVO" itemValue="ATIVO" />
+						<f:selectItem itemLabel="INATIVO" itemValue="INATIVO" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Situação do atendimento:" for="sitAtendimento"/>
+					<h:outputText id="sitAtendimento" value="EM_ATENDIMENTO" style="color:green;"/>
+					
+					<p:outputLabel value="Area do atendimento:" for="areaAtendimento"/>
+					<h:outputText id="areaAtendimento" value="PENAL" style="color: green;"/>
+					
+					<p:outputLabel value="Assistido:" for="assistido"/>
+					<h:outputText id="assistido" value="Joao das Neves" style="color: green;"/>
+					
+					
+
+				</p:panelGrid>
+				
+				<h:panelGroup layout="block" style="padding-right: 10px">		
+					<p:editor id="editor" widgetVar="editorWidget"   style="width: 100%"/>
+				</h:panelGroup>
+				
+				<f:facet name="footer">
+					<p:commandButton id="btnAlterar" oncomplete="PF('dlg3').hide();"
+						update="@form" value="Vincular"
+						title="Vincular Processo" ajax="true">
+
+					</p:commandButton>
+				</f:facet>
+			</p:dialog>
+		</h:form>
+    	
     </ui:define>
 </ui:composition>

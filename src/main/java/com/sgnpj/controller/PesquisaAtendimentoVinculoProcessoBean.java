@@ -35,12 +35,12 @@ public class PesquisaAtendimentoVinculoProcessoBean implements Serializable {
 		this.atendimentos = new ArrayList<Atendimento>();
 	}
 
-	public Processo getProcesso() {
-		return processo;
+	public void pesquisar() {
+		this.atendimentos = atendimentosRepository.filtradosParaProcesso(atendimentoFilter);
 	}
 
-	public void pesquisar() {
-
+	public Processo getProcesso() {
+		return processo;
 	}
 
 	public void setProcesso(Processo processo) {
