@@ -2,9 +2,9 @@ package com.sgnpj.model;
 
 public enum StatusProcesso {
 	
-	EM_ANDAMENTO("Em_Andamento"),
-	FECHADO("Fechado"),
-	CANCELADO("Cancelado");
+	EM_ANDAMENTO("Em andamento"),
+	ARQUIVADO("Processo arquivado"),
+	CANCELADO("Processo Cancelado");
 	
 	private String descricao;
 	

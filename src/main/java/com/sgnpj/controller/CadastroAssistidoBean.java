@@ -202,7 +202,8 @@ public class CadastroAssistidoBean implements Serializable {
 						this.setTipoPessoaJuridicaContraParte(true);
 					}
 				}
-
+				
+				
 				this.dataAtendimento = atendimento.getDataAtendimento();
 				this.tipoAssistido = atendimento.getAssistido()
 						.getTipoAssistido();
@@ -296,7 +297,8 @@ public class CadastroAssistidoBean implements Serializable {
 				this.atendimento.setAdvogado(advogado);
 
 				if (this.estagiario.getNome() == null) {
-					this.atendimento.setEstagiario(null);
+					this.estagiario = estagiarioService.porIdEstagiario(1L);
+					this.atendimento.setEstagiario(estagiario);
 				} else {
 					this.atendimento.setEstagiario(estagiario);
 				}

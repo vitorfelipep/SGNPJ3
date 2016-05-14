@@ -61,4 +61,16 @@ public class Varas implements Serializable{
 		return criteria.addOrder(Order.asc("nome")).list(); 
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<TipoVara> porNome(String nome) {
+		Session session = manager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(TipoVara.class);
+		
+		if(StringUtils.isNotBlank(nome)){
+			criteria.add(Restrictions.ilike("nome", nome.toUpperCase(), MatchMode.ANYWHERE));
+		}
+		
+		return criteria.addOrder(Order.asc("nome")).list();
+	}
+
 }

@@ -29,9 +29,9 @@ public class Teste {
 		
 		List<Perfil> perfis = new ArrayList<Perfil>();
 		
-		Perfil p = new Perfil(null, "administrador", "ADMINITSRADOR");
-		Perfil p2 = new Perfil(null, "Advogado", "ADVOGADO");
-		Perfil p3 = new Perfil(null, "Estagiario", "ESTAGIARIO");
+		Perfil p = new Perfil(null, "ADMINISTRADOR", "Aministrador");
+		Perfil p2 = new Perfil(null, "ADVOGADO", "Advogado");
+		Perfil p3 = new Perfil(null, "ESTAGIARIO", "Estagiario");
 		
 		p = manager.merge(p);
 		p2 = manager.merge(p2);

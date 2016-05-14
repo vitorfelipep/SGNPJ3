@@ -17,8 +17,6 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 import org.hibernate.jdbc.Work;
 
-import com.sun.faces.facelets.tag.jstl.core.SetHandler;
-
 public class ExecutorRelatorio implements Work {
 
 	private String caminhoRelatorio;

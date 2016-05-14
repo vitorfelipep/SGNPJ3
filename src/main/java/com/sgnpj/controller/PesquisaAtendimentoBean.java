@@ -37,6 +37,7 @@ public class PesquisaAtendimentoBean implements Serializable {
 		
 	}
 	
+	
 	// Lista de enums do tipo area de atuação
 	public StatusAtendimento[] getStatusAtendimento() {
 		return StatusAtendimento.values();

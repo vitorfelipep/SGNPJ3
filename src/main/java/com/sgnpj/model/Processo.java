@@ -18,7 +18,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "processo")
@@ -64,9 +63,9 @@ public class Processo implements Serializable {
 		this.atendimento = atendimento;
 	}
 
-	@NotEmpty
+	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 10)
+	@Column(nullable = false, length = 30)
 	public StatusProcesso getSituacao() {
 		return situacao;
 	}
@@ -86,9 +85,8 @@ public class Processo implements Serializable {
 		this.dataAbertura = dataAbertura;
 	}
 
-	@NotNull
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_conclusao", nullable = false)
+	@Column(name = "data_conclusao", nullable = true)
 	public Date getDataConclusao() {
 		return dataConclusao;
 	}

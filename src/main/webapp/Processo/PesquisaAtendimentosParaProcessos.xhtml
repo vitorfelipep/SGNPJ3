@@ -8,13 +8,20 @@
     <ui:define name="titulo">Adicionar processo</ui:define>
     
     <ui:define name="corpo">
-    	<h:form>
+    	<h:form id="frmAtendimento">
+    	
 	    	<h1>Vincular número do processo</h1>
 	    	
+	    	<p:messages autoUpdate="true" closable="true" />
+	    	
 	    	<p:toolbar style="margin-top: 20px">
-	    		<p:toolbarGroup>
-	    			<p:commandButton value="Pesquisar" 
+	    		<p:toolbarGroup styleClass="toobarStyle">
+	    			<p:commandButton value="Pesquisar atendimentos" 
 	    				update="@form"  action="#{pesquisaAtendimentoVinculoProcessoBean.pesquisar}"/>
+	    		</p:toolbarGroup>
+	    		
+	    		<p:toolbarGroup align="right" styleClass="toobarStyle">
+	    			<p:button value="Pesquisar Processos" outcome="/Processo/PesquisarProcessos" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
@@ -38,15 +45,16 @@
 	    		<p:autoComplete id="assistido" value="#{pesquisaAtendimentoVinculoProcessoBean.atendimentoFilter.assistido}"  minQueryLength="3"
 						completeMethod="#{cadastroAtendimentoBean.completarAssistido}" 
 						var="assistido" itemValue="#{assistido}" itemLabel="#{assistido.nome}"
-						forceSelection="true" dropdown="true"	>	
+						forceSelection="true" dropdown="true">	
 				</p:autoComplete>
 	    	</p:panelGrid>
 	    	
 	    	<p:dataTable id="tabelaAtendimento"  var="atendimento" value="#{pesquisaAtendimentoVinculoProcessoBean.atendimentos}" 
 		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
 		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-		    		
-	    		<p:column headerText="ID" style="text-align: center;">
+		    	
+		    	
+	    		<p:column headerText="ID" style="text-align: center;width: 50px;">
 	    			<h:outputText value="#{atendimento.id}"/>
 	    		</p:column>
 	    		<p:column headerText="Autor">
@@ -74,10 +82,11 @@
 	    		</p:column>
 	    		
 	    		<p:column style="text-align: center; width: 50px">
-	    			<p:commandButton id="vincularProcesso" icon="ui-icon-pencil"
-							title="Editar Regra" oncomplete="PF('dlg3').show();"
-							update=":formModal:vincularProcess">
-							
+	    			<p:commandButton id="vincularProcesso" icon="ui-icon-pencil" 
+							title="Editar Regra" oncomplete="PF('dlg3').show();" actionListener="#{pesquisaAtendimentoVinculoProcessoBean.verificarAtendimento(atendimento.id)}"
+							update=":formModal:vincularProcess" disabled="#{pesquisaAtendimentoVinculoProcessoBean.btnVincularProcesso}">
+							<f:setPropertyActionListener value="#{atendimento}"
+								target="#{pesquisaAtendimentoVinculoProcessoBean.atendimento}" />
 						</p:commandButton>
 	    		</p:column>
 	    	</p:dataTable>
@@ -85,65 +94,65 @@
     	</h:form>
     	
     	<h:form id="formModal">
-			<p:dialog id="vincularProcess" styleClass="modalProcesso"
-				header="Vincular Processo" widgetVar="dlg3" modal="true"
-				showEffect="fade" hideEffect="slide" resizable="false"
-				draggable="false">
-
-				<p:panelGrid columns="2" id="painelAlterar"
-					style="width: 100%;margin-top:10px;" columnClasses="rotulo, campo">
+    		
+			<p:dialog id="vincularProcess" styleClass="vi-modalProcesso" header="Vincular Processo" widgetVar="dlg3" modal="true"
+				showEffect="fade" hideEffect="slide" resizable="false" draggable="true" style="margin-top:5px !important;">
+				
+				
+				<p:toolbar style="margin-top: 20px">
+		    		<p:toolbarGroup>
+						<p:commandButton id="btnVincularProcesso" update="@form" value="Vincular processo" 
+						title="Vincular Processo" ajax="true" actionListener="#{pesquisaAtendimentoVinculoProcessoBean.vincularProcesso}"
+						oncomplete="PF('dlg3').hide();">
+							
+						</p:commandButton>
+					</p:toolbarGroup>
+	    		</p:toolbar>
+	    	
+				
+				<p:panelGrid columns="4" id="painelAlterar" style="width: 100%;margin-top:5px;" columnClasses="rotulo, campo">
 	
 					<p:outputLabel value="Processo: " for="numeroProcesso"/>
-					<p:inputText id="numeroProcesso" size="50" maxlength="80"/>
+					<p:inputText id="numeroProcesso" size="20" maxlength="80" value="#{pesquisaAtendimentoVinculoProcessoBean.processo.numeroProcesso}"/>
 
 					<p:outputLabel value="Situação da Processo: " for="sitProcesso"  />
-					<p:selectOneMenu id="sitProcesso">
+					<p:selectOneMenu id="sitProcesso" value="#{pesquisaAtendimentoVinculoProcessoBean.processo.situacao}">
 						<f:selectItem itemLabel="Selecione" />
-						<f:selectItem itemLabel="PENDENTE" itemValue="PENDENTE" />
-						<f:selectItem itemLabel="ATIVO" itemValue="ATIVO" />
-						<f:selectItem itemLabel="INATIVO" itemValue="INATIVO" />
+						<f:selectItems value="#{pesquisaAtendimentoVinculoProcessoBean.statusProcesso}" var="status"
+									itemLabel="#{status.descricao}" itemValue="#{status}"/>
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Data Abertura: " for="dataAbertura"  />
-					<p:calendar id="dataAbertura" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"   />
+					<p:calendar id="dataAbertura" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true" value="#{pesquisaAtendimentoVinculoProcessoBean.processo.dataAbertura}"  />
 					
 					<p:outputLabel value="Data de fechamento: " for="dataFechamento"  />
-					<p:calendar id="dataFechamento" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"   />
+					<p:calendar id="dataFechamento" size="10" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{pesquisaAtendimentoVinculoProcessoBean.processo.dataConclusao}" />
 					
-					<p:outputLabel value="Vara do processo: " for="varaProcesso"  />
-					<p:selectOneMenu id="varaProcesso">
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItem itemLabel="PENDENTE" itemValue="PENDENTE" />
-						<f:selectItem itemLabel="ATIVO" itemValue="ATIVO" />
-						<f:selectItem itemLabel="INATIVO" itemValue="INATIVO" />
-					</p:selectOneMenu>
+					<p:outputLabel value="Vara do processo: " for="tipoVara"  />
+					<p:autoComplete id="tipoVara" value="#{pesquisaAtendimentoVinculoProcessoBean.processo.vara}"  minQueryLength="3"
+							completeMethod="#{pesquisaAtendimentoVinculoProcessoBean.completarTipoVara}" 
+							var="tipoVara" itemValue="#{tipoVara}" itemLabel="#{tipoVara.nome}"
+							forceSelection="true" dropdown="true"	>	
+					</p:autoComplete>					
 					
 					<p:outputLabel value="Situação do atendimento:" for="sitAtendimento"/>
-					<h:outputText id="sitAtendimento" value="EM_ATENDIMENTO" style="color:green;"/>
+					<h:outputText id="sitAtendimento" value="#{pesquisaAtendimentoVinculoProcessoBean.atendimento.statusAtendimento}" style="color:green;"/>
 					
 					<p:outputLabel value="Area do atendimento:" for="areaAtendimento"/>
-					<h:outputText id="areaAtendimento" value="PENAL" style="color: green;"/>
+					<h:outputText id="areaAtendimento" value="#{pesquisaAtendimentoVinculoProcessoBean.atendimento.areaAtendimento}" style="color: green;"/>
 					
 					<p:outputLabel value="Assistido:" for="assistido"/>
-					<h:outputText id="assistido" value="Joao das Neves" style="color: green;"/>
+					<h:outputText id="assistido" value="#{pesquisaAtendimentoVinculoProcessoBean.atendimento.assistido.nome}" style="color: green;"/>
 					
-					
-
 				</p:panelGrid>
 				
 				<h:panelGroup layout="block" style="padding-right: 10px">		
-					<p:editor id="editor" widgetVar="editorWidget"   style="width: 100%"/>
+					<p:editor id="editor" widgetVar="editorWidget" value="#{pesquisaAtendimentoVinculoProcessoBean.processo.observacao}"  style="width: 100%; heigth: 300px;"/>
 				</h:panelGroup>
 				
-				<f:facet name="footer">
-					<p:commandButton id="btnAlterar" oncomplete="PF('dlg3').hide();"
-						update="@form" value="Vincular"
-						title="Vincular Processo" ajax="true">
-
-					</p:commandButton>
-				</f:facet>
+				
 			</p:dialog>
+			
 		</h:form>
-    	
     </ui:define>
 </ui:composition>

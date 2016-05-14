@@ -207,4 +207,19 @@ public class Atendimentos implements Serializable{
 		return criteria.addOrder(Order.asc("cliente.nome")).list(); 
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Atendimento> porNome(String nome) {
+		
+		Session session = manager.unwrap(Session.class);
+		
+		Criteria criteria = session.createCriteria(Atendimento.class)
+				.createAlias("assistido", "as");
+		
+		if(StringUtils.isNotBlank(nome)){
+			criteria.add(Restrictions.ilike("as.nome", nome.toUpperCase(), MatchMode.ANYWHERE));
+		}
+		
+		return criteria.addOrder(Order.asc("as.nome")).list();
+	}
+
 }
