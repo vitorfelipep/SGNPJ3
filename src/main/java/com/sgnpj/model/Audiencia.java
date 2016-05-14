@@ -28,10 +28,10 @@ public class Audiencia implements Serializable {
 	private Date dataAudiencia;
 	private String horaAudiencia;
 	private String endereco;
+	private String estado;
 	private String cidade;
 	private Advogado advogadoResponsavel;
 	private String juizResponsavel;
-	private String varaTribunal;
 	private Estagiario estagiario;
 	private Processo processo;
 	private TipoAudiencia tipoAudiencia;
@@ -41,21 +41,20 @@ public class Audiencia implements Serializable {
 
 	public Audiencia(Long id, Date dataAudiencia, String horaAudiencia,
 			String endereco, String cidade, String juizResponsavel,
-			String varaTribunal, TipoAudiencia tipoAudiencia) {
+			TipoAudiencia tipoAudiencia) {
 		this.id = id;
 		this.dataAudiencia = dataAudiencia;
 		this.horaAudiencia = horaAudiencia;
 		this.endereco = endereco;
 		this.cidade = cidade;
 		this.juizResponsavel = juizResponsavel;
-		this.varaTribunal = varaTribunal;
 		this.tipoAudiencia = tipoAudiencia;
 	}
-	
+
 	public Audiencia(Long id, Date dataAudiencia, String horaAudiencia,
 			String endereco, String cidade, Advogado advogadoResponsavel,
-			String juizResponsavel, String varaTribunal, Estagiario estagiario,
-			Processo processo, TipoAudiencia tipoAudiencia) {
+			String juizResponsavel, Estagiario estagiario, Processo processo,
+			TipoAudiencia tipoAudiencia) {
 		this.id = id;
 		this.dataAudiencia = dataAudiencia;
 		this.horaAudiencia = horaAudiencia;
@@ -63,7 +62,6 @@ public class Audiencia implements Serializable {
 		this.cidade = cidade;
 		this.advogadoResponsavel = advogadoResponsavel;
 		this.juizResponsavel = juizResponsavel;
-		this.varaTribunal = varaTribunal;
 		this.estagiario = estagiario;
 		this.processo = processo;
 		this.tipoAudiencia = tipoAudiencia;
@@ -111,6 +109,16 @@ public class Audiencia implements Serializable {
 	}
 
 	@NotBlank
+	@Column(name = "estado", nullable = false, length = 3)
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	@NotBlank
 	@Column(name = "cidade", nullable = false, length = 80)
 	public String getCidade() {
 		return cidade;
@@ -141,16 +149,6 @@ public class Audiencia implements Serializable {
 		this.juizResponsavel = juizResponsavel;
 	}
 
-	@NotBlank
-	@Column(name = "juiz_atendimento", nullable = false, length = 80)
-	public String getVaraTribunal() {
-		return varaTribunal;
-	}
-
-	public void setVaraTribunal(String varaTribunal) {
-		this.varaTribunal = varaTribunal;
-	}
-
 	@ManyToOne
 	@JoinColumn(name = "estagiario_id", nullable = false)
 	public Estagiario getEstagiario() {
@@ -171,7 +169,7 @@ public class Audiencia implements Serializable {
 	public void setProcesso(Processo processo) {
 		this.processo = processo;
 	}
-	
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 40)
@@ -206,6 +204,17 @@ public class Audiencia implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Audiencia [id=" + id + ", dataAudiencia=" + dataAudiencia
+				+ ", horaAudiencia=" + horaAudiencia + ", endereco=" + endereco
+				+ ", estado=" + estado + ", cidade=" + cidade
+				+ ", advogadoResponsavel=" + advogadoResponsavel
+				+ ", juizResponsavel=" + juizResponsavel + ", estagiario="
+				+ estagiario + ", processo=" + processo + ", tipoAudiencia="
+				+ tipoAudiencia + "]";
 	}
 
 }

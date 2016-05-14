@@ -8,49 +8,70 @@
 		<p:panelGrid columns="4" style="width:100%; margin-top:20px;"
 			columnClasses="rotulo, campo, rotulo, campo">
 
-			<p:outputLabel value="Data de Atendimento" />
-     		<p:calendar size="10" pattern="dd/MM/yyyy"  />
+			<p:outputLabel value="Data da audiência" />
+     		<p:calendar size="10" pattern="dd/MM/yyyy"  value="#{cadastrarAudienciaBean.audiencia.dataAudiencia}"/>
      		
      		<p:outputLabel value="Hora da audiência: " for="hora-audiencia" />
 			<p:inputMask id="hora-audiencia" size="10" maxlength="80"
-				value="" mask="99:99"  />
+				value="#{cadastrarAudienciaBean.audiencia.horaAudiencia}" mask="99:99"  />
 			
     		<p:outputLabel value="Endereço: " for="endereco" />
 			<p:inputText id="endereco" size="60" maxlength="80"
-				value=""  />
+				value="#{cadastrarAudienciaBean.audiencia.endereco}"  />
 				
-			<p:outputLabel value="Cidade: " for="cidade" />
-			<p:inputText id="cidade" size="50" maxlength="80"
-				value=""  />
-					
-			<p:outputLabel value="Advogado: " for="advogadoAudiencia" />
-			<p:autoComplete id="advogadoAudiencia" size="40" dropdown="true" required="true" />
+			<p:outputLabel value="Estado:" for="estado" />
+			<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastrarAudienciaBean.audiencia.estado}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItem itemLabel="RJ" itemValue="RJ"/>
+					<f:selectItem itemLabel="MG" itemValue="MG"/>
+					<f:selectItem itemLabel="SP" itemValue="SP"/>
+					<f:selectItem itemLabel="AM" itemValue="AM"/>
+					<f:selectItem itemLabel="ES" itemValue="ES"/>
+			</p:selectOneMenu>
 			
-			<p:outputLabel value="Assistido (Autor): " for="reu" />
-			<p:autoComplete id="reu" size="40" dropdown="true" required="true" />
+			
+			<p:outputLabel value="Cidade:" for="cidade" />
+			<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastrarAudienciaBean.audiencia.cidade}" required="false">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
+					<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguacu"/>
+					<f:selectItem itemLabel="Nilópolis" itemValue="Nilopolis"/>
+					<f:selectItem itemLabel="Pavuna" itemValue="Pavuna"/>
+					<f:selectItem itemLabel="São João de Meriti" itemValue="São Joao de Meriti"/>
+			</p:selectOneMenu>
 			
 			<p:outputLabel value="Número do Processo: " for="numProcesso" />
-			<p:inputText id="numProcesso" size="60" maxlength="80"
-				value=""  />
+			<p:autoComplete id="numProcesso" size="40" dropdown="true" 
+				value="#{cadastrarAudienciaBean.audiencia.processo}" minQueryLength="3"
+				completeMethod="#{cadastrarAudienciaBean.completarProcesso}"
+				var="processo" itemValue="#{processo}" itemLabel="#{processo.numeroProcesso}"
+				forceSelection="true"/>
 			
-			<p:outputLabel value="Réu: " for="reuAudiencia" />
-			<p:selectOneMenu id="reuAudiencia" style="width: 200px;" required="true">
-				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="Julio Cesar" itemValue="Julio Cesar"/>
-				<f:selectItem itemLabel="Casas Bahia" itemValue="Casas Bahia"/>
-			</p:selectOneMenu>
+			<p:outputLabel value="Advogado: " for="advogadoAssis" />
+			<p:autoComplete id="advogadoAssis" size="40" dropdown="true" 
+				value="#{cadastrarAudienciaBean.audiencia.advogadoResponsavel}" minQueryLength="3"
+				completeMethod="#{cadastroAssistidoBean.completarAdvogado}"
+				var="advogado" itemValue="#{advogado}" itemLabel="#{advogado.usuario.nome}"
+				forceSelection="true"/>
+				
+			<p:outputLabel value="Estagiário: " for="estagiario" />
+			<p:autoComplete id="estagiario" value="#{cadastrarAudienciaBean.audiencia.estagiario}" minQueryLength="3"	
+					completeMethod="#{cadastroAtendimentoBean.completarEstagiario}" 
+					var="estagiario" itemValue="#{estagiario}" itemLabel="#{estagiario.usuario.nome}"
+					forceSelection="true" dropdown="true">	
 			
-		
-			<p:outputLabel value="Vara de audiência:  " for="varaAudiencia" />
-			<p:selectOneMenu id="varaAudiencia" style="width: 200px;" required="true">
-				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="1º vara da familia" itemValue="1º vara da familia"/>
-				<f:selectItem itemLabel="15º vara " itemValue="15º vara "/>
-			</p:selectOneMenu>
-			
+			</p:autoComplete>
+	
 			<p:outputLabel value="Nome do Juiz " for="JuizAudiencia" />
 			<p:inputText id="JuizAudiencia" size="50" maxlength="80"
-				value=""  />
+				value="#{cadastrarAudienciaBean.audiencia.juizResponsavel}"  />
+
+			<p:outputLabel value="Tipo de audiência: " for="tipoAudiencia"/>
+			<p:selectOneMenu  id="tipoAudiencia" value="#{cadastrarAudienciaBean.audiencia.tipoAudiencia}">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItems value="#{cadastrarAudienciaBean.tipoAudiencia}" var="tipo"
+				   itemValue="#{tipo}"  itemLabel="#{tipo.descricao}" />
+			</p:selectOneMenu>
 		</p:panelGrid>
 	</div>
 </ui:composition>

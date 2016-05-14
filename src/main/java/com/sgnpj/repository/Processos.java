@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -72,6 +74,21 @@ public class Processos implements Serializable{
 		}
 		
 		return criteria.addOrder(Order.asc("dataAbertura")).list(); 
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<Processo> porNumeroProcesso(Integer numeroProcesso) {
+		Session session = manager.unwrap(Session.class);
+		
+		Criteria criteria = session.createCriteria(Processo.class)
+				.createAlias("atendimento", "at");
+		
+		if(numeroProcesso != 0){
+			criteria.add(Restrictions.eq("numeroProcesso", numeroProcesso));
+		}
+		 
+		return criteria.addOrder(Order.asc("dataAbertura")).list();
 	}
 	
 	

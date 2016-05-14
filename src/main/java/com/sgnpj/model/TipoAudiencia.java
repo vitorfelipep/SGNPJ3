@@ -2,7 +2,7 @@ package com.sgnpj.model;
 
 public enum TipoAudiencia {
 	
-	INSTRUÇÃO("Instrução"), JULGAMENTO("Julgamento");
+	INSTRUÇÃO("Instrução"), CONCILIACAO("Conciliação"), JULGAMENTO("Julgamento");
 	
 	private String descricao;
 	
