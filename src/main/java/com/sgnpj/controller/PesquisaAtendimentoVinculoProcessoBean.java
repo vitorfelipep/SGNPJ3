@@ -15,6 +15,7 @@ import com.sgnpj.model.Processo;
 import com.sgnpj.model.StatusProcesso;
 import com.sgnpj.model.TipoVara;
 import com.sgnpj.repository.Atendimentos;
+import com.sgnpj.repository.Processos;
 import com.sgnpj.repository.Varas;
 import com.sgnpj.repository.filter.AtendimentoFilter;
 import com.sgnpj.service.CadastrarProcessoService;
@@ -34,6 +35,11 @@ public class PesquisaAtendimentoVinculoProcessoBean implements Serializable {
 
 	@Inject
 	private Varas varas;
+	
+	@Inject
+	private Processos processos;
+	
+	private List<Processo> processosJaExistente;
 
 	@Produces
 	@ProcessoEdicao
@@ -52,6 +58,7 @@ public class PesquisaAtendimentoVinculoProcessoBean implements Serializable {
 	public PesquisaAtendimentoVinculoProcessoBean() {
 		this.processo = new Processo();
 		this.atendimentos = new ArrayList<Atendimento>();
+		this.processosJaExistente = new ArrayList<Processo>();
 	}
 
 	public void pesquisar() {
@@ -78,7 +85,10 @@ public class PesquisaAtendimentoVinculoProcessoBean implements Serializable {
 	
 	//Verifica se o atendimento já possui processo.
 	public void verificarAtendimento(Long id){
-		this.processo = processoService.porId(id);
+		this.processosJaExistente = processos.findAll();
+		if(processosJaExistente.size() > 0){
+			this.processo = processoService.porId(id);
+		}
 	}
 	
 	

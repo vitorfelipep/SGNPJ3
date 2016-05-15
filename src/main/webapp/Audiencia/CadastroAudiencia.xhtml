@@ -18,41 +18,41 @@
 	    	
 	    	<ui:include src="/WEB-INF/template/audiencia/CapaAudiencia.xhtml"  /> 
 	    	
-	    	<p:dataTable id="tabelaAudiencia"  var="audiencia"
+	    	<p:dataTable id="tabelaAudiencia"  value="#{cadastrarAudienciaBean.audienciasCadastradas}" var="audiencia"
 		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
 		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 		    	
 	    		<p:column headerText="Número do processo">
-	    			<h:outputText value="gfgsfg"/>
+	    			<h:outputText value="#{audiencia.processo.numeroProcesso}"/>
 	    		</p:column>
 	    		<p:column headerText="Réu">
-	    			<h:outputText value="sdfgdfg"/>
+	    			<h:outputText value="#{audiencia.processo.atendimento.assistido.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Estagiario: " style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    			<h:outputText value="#{audiencia.estagiario.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Advogado: " style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    			<h:outputText value="#{audiencia.advogadoResponsavel.usuario.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Endereço:" style="text-align: center; width: 140px">
-	    			<h:outputText value="sdasdsdas" />
+	    			<h:outputText value="#{audiencia.endereco}" />
 	    		</p:column>
 	    		<p:column headerText="Cidade: " style="text-align: center; width: 120px">
-	    			<h:outputText value="Juiz de Fora" />
+	    			<h:outputText value="#{audiencia.cidade}" />
 	    		</p:column>
 	    		<p:column headerText="Data da audiência: " style="text-align: center; width: 140px">
-	    			<h:outputText value="05/02/1988">
+	    			<h:outputText value="#{audiencia.dataAudiencia}">
 	    				<f:convertDateTime pattern="dd/MM/yyyy" />
 	    			</h:outputText>
 	    		</p:column>
 	    		<p:column headerText="Hora da audiência: " style="text-align: center; width: 120px">
-	    			<h:outputText value="10:55" />
+	    			<h:outputText value="#{audiencia.horaAudiencia}" />
 	    		</p:column>
 	    		<p:column headerText="Vara tribunal: " style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    			<h:outputText value="#{audiencia.processo.vara.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Juiz Resposanvel: " style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    			<h:outputText value="#{audiencia.juizResponsavel}"/>
 	    		</p:column>
 	    		<p:column style="text-align: center; width: 50px">
 	    			<p:button icon="ui-icon-pencil" title="Alterar" >
