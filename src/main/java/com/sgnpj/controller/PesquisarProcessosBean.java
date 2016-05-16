@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import com.sgnpj.model.Atendimento;
 import com.sgnpj.model.Processo;
+import com.sgnpj.model.StatusAtendimento;
 import com.sgnpj.model.StatusProcesso;
 import com.sgnpj.repository.Atendimentos;
 import com.sgnpj.repository.Processos;
@@ -55,6 +56,13 @@ public class PesquisarProcessosBean implements Serializable {
 	
 	
 	public void alterarProcesso(){
+		if(this.processo.getDataConclusao() != null){
+			if(this.processo.getAtendimento().getStatusAtendimento().equals(StatusAtendimento.EM_ATENDIMENTO)){
+				this.processo.getAtendimento().setStatusAtendimento(StatusAtendimento.FINALIZADO);
+				this.atendimentos.armazenar(this.processo.getAtendimento());
+			}
+		}
+		
 		this.processo = processoService.salvar(processo);
 		
 		FacesUtil.addInfoMesage("Processo de número: " + this.processo.getNumeroProcesso() + " Alterado com sucesso!");
