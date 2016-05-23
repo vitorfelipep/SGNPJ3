@@ -49,6 +49,7 @@
 					oncomplete="PF('confirmacaoExclusao').hide();  "
 					ajax="false"
 					action="#{cadastroAssistidoBean.gerarRelatorios}"
+					actionListener="#{cadastroAssistidoBean.segundoRelatorio}"
 					update="@form" id="yesButton" />
 			</p:confirmDialog>
 	    	

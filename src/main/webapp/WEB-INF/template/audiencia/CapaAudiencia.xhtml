@@ -72,6 +72,14 @@
 				<f:selectItems value="#{cadastrarAudienciaBean.tipoAudiencia}" var="tipo"
 				   itemValue="#{tipo}"  itemLabel="#{tipo.descricao}" />
 			</p:selectOneMenu>
+	
+			<p:outputLabel value="Status da audiência: " for="statusAudiencia"/>
+			<p:selectOneMenu  id="statusAudiencia" value="#{cadastrarAudienciaBean.audiencia.stauAudiencia}">
+				<f:selectItem itemLabel="Selecione" />
+				<f:selectItems value="#{cadastrarAudienciaBean.statusAudiencia}" var="audiencia"
+				   itemValue="#{audiencia}"  itemLabel="#{audiencia.descricao}" />
+			</p:selectOneMenu>
+			
 		</p:panelGrid>
 	</div>
 </ui:composition>

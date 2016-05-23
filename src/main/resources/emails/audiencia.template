@@ -1,0 +1,23 @@
+<html>
+    <body>
+        <table>
+            <tr>
+                <td style="width: 100px">Número do processo:</td>
+                <td>$audiencia.processo.numeroProcesso</td>
+            </tr>
+            <tr>
+                <td>Assistido:</td>
+                <td>$audiencia.processo.atendimento.assistido.nome</td>
+            </tr>
+            <tr>
+                <td>Data da audiencia:</td>
+                <td>$audiencia.dataAudiencia</td>
+            </tr>
+        	
+        	 <tr>
+                <td>Hora:</td>
+                <td>$audiencia.horaAudiencia</td>
+            </tr>
+        </table>
+    </body>
+</html>

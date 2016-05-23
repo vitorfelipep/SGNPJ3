@@ -31,9 +31,11 @@ public class Processos implements Serializable{
 	}
  
 	public Processo porIdAtendimento(Long id) {
-		return manager.createQuery("from Processo pro where pro.atendimento.id = :id ", Processo.class)
+		return manager.createQuery("from Processo as pro"
+				+ "	left join Atendimento as at  where at.id = :id  ", Processo.class)
 				.setParameter("id", id)
 				.getSingleResult();
+		
 	}
 	
 	@SuppressWarnings("unchecked")

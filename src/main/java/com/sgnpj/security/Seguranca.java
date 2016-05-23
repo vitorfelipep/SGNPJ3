@@ -131,14 +131,14 @@ public class Seguranca implements Serializable {
 		return this.getUsuarioLogado();
 	}
 
-	public boolean isEmitirPedidoPermitido() {
-		return externalContext.isUserInRole("ADMINISTRADORES")
-				|| externalContext.isUserInRole("VENDEDORES");
+	public boolean isEmitirRelatorioPermisaao() {
+		return externalContext.isUserInRole("ADMINISTRADOR")
+				|| externalContext.isUserInRole("ADVOGADO");
 	}
 
-	public boolean isCancelarPedidoPermitido() {
-		return externalContext.isUserInRole("ADMINISTRADORES")
-				|| externalContext.isUserInRole("VENDEDORES");
+	public boolean isCancelarAudienciaPermissao() {
+		return externalContext.isUserInRole("ADMINISTRADOR")
+				|| externalContext.isUserInRole("ADVOGADO");
 	}
 
 	public Usuario getUsuario() {

@@ -14,7 +14,7 @@
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
 	    			<p:commandButton value="Pesquisar" 
-	    				update="@form" />
+	    				update="@form" action="#{pesquisarAudienciaBean.pesquisar}" />
 	    		</p:toolbarGroup>
 	    		<p:toolbarGroup align="right">
 	    			<p:button value="Novo" outcome="/Audiencia/CadastroAudiencia" />
@@ -25,57 +25,58 @@
 	    			columnClasses="rotulo, campo">
 	    		
 	    		<p:outputLabel value="Número do processo" for="numProcesso"/>
-	    		<p:inputText size="10" value="" id="numProcesso"/>
-	    			    		
-	    		<p:outputLabel value="Data da audiência" for="dataAudiencia" />
-	    		<p:calendar id="dataAudiencia" size="10" pattern="dd/MM/yyyy" />
+	    		<p:inputText size="10" value="#{pesquisarAudienciaBean.filtro.numeroProcesso}" id="numProcesso"/>
 	    		
-	    		<p:outputLabel value="Assistido: "  for="assistido"/>
-	    		<p:inputText id="assistido" size="40" value="" />
-	    		
-	    		<p:outputLabel value="Status atendimento" />
-	    		<p:selectManyCheckbox >
-	    			<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
-	    			<f:selectItem itemValue="Cancelado" itemLabel="Cancelado" />
-	    			<f:selectItem itemValue="Fechado" itemLabel="Fechado" />
+	    		<p:outputLabel value="Data da audiência: " />	    		
+	    		<h:panelGroup>
+	    			<p:calendar id="dataInicial" size="10" pattern="dd/MM/yyyy" yearRange="c-5:c+50" locale="pt"  navigator="true"  value="#{pesquisarAudienciaBean.filtro.dataAudienciaInicial}"	 />
+	    			a
+	    			<p:calendar id="dataFinal" size="10" pattern="dd/MM/yyyy" yearRange="c-5:c+50" locale="pt"  navigator="true"  value="#{pesquisarAudienciaBean.filtro.dataAudienciaFinal}"	/>
+	    		</h:panelGroup>
+	    				
+	    		<p:outputLabel value="Situação Audiência: " for="statusAudiencia"/>
+	    		<p:selectManyCheckbox id="statusAudiencia" value="#{pesquisarAudienciaBean.filtro.statusAudiencia}" >
+					<f:selectItems  value="#{pesquisarAudienciaBean.statusAudiencia}" var="situacao"
+	    					itemLabel="#{situacao.descricao}" itemValue="#{situacao}"/>
 	    		</p:selectManyCheckbox>
+	    	
 	    	</p:panelGrid>
 	    	
-	    	<p:dataTable id="tabelaAudiencia"  var="audiencia"
+	    	<p:dataTable id="tabelaAudiencia"  var="audiencia" value="#{pesquisarAudienciaBean.audiencias}"
 		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
 		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 		    	
-	    		<p:column headerText="Número do processo">
-	    			<h:outputText value="gfgsfg"/>
+	    		<p:column headerText="Número do processo"  style="text-align: center;">
+	    			<h:outputText value="#{audiencia.processo.numeroProcesso}" />
 	    		</p:column>
-	    		<p:column headerText="Réu">
-	    			<h:outputText value="sdfgdfg"/>
+	    		<p:column headerText="Assistido" style="width: 150px">
+	    			<h:outputText value="#{audiencia.processo.atendimento.assistido.nome}"/>
 	    		</p:column>
-	    		<p:column headerText="Estagiario: " style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		<p:column headerText="Estagiario " style="width: 100px">
+	    			<h:outputText value="#{audiencia.estagiario.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Advogado: " style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    			<h:outputText value="#{audiencia.advogadoResponsavel.usuario.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Endereço:" style="text-align: center; width: 140px">
-	    			<h:outputText value="sdasdsdas" />
+	    			<h:outputText value="#{audiencia.endereco}" />
 	    		</p:column>
 	    		<p:column headerText="Cidade: " style="text-align: center; width: 120px">
-	    			<h:outputText value="Juiz de Fora" />
+	    			<h:outputText value="#{audiencia.cidade}" />
 	    		</p:column>
-	    		<p:column headerText="Data da audiência: " style="text-align: center; width: 140px">
-	    			<h:outputText value="05/02/1988">
+	    		<p:column headerText="Data da audiência: " style="text-align: center; width: 80px">
+	    			<h:outputText value="#{audiencia.dataAudiencia}">
 	    				<f:convertDateTime pattern="dd/MM/yyyy" />
 	    			</h:outputText>
 	    		</p:column>
-	    		<p:column headerText="Hora da audiência: " style="text-align: center; width: 120px">
-	    			<h:outputText value="10:55" />
+	    		<p:column headerText="Hora da audiência: " style="text-align: center; width: 80px">
+	    			<h:outputText value="#{audiencia.horaAudiencia}" />
 	    		</p:column>
 	    		<p:column headerText="Vara tribunal: " style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    			<h:outputText value="#{audiencia.processo.vara.cormarca.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Juiz Resposanvel: " style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    			<h:outputText value="#{audiencia.juizResponsavel}"/>
 	    		</p:column>
 	    		<p:column style="text-align: center; width: 50px">
 	    			<p:button icon="ui-icon-pencil" title="Alterar" >

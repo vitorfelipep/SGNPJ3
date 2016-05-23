@@ -6,11 +6,16 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui">
     
-    <ui:define name="titulo">Cadastro de Audiência</ui:define>
+    <f:metadata>
+		<o:viewParam name="audiencia" value="#{cadastrarAudienciaBean.audiencia}"/>
+    	<f:event listener="#{cadastrarAudienciaBean.inicializar}" type="preRenderView" /> 
+    </f:metadata>
+    
+    <ui:define name="titulo">#{cadastrarAudienciaBean.editando ? 'Editação de audiência' : 'Cadastro de Audiência'}</ui:define>
     
     <ui:define name="corpo">
     	<h:form id="frmCadastro">
-	    	<h1>Nova Audiência</h1>
+	    	<h1>#{cadastrarAudienciaBean.editando ? 'Editar audiência' : 'Nova audiência'}</h1>
 	    	
 	    	<p:messages autoUpdate="true" closable="true"/>
 	    	
@@ -55,8 +60,8 @@
 	    			<h:outputText value="#{audiencia.juizResponsavel}"/>
 	    		</p:column>
 	    		<p:column style="text-align: center; width: 50px">
-	    			<p:button icon="ui-icon-pencil" title="Alterar" >
-	    				<f:param name="assistido" value="12"/>
+	    			<p:button icon="ui-icon-pencil" title="Alterar" outcome="/Audiencia/CadastroAudiencia" >
+	    				<f:param name="audiencia" value="#{audiencia.id}"/>
 	    			</p:button>
 	    		</p:column>
 	    	</p:dataTable>

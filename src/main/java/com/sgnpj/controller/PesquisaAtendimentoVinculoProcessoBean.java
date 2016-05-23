@@ -87,7 +87,17 @@ public class PesquisaAtendimentoVinculoProcessoBean implements Serializable {
 	public void verificarAtendimento(Long id){
 		this.processosJaExistente = processos.findAll();
 		if(processosJaExistente.size() > 0){
-			this.processo = processoService.porId(id);
+			for(Processo p : processosJaExistente){
+				if(p.getId().equals(id)){
+					this.processo = p;
+				}else{
+					this.processo = new Processo();
+				}
+			}
+			
+//			if(this.processo.getAtendimento().getId() != id){
+//				this.processo = processoService.porId(id);
+//			}
 		}
 	}
 	

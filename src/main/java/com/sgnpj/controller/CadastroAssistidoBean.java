@@ -376,7 +376,7 @@ public class CadastroAssistidoBean implements Serializable {
 		}
 	}
 
-	public void gerarRelatorios() {
+	public void gerarRelatorios() throws InterruptedException {
 
 		Session session = manager.unwrap(Session.class);
 		Map<String, Object> parametros = new HashMap<>();
@@ -388,15 +388,45 @@ public class CadastroAssistidoBean implements Serializable {
 					"/relatorios/Relatorio_hipossuficiencia.jasper", this.response,
 					parametros, "Relatorio Hipossuficiencia.pdf");
 			
+//			ExecutorRelatorio executor2 = new ExecutorRelatorio(
+//					"/relatorios/relatorio_procuracao.jasper", this.response,
+//					parametros, "Procuracao.pdf");
+			
 			
 			session.doWork(executor);
-			
-			facesContext.responseComplete();
+			//session.doWork(executor2);
+			if(executor.isRelatorioGerado()){
+				facesContext.responseComplete();
+				
+				//Thread.sleep(10000);				
+			}else{
+				FacesUtil.addErrorMesage("A execução do relatório não retornou dados.");
+			}
 		}
 		
 		limparForm();
 	}
-
+	
+	public void segundoRelatorio(){
+		Session session = manager.unwrap(Session.class);
+		Map<String, Object> parametros = new HashMap<>();
+		
+		if(this.assistido.getId() != null){
+			parametros.put("idAssistido", this.assistido.getId());
+			
+			ExecutorRelatorio executor2 = new ExecutorRelatorio(
+					"/relatorios/relatorio_procuracao.jasper", this.response,
+					parametros, "Procuracao.pdf");
+			session.doWork(executor2);
+			if(executor2.isRelatorioGerado()){
+				facesContext.responseComplete();
+			}else{
+				FacesUtil.addErrorMesage("A execução do relatório não retornou dados.");
+			}
+		}
+	
+	}
+	
 	private void limparForm() {
 		this.telefone = new Telefone();
 		this.advogado = new Advogado();

@@ -14,10 +14,11 @@
     			
     		<p:toolbarGroup align="right" styleClass="toobarStyle">
     			<p:commandButton value="Excluir" 
-    				process="@this" update="@form"  >
+    				process="@this" update="@form" actionListener="#{cancelamentoAudienciaBean.cancelarAudiencia}" 
+    				  > 
     				<p:confirm header="Confirmação" message="Você têm certeza que deseja excluir esta audiência?" icon="ui-icon-alert"/>	
     			</p:commandButton>
-    			<p:commandButton value="Enviar por E-mail" 
+    			<p:commandButton value="Enviar por E-mail" action="#{envioEmailAudienciaBean.enviarAudiencia}"  
     				process="@this" />  
     			
     			<p:separator />

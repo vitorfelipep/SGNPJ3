@@ -35,36 +35,43 @@ public class Audiencia implements Serializable {
 	private Estagiario estagiario;
 	private Processo processo;
 	private TipoAudiencia tipoAudiencia;
+	private StatusAudiencia stauAudiencia;
 
 	public Audiencia() {
 	}
 
 	public Audiencia(Long id, Date dataAudiencia, String horaAudiencia,
-			String endereco, String cidade, String juizResponsavel,
-			TipoAudiencia tipoAudiencia) {
+			String endereco, String estado, String cidade,
+			Advogado advogadoResponsavel, String juizResponsavel,
+			Estagiario estagiario, Processo processo,
+			TipoAudiencia tipoAudiencia, StatusAudiencia stauAudiencia) {
 		this.id = id;
 		this.dataAudiencia = dataAudiencia;
 		this.horaAudiencia = horaAudiencia;
 		this.endereco = endereco;
-		this.cidade = cidade;
-		this.juizResponsavel = juizResponsavel;
-		this.tipoAudiencia = tipoAudiencia;
-	}
-
-	public Audiencia(Long id, Date dataAudiencia, String horaAudiencia,
-			String endereco, String cidade, Advogado advogadoResponsavel,
-			String juizResponsavel, Estagiario estagiario, Processo processo,
-			TipoAudiencia tipoAudiencia) {
-		this.id = id;
-		this.dataAudiencia = dataAudiencia;
-		this.horaAudiencia = horaAudiencia;
-		this.endereco = endereco;
+		this.estado = estado;
 		this.cidade = cidade;
 		this.advogadoResponsavel = advogadoResponsavel;
 		this.juizResponsavel = juizResponsavel;
 		this.estagiario = estagiario;
 		this.processo = processo;
 		this.tipoAudiencia = tipoAudiencia;
+		this.stauAudiencia = stauAudiencia;
+	}
+
+	public Audiencia(Long id, Date dataAudiencia, String horaAudiencia,
+			String endereco, String estado, String cidade,
+			String juizResponsavel, TipoAudiencia tipoAudiencia,
+			StatusAudiencia stauAudiencia) {
+		this.id = id;
+		this.dataAudiencia = dataAudiencia;
+		this.horaAudiencia = horaAudiencia;
+		this.endereco = endereco;
+		this.estado = estado;
+		this.cidade = cidade;
+		this.juizResponsavel = juizResponsavel;
+		this.tipoAudiencia = tipoAudiencia;
+		this.stauAudiencia = stauAudiencia;
 	}
 
 	@Id
@@ -181,6 +188,17 @@ public class Audiencia implements Serializable {
 		this.tipoAudiencia = tipoAudiencia;
 	}
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 30)
+	public StatusAudiencia getStauAudiencia() {
+		return stauAudiencia;
+	}
+
+	public void setStauAudiencia(StatusAudiencia stauAudiencia) {
+		this.stauAudiencia = stauAudiencia;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -215,6 +233,15 @@ public class Audiencia implements Serializable {
 				+ ", juizResponsavel=" + juizResponsavel + ", estagiario="
 				+ estagiario + ", processo=" + processo + ", tipoAudiencia="
 				+ tipoAudiencia + "]";
+	}
+
+	@javax.persistence.Transient
+	public boolean isNaoCancelavel() {
+		return !isCancelavel();
+	}
+	@javax.persistence.Transient
+	public boolean isCancelavel() {
+		return new Date() == this.getDataAudiencia();
 	}
 
 }
