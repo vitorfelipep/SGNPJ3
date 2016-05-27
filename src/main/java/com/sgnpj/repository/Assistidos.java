@@ -15,6 +15,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.sgnpj.model.Assistido;
 import com.sgnpj.repository.filter.AssistidoFilter;
+import com.sgnpj.repository.filter.FiltroHipossuficiencia;
 
 /**
  * 
@@ -84,5 +85,36 @@ public class Assistidos implements Serializable{
 		}
 		
 		return criteria.addOrder(Order.asc("nome")).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Assistido> filtradosHipossuficiecia(FiltroHipossuficiencia filtro) {
+		Session session = manager.unwrap(Session.class);
+		
+		Criteria criteria = session.createCriteria(Assistido.class)
+				//INNER JOIN COM 
+				.createAlias("pessoaFisica", "pf")
+				
+				//.createAlias("pessoaJuridica", "pj")
+				
+				.createAlias("triagem", "tr");
+		
+//		if(StringUtils.isNotBlank(filtro.getProcesso())){
+//			criteria.add(Restrictions.eq("codigo_OAB", filtro.getCodigo_OAB()));
+//		}
+		
+		if(filtro.getAssistido() != null && filtro.getAssistido().getNome() != null){
+			criteria.add(Restrictions.ilike("nome", filtro.getAssistido().getNome(), MatchMode.ANYWHERE));
+		}
+		
+		if(StringUtils.isNotBlank(filtro.getEmail())){
+			criteria.add(Restrictions.ilike("email", filtro.getEmail()));
+		}
+		
+		if(filtro.getSituacaoAssistido() != null){
+			criteria.add(Restrictions.eq("situacao", filtro.getSituacaoAssistido()));
+		}
+		
+		return criteria.addOrder(Order.asc("nome")).list(); 
 	}
 }

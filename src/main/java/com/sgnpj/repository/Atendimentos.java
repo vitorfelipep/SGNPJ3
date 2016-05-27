@@ -30,6 +30,7 @@ import com.sgnpj.model.StatusAtendimento;
 import com.sgnpj.model.Usuario;
 import com.sgnpj.model.vo.DataValor;
 import com.sgnpj.repository.filter.AtendimentoFilter;
+import com.sgnpj.repository.filter.ProcuracaoFilter;
 
 public class Atendimentos implements Serializable{
 
@@ -220,6 +221,53 @@ public class Atendimentos implements Serializable{
 		}
 		
 		return criteria.addOrder(Order.asc("as.nome")).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Atendimento> filtradosParaProcuracao(ProcuracaoFilter filtro) {
+Session session = manager.unwrap(Session.class);
+		
+		Atendimento a = new Atendimento();
+		
+		a.setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
+		
+		Example example = Example.create(a).enableLike(MatchMode.ANYWHERE);
+		
+		Criteria criteria = session.createCriteria(Atendimento.class)
+				//INNER JOIN COM 
+				.createAlias("assistido", "cliente")
+				
+				.createAlias("advogado", "ad")
+				
+				.createAlias("estagiario", "es")
+				
+				.createAlias("contraParte", "cp")
+				.add(example);
+		
+		if (filtro.getDataInicial() != null) {
+			criteria.add(Restrictions.ge("dataAtendimento", filtro.getDataInicial()));
+		}
+		
+		if (filtro.getDataFinal() != null) {
+			criteria.add(Restrictions.le("dataAtendimento", filtro.getDataFinal()));
+		}
+		
+		if(filtro.getAdvogado() != null){
+			if(StringUtils.isNotBlank(filtro.getAdvogado().getUsuario().getNome())){
+				criteria.add(Restrictions.eq("ad.id", filtro.getAdvogado().getId_advogado()));
+			}
+		}
+		
+		if(filtro.getAssistido() != null){
+			if(StringUtils.isNotBlank(filtro.getAssistido().getNome())){
+				criteria.add(Restrictions.ilike("cliente.nome", filtro.getAssistido().getNome()));
+			}
+		}
+				
+		// adicionamos uma restrição "in", passando um array de constantes da enum StatusPedido
+		//criteria.add(Restrictions.ilike("statusAtendimento", StatusAtendimento.EM_ATENDIMENTO.getDescricao(), MatchMode.ANYWHERE));
+	
+		return criteria.addOrder(Order.asc("cliente.nome")).list(); 
 	}
 
 }

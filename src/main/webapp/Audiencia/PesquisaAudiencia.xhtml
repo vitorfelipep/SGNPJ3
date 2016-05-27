@@ -11,6 +11,8 @@
     	<h:form>
 	    	<h1>Pesquisa de Audiência</h1>
 	    	
+	    	<p:messages autoUpdate="true" closable="true"/>
+	    	
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
 	    			<p:commandButton value="Pesquisar" 
@@ -83,9 +85,8 @@
 	    				<f:param name="audiencia" value="#{audiencia.id}"/>
 	    			</p:button>
 	    			
-	    			<p:button icon="fa fa-fw fa-file-pdf-o" title="Gerar PDF" >
-	    				<f:param name="audiencia" value="#{audiencia.id}"/>
-	    			</p:button>
+	    			<p:commandButton icon="fa fa-fw fa-file-pdf-o" title="Gerar PDF" ajax="false"
+	    				action="#{pesquisarAudienciaBean.gerarRelatorioPdf(audiencia.id)}" />
 	    		</p:column>
 	    	</p:dataTable>	
     	</h:form>
