@@ -336,6 +336,13 @@ public class CadastroAssistidoBean implements Serializable {
 			try {
 				this.assistido.setTriagem(triagemService.salvar(this.assistido
 						.getTriagem()));
+				
+				if(this.assistido.getPessoaFisica().getId() != null){
+					this.assistido.setPessoaFisica(pessoaFisicaService.salvar(this.assistido.getPessoaFisica()));
+				}else{
+					this.assistido.setPessoaJuridica(pessoaJuridicaService.salvar(this.assistido.getPessoaJuridica()));
+				}
+				
 				this.assistido = this.assistidoService.salvar(assistido);
 				this.assistido.setTriagem(triagemService.salvar(this.assistido
 						.getTriagem()));

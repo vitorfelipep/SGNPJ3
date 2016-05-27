@@ -79,8 +79,12 @@
 	    			<h:outputText value="#{audiencia.juizResponsavel}"/>
 	    		</p:column>
 	    		<p:column style="text-align: center; width: 50px">
-	    			<p:button icon="ui-icon-pencil" title="Alterar" >
-	    				<f:param name="assistido" value="12"/>
+	    			<p:button icon="ui-icon-pencil" title="Alterar" outcome="/Audiencia/CadastroAudiencia">
+	    				<f:param name="audiencia" value="#{audiencia.id}"/>
+	    			</p:button>
+	    			
+	    			<p:button icon="fa fa-fw fa-file-pdf-o" title="Gerar PDF" >
+	    				<f:param name="audiencia" value="#{audiencia.id}"/>
 	    			</p:button>
 	    		</p:column>
 	    	</p:dataTable>	

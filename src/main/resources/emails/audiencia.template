@@ -1,22 +1,39 @@
 <html>
     <body>
-        <table>
-            <tr>
-                <td style="width: 100px">Número do processo:</td>
-                <td>$audiencia.processo.numeroProcesso</td>
+        <table style="border: 1px solid #4f4f4f">
+            <tr style="border: 1px solid #4f4f4f">
+	            <td style="border: 1px solid #4f4f4f">Numero do processo:</td>
+	            <td>$audiencia.processo.numeroProcesso</td>
+	            <td style="border: 1px solid #4f4f4f">Assistido:</td>
+	            <td>$audiencia.processo.atendimento.assistido.nome</td>
             </tr>
-            <tr>
-                <td>Assistido:</td>
-                <td>$audiencia.processo.atendimento.assistido.nome</td>
-            </tr>
-            <tr>
-                <td>Data da audiencia:</td>
+           
+            <tr style="border: 1px solid #4f4f4f">
+                <td style="border: 1px solid #4f4f4f">Data da audiencia:</td>
                 <td>$audiencia.dataAudiencia</td>
+                <td style="border: 1px solid #4f4f4f">Hora:</td>
+                <td>$audiencia.horaAudiencia</td>
             </tr>
         	
-        	 <tr>
-                <td>Hora:</td>
-                <td>$audiencia.horaAudiencia</td>
+        	 <tr style="border: 1px solid #4f4f4f">
+        	 	<td style="border: 1px solid #4f4f4f">Cidade:</td>
+                <td>$audiencia.cidade</td>
+                <td style="border: 1px solid #4f4f4f">Estado:</td>
+                <td>$audiencia.estado</td>
+            </tr>
+            
+            <tr>
+        	 	<td style="border: 1px solid #4f4f4f">Advogado:</td>
+                <td>$audiencia.advogadoResponsavel.usuario.nome</td>
+                <td style="border: 1px solid #4f4f4f">Juiz responsavel:</td>
+                <td>$audiencia.juizResponsavel</td>
+            </tr>
+            
+            <tr style="border: 1px solid #4f4f4f">
+        	 	<td style="border: 1px solid #4f4f4f">Tipo de audiencia:</td>
+                <td>$audiencia.tipoAudiencia.descricao</td>
+                <td style="border: 1px solid #4f4f4f">Situacao da audiencia:</td>
+                <td>$audiencia.stauAudiencia.descricao</td>
             </tr>
         </table>
     </body>

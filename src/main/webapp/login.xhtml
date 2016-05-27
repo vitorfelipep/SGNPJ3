@@ -45,7 +45,11 @@
 			 		<p:password id="j_password" size="30" />
 			 		<h:panelGroup />
 			 		
-			 		<p:commandButton value="Login" action="#{loginBean.login}" ajax="false" />
+				 		<p:commandButton value="Login"  action="#{loginBean.login}" ajax="false" >
+				 		<div class="fa fa-fw fa-lock vi-customlock">
+				 		</div>
+				 		</p:commandButton>
+			 		
 			 	</h:panelGrid>
 				<br />
 				</center>
@@ -58,7 +62,7 @@
 				<p:graphicImage library="imagens" name="carregando.gif" />
 			</p:dialog>
 			
-			<f:facet name="footer"><center></center><h:outputText value="Sistema Gerenciador de núcleo de práticas Júridicas - 2016" style="margin-left: 170px; "/></f:facet>
+			<f:facet name="footer"><center></center><span class="fa fa-fw fa-copyright vi-copyrightStyle"></span><h:outputText value="Sistema Gerenciador de núcleo de práticas Júridicas - 2016" style="margin-left: 170px; "/></f:facet>
 			
 		</p:panel>
 	</h:body>
