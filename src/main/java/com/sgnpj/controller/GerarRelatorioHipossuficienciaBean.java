@@ -72,7 +72,7 @@ public class GerarRelatorioHipossuficienciaBean implements Serializable {
 			parametros.put("idAssistido", idAssistido);
 			
 			ExecutorRelatorio executor = new ExecutorRelatorio(
-					"/relatorios/Relatorio_hipossuficiencia.jasper", this.response,
+					"/relatorios/RelatorioHipossuficiencia.jasper", this.response,
 					parametros, "Relatorio_Hipossuficiencia.pdf");
 
 			session.doWork(executor);

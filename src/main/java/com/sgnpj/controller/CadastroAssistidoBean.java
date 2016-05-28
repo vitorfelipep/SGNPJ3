@@ -1,5 +1,6 @@
 package com.sgnpj.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,10 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Transient;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 import org.hibernate.Session;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -41,6 +46,7 @@ import com.sgnpj.model.Triagem;
 import com.sgnpj.model.Usuario;
 import com.sgnpj.repository.Advogados;
 import com.sgnpj.repository.Atendimentos;
+import com.sgnpj.repository.Dao;
 import com.sgnpj.repository.Telefones;
 import com.sgnpj.security.Seguranca;
 import com.sgnpj.security.UsuarioSistema;
@@ -57,7 +63,7 @@ import com.sgnpj.util.report.ExecutorRelatorio;
 
 @Named
 @ViewScoped
-public class CadastroAssistidoBean implements Serializable {
+public class CadastroAssistidoBean extends Dao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -88,6 +94,9 @@ public class CadastroAssistidoBean implements Serializable {
 	@Produces
 	@AssistidoEdicao
 	private Assistido assistido;
+	
+	@Inject
+	private static Assistido assistidoRelatorio;
 
 	@Inject
 	private Advogado advogado;
@@ -389,27 +398,37 @@ public class CadastroAssistidoBean implements Serializable {
 		}
 	}
 
-	public void gerarRelatorios() throws InterruptedException {
+	public void gerarRelatorios() throws InterruptedException, IOException {
 
 		Session session = manager.unwrap(Session.class);
 		Map<String, Object> parametros = new HashMap<>();
+		
+		if(this.assistido != null){
+			if(this.assistido.getId() != null){
+				CadastroAssistidoBean.assistidoRelatorio = assistido;
+			}
+		}
 		
 		if(this.assistido.getId() != null){
 			parametros.put("idAssistido", this.assistido.getId());
 	
 			ExecutorRelatorio executor = new ExecutorRelatorio(
-					"/relatorios/Relatorio_hipossuficiencia.jasper", this.response,
+					"/relatorios/RelatorioHipossuficiencia.jasper", this.response,
 					parametros, "Relatorio Hipossuficiencia.pdf");
-			
-//			ExecutorRelatorio executor2 = new ExecutorRelatorio(
-//					"/relatorios/relatorio_procuracao.jasper", this.response,
-//					parametros, "Procuracao.pdf");
-			
-			
+
 			session.doWork(executor);
 			//session.doWork(executor2);
 			if(executor.isRelatorioGerado()){
+//				segundoRelatorio();
+//				facesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf");
+				
+				facesContext.getApplication().getStateManager().saveView(facesContext);
+				
+				facesContext.renderResponse();
+				
 				facesContext.responseComplete();
+				
+				
 				
 				//Thread.sleep(10000);				
 			}else{
@@ -420,22 +439,36 @@ public class CadastroAssistidoBean implements Serializable {
 		limparForm();
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void segundoRelatorio(){
-		Session session = manager.unwrap(Session.class);
-		Map<String, Object> parametros = new HashMap<>();
-		
-		if(this.assistido.getId() != null){
-			parametros.put("idAssistido", this.assistido.getId());
+		try{
 			
-			ExecutorRelatorio executor2 = new ExecutorRelatorio(
-					"/relatorios/relatorio_procuracao.jasper", this.response,
-					parametros, "Procuracao.pdf");
-			session.doWork(executor2);
-			if(executor2.isRelatorioGerado()){
-				facesContext.responseComplete();
-			}else{
-				FacesUtil.addErrorMesage("A execução do relatório não retornou dados.");
-			}
+			open();
+				HashMap parametros = new HashMap(); 
+				
+				parametros.put("idAssistido", CadastroAssistidoBean.assistidoRelatorio.getId());
+				
+				//Saida Teste
+				JasperPrint print = JasperFillManager.fillReport("C:/Users/Vitor/workspace/SGNPJ/src/main/resources/relatorios/RelatorioProcuracao.jasper", parametros, con);
+				JasperExportManager.exportReportToPdfFile(print, "C:/Users/Vitor/workspace/SGNPJ/src/main/webapp/Relatorio/Procuracao.pdf");
+				
+				Thread.sleep(5000);													
+				FacesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf"); 
+		       
+			
+			//Link de Produção
+//			JasperPrint print = JasperFillManager.fillReport("/var/lib/tomcat7/webapps/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.jasper", parametros);
+//			JasperExportManager.exportReportToPdfFile(print, "/var/lib/tomcat7/webapps/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.pdf");
+//		
+//			
+//			
+//			Thread.sleep(5000);													
+//	        FacesContext.getCurrentInstance().getExternalContext().redirect("http://192.168.15.164:8080/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.pdf"); 
+			
+			close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	
 	}

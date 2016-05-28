@@ -17,7 +17,9 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 import org.hibernate.jdbc.Work;
 
-public class ExecutorRelatorio implements Work {
+import com.sgnpj.repository.Dao;
+
+public class ExecutorRelatorio extends Dao implements Work {
 
 	private String caminhoRelatorio;
 	private HttpServletResponse response;
@@ -35,6 +37,7 @@ public class ExecutorRelatorio implements Work {
 		this.nomeArquivoSaida = nomeArquivoSaida;
 
 		this.parametro.put(JRParameter.REPORT_LOCALE, new Locale("pt", "BR"));
+
 	}
 
 	@Override
@@ -48,7 +51,9 @@ public class ExecutorRelatorio implements Work {
 			
 			this.relatorioGerado = print.getPages().size() > 0;
 			
+			
 			if(this.relatorioGerado){
+				
 				JRExporter exportador = new JRPdfExporter();
 				exportador.setParameter(JRExporterParameter.OUTPUT_STREAM,
 						response.getOutputStream());
@@ -59,12 +64,47 @@ public class ExecutorRelatorio implements Work {
 						+ this.nomeArquivoSaida + "\"");
 
 				exportador.exportReport();
+				
+				//segundoRelatorio();
 			}
 		} catch (Exception e) {
 			throw new SQLException("Erro ao executar relatório "
 					+ this.caminhoRelatorio, e);
 		}
 	}
+	
+//	@SuppressWarnings({ "unchecked", "rawtypes" })
+//	public void segundoRelatorio(){
+//		try{
+//			
+//			open();
+////				HashMap parametros = new HashMap(); 
+////				parametros.put("idAssistido", this.assistido.getId());
+//				
+//				//Saida Teste
+//				JasperPrint print = JasperFillManager.fillReport("C:/Users/Vitor/workspace/SGNPJ/src/main/resources/relatorios/RelatorioProcuracao.jasper", this.parametro, con);
+//				JasperExportManager.exportReportToPdfFile(print, "C:/Users/Vitor/workspace/SGNPJ/src/main/webapp/Relatorio/Procuracao.pdf");
+//				
+//				Thread.sleep(5000);													
+//		        FacesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf"); 
+//		       
+//			
+//			//Link de Produção
+////			JasperPrint print = JasperFillManager.fillReport("/var/lib/tomcat7/webapps/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.jasper", parametros);
+////			JasperExportManager.exportReportToPdfFile(print, "/var/lib/tomcat7/webapps/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.pdf");
+////		
+////			
+////			
+////			Thread.sleep(5000);													
+////	        FacesContext.getCurrentInstance().getExternalContext().redirect("http://192.168.15.164:8080/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.pdf"); 
+//			
+//			close();
+//			
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	
+//	}
 
 	public boolean isRelatorioGerado() {
 		return relatorioGerado;

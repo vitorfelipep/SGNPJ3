@@ -13,20 +13,22 @@ public class ProcuracaoFilter implements Serializable {
 
 	private Date dataInicial;
 	private Date dataFinal;
-
+	
+	
 	private Advogado advogado;
-
+	
 	private Assistido assistido;
 
-	private StatusAtendimento situacaoAtendimento;
+	private StatusAtendimento[] situacaoAtendimento;
 
 	public ProcuracaoFilter() {
-
+		this.advogado = new Advogado();
+		this.assistido = new Assistido();
 	}
 
 	public ProcuracaoFilter(Date dataInicial, Date dataFinal,
 			Advogado advogado, Assistido assistido,
-			StatusAtendimento situacaoAtendimento) {
+			StatusAtendimento[] situacaoAtendimento) {
 		this.dataInicial = dataInicial;
 		this.dataFinal = dataFinal;
 		this.advogado = advogado;
@@ -66,11 +68,11 @@ public class ProcuracaoFilter implements Serializable {
 		this.assistido = assistido;
 	}
 
-	public StatusAtendimento getSituacaoAtendimento() {
+	public StatusAtendimento[] getSituacaoAtendimento() {
 		return situacaoAtendimento;
 	}
 
-	public void setSituacaoAtendimento(StatusAtendimento situacaoAtendimento) {
+	public void setSituacaoAtendimento(StatusAtendimento[] situacaoAtendimento) {
 		this.situacaoAtendimento = situacaoAtendimento;
 	}
 

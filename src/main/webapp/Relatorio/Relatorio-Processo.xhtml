@@ -12,8 +12,13 @@
 	    	<h1>Gerar Relatório de Processo</h1>
 	    	
 	    	<p:toolbar style="margin-top: 20px">
-	    		<p:toolbarGroup align="right">
+	    		<p:toolbarGroup align="left" styleClass="toobarStyle">
 	    			<p:commandButton value="Pesquisar" 
+	    				update="@form" action="#{gerarRelatorioProcessosBean.pesquisar}" />
+	    		</p:toolbarGroup>
+	    		
+	    		<p:toolbarGroup align="right" styleClass="toobarStyle">
+	    			<p:commandButton value="Gerar relatório todos" 
 	    				update="@form" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
@@ -23,66 +28,65 @@
 	    		
 	    		<p:outputLabel value="Número do processo" />
 	    		<h:panelGroup>
-	    			<p:inputText size="10" value="" />
+	    			<p:inputText size="10" value="#{gerarRelatorioProcessosBean.filtro.numeroProcesso}" />
 	    		</h:panelGroup>
 	    			    		
 	    		<p:outputLabel value="Data de Atendimento" />
 	    		<h:panelGroup>
-	    			<p:calendar size="10" pattern="dd/MM/yyyy" 
-	    				 />
+	    			<p:calendar size="10" pattern="dd/MM/yyyy" yearRange="c-20:c+10" locale="pt"  navigator="true" 
+	    				value="#{gerarRelatorioProcessosBean.filtro.dataAberturaInicial}" />
 	    			a
-	    			<p:calendar size="10" pattern="dd/MM/yyyy"
-	    				/>
+	    			<p:calendar size="10" pattern="dd/MM/yyyy" yearRange="c-20:c+10" locale="pt"  navigator="true" 
+	    				value="#{gerarRelatorioProcessosBean.filtro.dataAberturaFinal}" />
 	    		</h:panelGroup>
 	    		
-	    		<p:outputLabel value="Atendente" />
-	    		<p:inputText size="40" value="" required="true"/>
+	    		<p:outputLabel value="Assistido: " for="atendimento"/>
+	    		<p:autoComplete id="atendimento" value="#{gerarRelatorioProcessosBean.filtro.atendimento}" minQueryLength="3"	
+							completeMethod="#{pesquisarProcessosBean.completarAtendimento}"  
+							var="atendimento" itemValue="#{atendimento}" itemLabel="#{atendimento.assistido.nome}"
+							forceSelection="true" dropdown="true" />
 	    		
-	    		<p:outputLabel value="Cliente (Assistido): " />
-	    		<p:inputText size="40" value="" />
-	    		
-	    		<p:outputLabel value="Status atendimento" />
-	    		<p:selectManyCheckbox >
-	    			<f:selectItem itemValue="Em andamento" itemLabel="Em andamento" />
-	    			<f:selectItem itemValue="Cancelado" itemLabel="Cancelado" />
-	    			<f:selectItem itemValue="Fechado" itemLabel="Fechado" />
+	    		<p:outputLabel value="Situação do processo: " for="situacaoProcesso"/>
+	    		<p:selectManyCheckbox id="situacaoProcesso" value="#{gerarRelatorioProcessosBean.filtro.situacao}">
+	    			<f:selectItems  value="#{pesquisarProcessosBean.statusProcesso}" var="situacao"
+	    					itemLabel="#{situacao.descricao}" itemValue="#{situacao}"/>
 	    		</p:selectManyCheckbox>
 	    	</p:panelGrid>
 	    	
-	    	<p:dataTable id="tabelaAssistido"  var="assistido"
+	    	<p:dataTable id="tabelaAssistido"  var="processo" value="#{gerarRelatorioProcessosBean.processos}"
 		    		style="margin-top: 20px" emptyMessage="Nenhum assistido encontrado."
 		    		rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 		    		
-	    		<p:column headerText="Número" style="text-align: center; width: 100px">
-	    			<h:outputText value="232"/>
+	    		<p:column headerText="Processo" style="text-align: center;width: 100px;">
+	    			<h:outputText value="#{processo.numeroProcesso}"/>
 	    		</p:column>
 	    		<p:column headerText="Autor">
-	    			<h:outputText value="gfgsfg"/>
+	    			<h:outputText value="#{processo.atendimento.assistido.nome}"/>
 	    		</p:column>
-	    		<p:column headerText="Relato">
-	    			<h:outputText value="sdfgdfg"/>
-	    		</p:column>
+	    		
 	    		<p:column headerText="Data de criação" style="text-align: center; width: 140px">
-	    			<h:outputText value="05/02/1988">
+	    			<h:outputText value="#{processo.dataAbertura}">
 	    				<f:convertDateTime pattern="dd/MM/yyyy" />
 	    			</h:outputText>
 	    		</p:column>
-	    		<p:column headerText="Réu " style="text-align: center; width: 120px">
-	    			<h:outputText value="" />
+	    		<p:column headerText="Réu: " style="width: 120px">
+	    			<h:outputText value="#{processo.atendimento.contraParte.nome}" />
 	    		</p:column>
-	    		<p:column headerText="Area atendimento:" style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		<p:column headerText="Area atendimento:" style="text-align: center;width: 100px">
+	    			<h:outputText value="#{processo.atendimento.areaAtendimento}"/>
 	    		</p:column>
-	    		<p:column headerText="Rendimento Familiar:" style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		
+	    		<p:column headerText="Advogado responsável" style="text-align: center;width: 150px;">
+	    			<h:outputText value="#{processo.atendimento.advogado.usuario.nome}"/>
 	    		</p:column>
-	    		<p:column headerText="Qtd Filhos:" style="width: 100px">
-	    			<h:outputText value="dfgdfgdfgfg"/>
+	    		
+	    		<p:column headerText="Situação do processo" style="text-align: center;">
+	    			<h:outputText value="#{processo.situacao.descricao}"/>
 	    		</p:column>
-	    		<p:column style="text-align: center; width: 50px">
-	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/assistido/CadastroAssistido">
-	    				<f:param name="assistido" value="12"/>
-	    			</p:button>
+	    		
+	    		<p:column style="text-align: center; width: 50px">  
+	    			<p:commandButton icon="fa fa-fw fa-file-pdf-o" title="Gerar relatório de processo" ajax="false" 
+	    					action="#{gerarRelatorioProcessosBean.gerarRelatorioPorProcesso(processo.atendimento.assistido.id)}" /> 
 	    		</p:column>
 	    	</p:dataTable>
 	    	
