@@ -336,7 +336,7 @@ public class CadastroAssistidoBean implements Serializable {
 			try {
 				this.assistido.setTriagem(triagemService.salvar(this.assistido
 						.getTriagem()));
-				
+				//Verifica se é pessoa fisica ou juridica e salva para efetuar a edição
 				if(this.assistido.getPessoaFisica().getId() != null){
 					this.assistido.setPessoaFisica(pessoaFisicaService.salvar(this.assistido.getPessoaFisica()));
 				}else{
@@ -346,6 +346,12 @@ public class CadastroAssistidoBean implements Serializable {
 				this.assistido = this.assistidoService.salvar(assistido);
 				this.assistido.setTriagem(triagemService.salvar(this.assistido
 						.getTriagem()));
+				//Verifica se é pessoa fisica ou juridica e salva para efetuar a edição
+				if(this.contraParte.getPessoaFisica().getId() != null){
+					this.contraParte.setPessoaFisica(pessoaFisicaService.salvar(this.contraParte.getPessoaFisica()));
+				}else{
+					this.contraParte.setPessoaJuridica(pessoaJuridicaService.salvar(this.contraParte.getPessoaJuridica()));
+				}
 				this.contraParte = parteContrariaService.salvar(contraParte);
 				this.atendimento.setAssistido(assistido);
 				this.atendimento.setContraParte(contraParte);
