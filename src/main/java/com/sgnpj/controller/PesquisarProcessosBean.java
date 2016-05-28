@@ -65,6 +65,8 @@ public class PesquisarProcessosBean implements Serializable {
 				this.processo.getAtendimento().setStatusAtendimento(StatusAtendimento.EM_ATENDIMENTO);
 				this.atendimentos.armazenar(this.processo.getAtendimento());
 			}
+		}else {
+			this.processo.setSituacao(StatusProcesso.EM_ANDAMENTO);
 		}
 		
 		this.processo = processoService.salvar(processo);

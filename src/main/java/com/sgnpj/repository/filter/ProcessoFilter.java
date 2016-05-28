@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import com.sgnpj.model.Atendimento;
 import com.sgnpj.model.StatusProcesso;
 
@@ -40,6 +42,8 @@ public class ProcessoFilter implements Serializable {
 	}
 
 	/* getter and setters */
+	
+	@NotNull
 	public Date getDataAberturaInicial() {
 		return dataAberturaInicial;
 	}
@@ -47,7 +51,8 @@ public class ProcessoFilter implements Serializable {
 	public void setDataAberturaInicial(Date dataAberturaInicial) {
 		this.dataAberturaInicial = dataAberturaInicial;
 	}
-
+	
+	@NotNull(message = "Data de Final é obrigatório!")
 	public Date getDataAberturaFinal() {
 		return dataAberturaFinal;
 	}

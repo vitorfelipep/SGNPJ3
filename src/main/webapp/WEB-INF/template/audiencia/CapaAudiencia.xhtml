@@ -9,7 +9,7 @@
 			columnClasses="rotulo, campo, rotulo, campo">
 
 			<p:outputLabel value="Data da audiência" />
-     		<p:calendar size="10" pattern="dd/MM/yyyy"  value="#{cadastrarAudienciaBean.audiencia.dataAudiencia}"/>
+     		<p:calendar size="10" pattern="dd/MM/yyyy" yearRange="c-50:c+30" locale="pt"  navigator="true"  value="#{cadastrarAudienciaBean.audiencia.dataAudiencia}"/>
      		
      		<p:outputLabel value="Hora da audiência: " for="hora-audiencia" />
 			<p:inputMask id="hora-audiencia" size="10" maxlength="80"

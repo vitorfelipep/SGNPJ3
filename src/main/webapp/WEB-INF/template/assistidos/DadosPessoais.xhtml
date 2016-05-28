@@ -23,7 +23,7 @@
 		<p:inputText id="profissao" size="50" value="#{cadastroAssistidoBean.assistido.pessoaFisica.profissao}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
 		<p:outputLabel value="Data de Nasc.:" for="nascimento" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
-		<p:calendar id="nascimento" pattern="dd/MM/yyyy" yearRange="c-100:c+1" locale="pt"  navigator="true"  value="#{cadastroAssistidoBean.assistido.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
+		<p:calendar id="nascimento" pattern="dd/MM/yyyy" yearRange="c-100:c+10" locale="pt"  navigator="true"  value="#{cadastroAssistidoBean.assistido.pessoaFisica.dataNascimento}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 
 		<p:outputLabel value="CPF:" for="cpf" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}"/>
 		<p:inputMask id="cpf" size="20"  mask="999.999.999-99" title="Digite seu CPF" value="#{cadastroAssistidoBean.assistido.pessoaFisica.cpf}" rendered="#{cadastroAssistidoBean.tipoPessoaFisica}" />

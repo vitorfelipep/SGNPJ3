@@ -18,10 +18,12 @@
 	    		</p:toolbarGroup>
 	    		
 	    		<p:toolbarGroup align="right" styleClass="toobarStyle">
-	    			<p:commandButton value="Gerar relatório todos" 
-	    				update="@form" />
+	    			<p:commandButton value="Gerar relatório todos" ajax="false"
+	    				update="@form" action="#{gerarRelatorioProcessosBean.gerarRelatorioProcessoGeral}"/>
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
+	    	
+	    	<p:messages autoUpdate="true" closable="true"/>
 	    	
 	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
 	    			columnClasses="rotulo, campo">
@@ -31,12 +33,12 @@
 	    			<p:inputText size="10" value="#{gerarRelatorioProcessosBean.filtro.numeroProcesso}" />
 	    		</h:panelGroup>
 	    			    		
-	    		<p:outputLabel value="Data de Atendimento" />
-	    		<h:panelGroup>
-	    			<p:calendar size="10" pattern="dd/MM/yyyy" yearRange="c-20:c+10" locale="pt"  navigator="true" 
-	    				value="#{gerarRelatorioProcessosBean.filtro.dataAberturaInicial}" />
+	    		<p:outputLabel value="Data de Atendimento" for="data-Atendimento" />
+	    		<h:panelGroup >
+	    			<p:calendar id="data-Atendimento" size="10" pattern="dd/MM/yyyy" yearRange="c-20:c+10" locale="pt"  navigator="true" 
+	    				value="#{gerarRelatorioProcessosBean.filtro.dataAberturaInicial}"  />
 	    			a
-	    			<p:calendar size="10" pattern="dd/MM/yyyy" yearRange="c-20:c+10" locale="pt"  navigator="true" 
+	    			<p:calendar id="data-Atendimento-final" size="10" pattern="dd/MM/yyyy" yearRange="c-20:c+10" locale="pt"  navigator="true" 
 	    				value="#{gerarRelatorioProcessosBean.filtro.dataAberturaFinal}" />
 	    		</h:panelGroup>
 	    		
