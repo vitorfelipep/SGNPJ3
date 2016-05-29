@@ -16,8 +16,16 @@ public class AudienciaFilter implements Serializable {
 	private Date dataAudienciaFinal;
 
 	private StatusAudiencia[] statusAudiencia;
-	
+
 	public AudienciaFilter() {
+	}
+
+	public AudienciaFilter(Integer numeroProcesso, Date dataAudienciaInicial,
+			Date dataAudienciaFinal, StatusAudiencia[] statusAudiencia) {
+		this.numeroProcesso = numeroProcesso;
+		this.dataAudienciaInicial = dataAudienciaInicial;
+		this.dataAudienciaFinal = dataAudienciaFinal;
+		this.statusAudiencia = statusAudiencia;
 	}
 
 	public Integer getNumeroProcesso() {

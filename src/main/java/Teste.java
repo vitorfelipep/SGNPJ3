@@ -29,7 +29,7 @@ public class Teste {
 		
 		List<Perfil> perfis = new ArrayList<Perfil>();
 		
-		Perfil p = new Perfil(null, "ADMINISTRADOR", "Aministrador");
+		Perfil p = new Perfil(null, "ADMINISTRADOR", "Administrador");
 		Perfil p2 = new Perfil(null, "ADVOGADO", "Advogado");
 		Perfil p3 = new Perfil(null, "ESTAGIARIO", "Estagiario");
 		

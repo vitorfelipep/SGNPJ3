@@ -113,7 +113,8 @@
 				<p:panelGrid columns="4" id="painelAlterar" style="width: 100%;margin-top:5px;" columnClasses="rotulo, campo">
 	
 					<p:outputLabel value="Processo: " for="numeroProcesso"/>
-					<p:inputText id="numeroProcesso" size="20" maxlength="80" value="#{pesquisaAtendimentoVinculoProcessoBean.processo.numeroProcesso}"/>
+					<p:inputMask id="numeroProcesso" mask="9999999.99.9999.9.99.9999"  size="20" maxlength="80" value="#{pesquisaAtendimentoVinculoProcessoBean.processo.numeroProcesso}" />
+						
 
 					<p:outputLabel value="Situação da Processo: " for="sitProcesso"  />
 					<p:selectOneMenu id="sitProcesso" value="#{pesquisaAtendimentoVinculoProcessoBean.processo.situacao}">

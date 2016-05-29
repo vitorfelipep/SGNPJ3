@@ -34,6 +34,7 @@ import com.sgnpj.model.AreaAtuacao;
 import com.sgnpj.model.Assistido;
 import com.sgnpj.model.AssistidoContraParte;
 import com.sgnpj.model.Atendimento;
+import com.sgnpj.model.Cidade;
 import com.sgnpj.model.EstadoCivilAssistido;
 import com.sgnpj.model.Estagiario;
 import com.sgnpj.model.Processo;
@@ -47,6 +48,7 @@ import com.sgnpj.model.Usuario;
 import com.sgnpj.repository.Advogados;
 import com.sgnpj.repository.Atendimentos;
 import com.sgnpj.repository.Dao;
+import com.sgnpj.repository.RepositoryCidades;
 import com.sgnpj.repository.Telefones;
 import com.sgnpj.security.Seguranca;
 import com.sgnpj.security.UsuarioSistema;
@@ -94,7 +96,7 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 	@Produces
 	@AssistidoEdicao
 	private Assistido assistido;
-	
+
 	@Inject
 	private static Assistido assistidoRelatorio;
 
@@ -160,6 +162,11 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 
 	private Seguranca usuarioLogado;
 
+	@Inject
+	private RepositoryCidades repositoryCidades;
+
+	private List<Cidade> cidades;
+
 	public CadastroAssistidoBean() {
 
 		this.assistido = new Assistido();
@@ -169,6 +176,8 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 		this.setTipoPessoaFisicaContraParte(true);
 		this.setTipoPessoaJuridica(false);
 		this.dataAtendimento = new Date();
+		this.cidades = new ArrayList<Cidade>();
+
 	}
 
 	public void inicializar() {
@@ -211,8 +220,7 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 						this.setTipoPessoaJuridicaContraParte(true);
 					}
 				}
-				
-				
+
 				this.dataAtendimento = atendimento.getDataAtendimento();
 				this.tipoAssistido = atendimento.getAssistido()
 						.getTipoAssistido();
@@ -345,21 +353,27 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 			try {
 				this.assistido.setTriagem(triagemService.salvar(this.assistido
 						.getTriagem()));
-				//Verifica se é pessoa fisica ou juridica e salva para efetuar a edição
-				if(this.assistido.getPessoaFisica().getId() != null){
-					this.assistido.setPessoaFisica(pessoaFisicaService.salvar(this.assistido.getPessoaFisica()));
-				}else{
-					this.assistido.setPessoaJuridica(pessoaJuridicaService.salvar(this.assistido.getPessoaJuridica()));
+				// Verifica se é pessoa fisica ou juridica e salva para efetuar
+				// a edição
+				if (this.assistido.getPessoaFisica().getId() != null) {
+					this.assistido.setPessoaFisica(pessoaFisicaService
+							.salvar(this.assistido.getPessoaFisica()));
+				} else {
+					this.assistido.setPessoaJuridica(pessoaJuridicaService
+							.salvar(this.assistido.getPessoaJuridica()));
 				}
-				
+
 				this.assistido = this.assistidoService.salvar(assistido);
 				this.assistido.setTriagem(triagemService.salvar(this.assistido
 						.getTriagem()));
-				//Verifica se é pessoa fisica ou juridica e salva para efetuar a edição
-				if(this.contraParte.getPessoaFisica().getId() != null){
-					this.contraParte.setPessoaFisica(pessoaFisicaService.salvar(this.contraParte.getPessoaFisica()));
-				}else{
-					this.contraParte.setPessoaJuridica(pessoaJuridicaService.salvar(this.contraParte.getPessoaJuridica()));
+				// Verifica se é pessoa fisica ou juridica e salva para efetuar
+				// a edição
+				if (this.contraParte.getPessoaFisica().getId() != null) {
+					this.contraParte.setPessoaFisica(pessoaFisicaService
+							.salvar(this.contraParte.getPessoaFisica()));
+				} else {
+					this.contraParte.setPessoaJuridica(pessoaJuridicaService
+							.salvar(this.contraParte.getPessoaJuridica()));
 				}
 				this.contraParte = parteContrariaService.salvar(contraParte);
 				this.atendimento.setAssistido(assistido);
@@ -394,7 +408,7 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 		} finally {
 
 			this.controleBotaoFinalizar = true;
-			//limparForm();
+			// limparForm();
 		}
 	}
 
@@ -402,77 +416,89 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 
 		Session session = manager.unwrap(Session.class);
 		Map<String, Object> parametros = new HashMap<>();
-		
-		if(this.assistido != null){
-			if(this.assistido.getId() != null){
+
+		if (this.assistido != null) {
+			if (this.assistido.getId() != null) {
 				CadastroAssistidoBean.assistidoRelatorio = assistido;
 			}
 		}
-		
-		if(this.assistido.getId() != null){
+
+		if (this.assistido.getId() != null) {
 			parametros.put("idAssistido", this.assistido.getId());
-	
+
 			ExecutorRelatorio executor = new ExecutorRelatorio(
-					"/relatorios/RelatorioHipossuficiencia.jasper", this.response,
-					parametros, "Relatorio Hipossuficiencia.pdf");
+					"/relatorios/RelatorioHipossuficiencia.jasper",
+					this.response, parametros, "Relatorio Hipossuficiencia.pdf");
 
 			session.doWork(executor);
-			//session.doWork(executor2);
-			if(executor.isRelatorioGerado()){
-//				segundoRelatorio();
-//				facesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf");
-				
-				facesContext.getApplication().getStateManager().saveView(facesContext);
-				
+			// session.doWork(executor2);
+			if (executor.isRelatorioGerado()) {
+				// segundoRelatorio();
+				// facesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf");
+
+				facesContext.getApplication().getStateManager()
+						.saveView(facesContext);
+
 				facesContext.renderResponse();
-				
+
 				facesContext.responseComplete();
-				
-				
-				
-				//Thread.sleep(10000);				
-			}else{
-				FacesUtil.addErrorMesage("A execução do relatório não retornou dados.");
+
+				// Thread.sleep(10000);
+			} else {
+				FacesUtil
+						.addErrorMesage("A execução do relatório não retornou dados.");
 			}
 		}
-		
+
 		limparForm();
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void segundoRelatorio(){
-		try{
-			
+	public void segundoRelatorio() {
+		try {
+
 			open();
-				HashMap parametros = new HashMap(); 
-				
-				parametros.put("idAssistido", CadastroAssistidoBean.assistidoRelatorio.getId());
-				
-				//Saida Teste
-				JasperPrint print = JasperFillManager.fillReport("C:/Users/Vitor/workspace/SGNPJ/src/main/resources/relatorios/RelatorioProcuracao.jasper", parametros, con);
-				JasperExportManager.exportReportToPdfFile(print, "C:/Users/Vitor/workspace/SGNPJ/src/main/webapp/Relatorio/Procuracao.pdf");
-				
-				Thread.sleep(5000);													
-				FacesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf"); 
-		       
-			
-			//Link de Produção
-//			JasperPrint print = JasperFillManager.fillReport("/var/lib/tomcat7/webapps/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.jasper", parametros);
-//			JasperExportManager.exportReportToPdfFile(print, "/var/lib/tomcat7/webapps/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.pdf");
-//		
-//			
-//			
-//			Thread.sleep(5000);													
-//	        FacesContext.getCurrentInstance().getExternalContext().redirect("http://192.168.15.164:8080/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.pdf"); 
-			
+			HashMap parametros = new HashMap();
+
+			parametros.put("idAssistido",
+					CadastroAssistidoBean.assistidoRelatorio.getId());
+
+			// Saida Teste
+			JasperPrint print = JasperFillManager
+					.fillReport(
+							"C:/Users/Vitor/workspace/SGNPJ/src/main/resources/relatorios/RelatorioProcuracao.jasper",
+							parametros, con);
+			JasperExportManager
+					.exportReportToPdfFile(print,
+							"C:/Users/Vitor/workspace/SGNPJ/src/main/webapp/Relatorio/Procuracao.pdf");
+
+			Thread.sleep(5000);
+			FacesContext
+					.getCurrentInstance()
+					.getExternalContext()
+					.redirect(
+							"http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf");
+
+			// Link de Produção
+			// JasperPrint print =
+			// JasperFillManager.fillReport("/var/lib/tomcat7/webapps/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.jasper",
+			// parametros);
+			// JasperExportManager.exportReportToPdfFile(print,
+			// "/var/lib/tomcat7/webapps/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.pdf");
+			//
+			//
+			//
+			// Thread.sleep(5000);
+			// FacesContext.getCurrentInstance().getExternalContext().redirect("http://192.168.15.164:8080/saidasNogueiraV1/Relatorio/PdfSaidaNogueira.pdf");
+
 			close();
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+
 	}
-	
+
 	private void limparForm() {
 		this.telefone = new Telefone();
 		this.advogado = new Advogado();
@@ -503,7 +529,11 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 	}
-	
+
+	public List<Cidade> carregarCidades() {
+		return this.cidades = repositoryCidades
+				.filtradoPorEstado(this.assistido.getEstado());
+	}
 
 	public boolean isEditando() {
 		return this.assistido.getId() != null;
@@ -759,6 +789,14 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 
 	public void setAtendimentoFinalizado(Boolean atendimentoFinalizado) {
 		this.atendimentoFinalizado = atendimentoFinalizado;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	/*

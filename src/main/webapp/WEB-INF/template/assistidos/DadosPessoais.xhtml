@@ -113,23 +113,19 @@
 		<p:inputText id="bairro" size="50" value="#{cadastroAssistidoBean.assistido.bairro}" />
 					
 		<p:outputLabel value="Estado:" for="estado" />
-		<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.estado}">
+		<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.estado}" filter="true" filterMatchMode="startsWith" >
+				
+				<p:ajax event="change" process="@this" update="cidade"
+				        listener="#{cadastroAssistidoBean.carregarCidades}"/> 
+				
 				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="RJ" itemValue="RJ"/>
-				<f:selectItem itemLabel="MG" itemValue="MG"/>
-				<f:selectItem itemLabel="SP" itemValue="SP"/>
-				<f:selectItem itemLabel="AM" itemValue="AM"/>
-				<f:selectItem itemLabel="ES" itemValue="ES"/>
+				<f:selectItems value="#{carregarEstadosBean.estados}" var="estado" itemValue="#{estado.nome}" itemLabel="#{estado.uf}"/>
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Cidade:" for="cidade" />
-		<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.cidade}" required="false">
+		<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAssistidoBean.assistido.cidade}" filter="true" filterMatchMode="startsWith" >
 				<f:selectItem itemLabel="Selecione" />
-				<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo"/>
-				<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguacu"/>
-				<f:selectItem itemLabel="Nilópolis" itemValue="Nilopolis"/>
-				<f:selectItem itemLabel="Pavuna" itemValue="Pavuna"/>
-				<f:selectItem itemLabel="São João de Meriti" itemValue="São Joao de Meriti"/>
+				<f:selectItems value="#{cadastroAssistidoBean.cidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade.nome}"/>
 		</p:selectOneMenu>
 
 		<p:outputLabel value="Cep:" for="cep" required="true"/>

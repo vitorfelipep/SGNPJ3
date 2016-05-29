@@ -26,7 +26,7 @@ public class Processo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private Integer numeroProcesso;
+	private String numeroProcesso;
 	private Atendimento atendimento;
 	private StatusProcesso situacao;
 	private Date dataAbertura;
@@ -45,11 +45,11 @@ public class Processo implements Serializable {
 	}
 
 	@Column(nullable = true, unique = true, length = 20)
-	public Integer getNumeroProcesso() {
+	public String getNumeroProcesso() {
 		return numeroProcesso;
 	}
 
-	public void setNumeroProcesso(Integer numeroProcesso) {
+	public void setNumeroProcesso(String numeroProcesso) {
 		this.numeroProcesso = numeroProcesso;
 	}
 
