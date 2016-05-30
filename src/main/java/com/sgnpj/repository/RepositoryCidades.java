@@ -46,5 +46,19 @@ public class RepositoryCidades implements Serializable{
 		
 		return criteria.addOrder(Order.asc("nome")).list(); 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Cidade> filtradoPorUf(String uf) {
+		Session session = manager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Cidade.class)
+				//INNER JOIN COM A TABELA USUÁRIO
+				.createAlias("estado", "e");
+		
+		if(uf != null){
+			criteria.add(Restrictions.eq("e.uf", uf));
+		}
+		
+		return criteria.addOrder(Order.asc("nome")).list(); 
+	}
 
 }

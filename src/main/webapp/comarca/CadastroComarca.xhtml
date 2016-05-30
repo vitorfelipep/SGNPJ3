@@ -11,11 +11,11 @@
     	<f:event listener="#{cadastroTribunalBean.inicializar}" type="preRenderView" />
     </f:metadata>
 	
-	<ui:define name="titulo">Cadastro de Comarca</ui:define>
+	<ui:define name="titulo">#{cadastroComarcaBean.editando ? 'Edição de Comarca' : 'Cadastro de Comarca'}</ui:define>
 
 	<ui:define name="corpo">
-		<h:form  >
-			<h1>Cadastro de Comarca</h1>
+		<h:form  acceptcharset="ISO-8859-1">
+			<h1>#{cadastroComarcaBean.editando ? 'Edição de Comarca' : 'Cadastro de Comarca'}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
@@ -68,16 +68,18 @@
 						<p:inputMask id="cep" mask="99.999-999" size="50"  value="#{cadastroComarcaBean.comarca.cep}" />
 						
 						<p:outputLabel value="UF: " for="uf"/>
-						<p:selectOneMenu id="uf" value="#{cadastroComarcaBean.comarca.uf}">
-							<f:selectItem itemLabel="--Selecione--" />
-							<f:selectItem itemLabel="RJ" itemValue="RJ" />
+						<p:selectOneMenu id="uf" value="#{cadastroComarcaBean.comarca.uf}" filter="true" filterMatchMode="startsWith">
+							<p:ajax event="change" process="@this" update="cidadeComarca"
+				        			listener="#{cadastroTribunalBean.carregarCidades}" /> 
+				
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{carregarEstadosBean.estados}" var="estado" itemValue="#{estado.uf}" itemLabel="#{estado.uf}"/>
 						</p:selectOneMenu>
 						
-						<p:outputLabel value="Cidade: " for="cidade"/>
-						<p:selectOneMenu id="cidade" value="#{cadastroComarcaBean.comarca.cidade}">
-							<f:selectItem itemLabel="--Selecione--" />
-							<f:selectItem itemLabel="Rio de Janeiro" itemValue="Rio de Janeiro" />
-							<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
+						<p:outputLabel value="Cidade: " for="cidadeComarca"/>
+						<p:selectOneMenu id="cidadeComarca" value="#{cadastroComarcaBean.comarca.cidade}" filter="true" filterMatchMode="startsWith">
+							 <f:selectItem itemLabel="Selecione" />
+							 <f:selectItems value="#{cadastroTribunalBean.cidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade.nome}"/>
 						</p:selectOneMenu>
 						
 						

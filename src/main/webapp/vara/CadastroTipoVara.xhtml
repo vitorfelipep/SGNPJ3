@@ -12,11 +12,11 @@
     	<f:event listener="#{cadastroTipoVaraBean.inicializar}" type="preRenderView" />
     </f:metadata>
 	
-	<ui:define name="titulo">Cadastro de tipo de vara</ui:define>
+	<ui:define name="titulo">#{cadastroTipoVaraBean.editando ? 'Edição de vara tribunal' : 'Cadastro de tipo de vara'}</ui:define>
 
 	<ui:define name="corpo">
-		<h:form  >
-			<h1>Cadastro de tipo de vara</h1>
+		<h:form  acceptcharset="ISO-8859-1">
+			<h1>#{cadastroTipoVaraBean.editando ? 'Edição de vara tribunal' : 'Nova Vara Tribunal'}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 

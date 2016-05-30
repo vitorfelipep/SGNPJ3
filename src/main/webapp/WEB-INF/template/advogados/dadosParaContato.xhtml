@@ -28,25 +28,26 @@
 					<p:outputLabel value="Bairro:" for="bairro" />
 					<p:inputText id="bairro" size="50" value="#{cadastroAdvogadoBean.advogado.bairro}" />
 					
-					<p:outputLabel value="Cidade:" for="cidade" />
-					<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.cidade}">
+					<p:outputLabel value="Estado:" for="estado" />
+					<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.estado}"
+						filter="true" filterMatchMode="startsWith">
+						
+						<p:ajax event="change" process="@this" update="cidade"
+				        	listener="#{cadastroAssistidoBean.carregarCidades}"/> 
+				
 						<f:selectItem itemLabel="Selecione" />
-						<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo" />
-						<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
-						<f:selectItem itemLabel="Nilópolis" itemValue="Nilopolis" />
+						<f:selectItems value="#{carregarEstadosBean.estados}" var="estado" itemValue="#{estado.nome}" itemLabel="#{estado.uf}"/>
 					</p:selectOneMenu>
 					
-					
-					<p:outputLabel value="Estado:" for="estado" />
-					<p:selectOneMenu id="estado" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.estado}">
+					<p:outputLabel value="Cidade:" for="cidade" />
+					<p:selectOneMenu id="cidade" style="width: 200px;" value="#{cadastroAdvogadoBean.advogado.cidade}"
+							filter="true" filterMatchMode="startsWith">
 						<f:selectItem itemLabel="Selecione" />
-						<f:selectItem itemLabel="RJ" itemValue="RJ" />
-						<f:selectItem itemLabel="SP" itemValue="SP" />
+						<f:selectItems value="#{cadastroAssistidoBean.cidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade.nome}"/>
 					</p:selectOneMenu>
 	
 					<p:outputLabel value="Cep:" for="cep"  />
-					<p:inputMask id="cep" mask="99999-999" size="10" value="#{cadastroAdvogadoBean.advogado.cep}"
-						 />
+					<p:inputMask id="cep" mask="99999-999" size="10" value="#{cadastroAdvogadoBean.advogado.cep}"/>
 	
 					<p:outputLabel value="Telefone: " for="telefone" />
 					<p:inputMask id="telefone" mask="(99)9999-9999" size="50" value="#{cadastroAdvogadoBean.advogado.telefoneContato}" />

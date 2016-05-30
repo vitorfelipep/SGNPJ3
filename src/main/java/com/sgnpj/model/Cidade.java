@@ -13,6 +13,14 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * 
+ * @author Vitor
+ *	
+ *	Este é o modelo -> objeto do tipo Cidade
+ *	 
+ */
+
 @Entity
 @Table(name = "cidade")
 public class Cidade implements Serializable {

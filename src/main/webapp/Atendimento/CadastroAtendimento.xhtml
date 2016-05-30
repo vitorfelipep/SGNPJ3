@@ -19,7 +19,7 @@
     <ui:define name="titulo">#{cadastroAtendimentoBean.editando ? 'Edição de atendimento' : 'Cadastrar Atendimento'}</ui:define>
     
     <ui:define name="corpo">
-    	<h:form id="frmCadastroAtendimento">
+    	<h:form id="frmCadastroAtendimento" acceptcharset="ISO-8859-1">
     	
 			<h1>#{cadastroAtendimentoBean.editando ? 'Edição de atendimento' : 'Novo Atendimento'}</h1>
 
@@ -218,20 +218,20 @@
 					
 							<p:outputLabel value="Estado:" for="estadoPt" />
 							<p:selectOneMenu id="estadoPt" style="width: 200px;"
-								value="#{cadastroAtendimentoBean.contraParte.estado}">
-								<f:selectItem itemLabel="Selecione" />
-								<f:selectItem itemLabel="RJ" itemValue="RJ" />
-								<f:selectItem itemLabel="MG" itemValue="MG" />
-								<f:selectItem itemLabel="SP" itemValue="SP" />
+								value="#{cadastroAtendimentoBean.contraParte.estado}"
+								filter="true" filterMatchMode="startsWith">
+								<p:ajax event="change" process="@this" update="cidadePt"
+				        			listener="#{cadastroAssistidoBean.carregarCidades}"/> 
+				
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{carregarEstadosBean.estados}" var="estado" itemValue="#{estado.nome}" itemLabel="#{estado.uf}"/>
 							</p:selectOneMenu>
 							
 							<p:outputLabel value="Cidade:" for="cidadePt" />
 							<p:selectOneMenu id="cidadePt" style="width: 200px;"
-								value="#{cadastroAtendimentoBean.contraParte.cidade}">
+								value="#{cadastroAtendimentoBean.contraParte.cidade}" filter="true" filterMatchMode="startsWith">
 								<f:selectItem itemLabel="Selecione" />
-								<f:selectItem itemLabel="Belford Roxo" itemValue="Belford Roxo" />
-								<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
-								<f:selectItem itemLabel="Nilópolis" itemValue="Nilópolis" />
+								<f:selectItems value="#{cadastroAssistidoBean.cidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade.nome}"/>
 							</p:selectOneMenu>
 					
 					

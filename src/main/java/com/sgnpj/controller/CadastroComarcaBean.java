@@ -80,7 +80,13 @@ public class CadastroComarcaBean implements Serializable {
 		List<Tribunal> tribunais = this.tribunais.porNome(nome);
 		return tribunais;
 	}
-
+	
+	public boolean isEditando() {
+		return this.comarca.getId() != null;
+	}
+	
+	
+	/*Getters And Setters */
 	public Comarca getComarca() {
 		return comarca;
 	}

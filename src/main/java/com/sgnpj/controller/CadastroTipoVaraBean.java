@@ -84,6 +84,13 @@ public class CadastroTipoVaraBean implements Serializable {
 		this.vara = event.getVara();
 	}
 	
+	public boolean isEditando() {
+		return this.vara.getId() != null;
+	}
+	
+	
+	/* Getters and Setters */
+	
 	public TipoVara getVara() {
 		return vara;
 	}

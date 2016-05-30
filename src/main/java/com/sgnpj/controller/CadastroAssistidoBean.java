@@ -464,20 +464,11 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 					CadastroAssistidoBean.assistidoRelatorio.getId());
 
 			// Saida Teste
-			JasperPrint print = JasperFillManager
-					.fillReport(
-							"C:/Users/Vitor/workspace/SGNPJ/src/main/resources/relatorios/RelatorioProcuracao.jasper",
-							parametros, con);
-			JasperExportManager
-					.exportReportToPdfFile(print,
-							"C:/Users/Vitor/workspace/SGNPJ/src/main/webapp/Relatorio/Procuracao.pdf");
+			JasperPrint print = JasperFillManager.fillReport("C:/Users/Vitor/workspace/SGNPJ/src/main/resources/relatorios/RelatorioProcuracao.jasper",	parametros, con);
+			JasperExportManager.exportReportToPdfFile(print,"C:/Users/Vitor/workspace/SGNPJ/src/main/webapp/Relatorio/Procuracao.pdf");
 
 			Thread.sleep(5000);
-			FacesContext
-					.getCurrentInstance()
-					.getExternalContext()
-					.redirect(
-							"http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8081/SGNPJ/Relatorio/Procuracao.pdf");
 
 			// Link de Produção
 			// JasperPrint print =
@@ -529,8 +520,19 @@ public class CadastroAssistidoBean extends Dao implements Serializable {
 
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 	}
-
+	
+	/**
+	 * Métedo abaixo é resposavel por auto completar a lista de cidades 
+	 * Após o click do select One menu de estado. 
+	 * 
+	 * @return this.cidades
+	 */
 	public List<Cidade> carregarCidades() {
+		
+		if(this.cidades != null){
+			this.cidades = new ArrayList<Cidade>();
+		}
+		
 		return this.cidades = repositoryCidades
 				.filtradoPorEstado(this.assistido.getEstado());
 	}

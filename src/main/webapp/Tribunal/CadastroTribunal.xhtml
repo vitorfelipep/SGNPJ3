@@ -5,17 +5,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 	
-	
+
 	<f:metadata>
 		<o:viewParam name="tribunal" value="#{cadastroTribunalBean.tribunal}"/>
     	<f:event listener="#{cadastroTribunalBean.inicializar}" type="preRenderView" />
     </f:metadata>
 
-	<ui:define name="titulo">Cadastro de tribunal</ui:define>
+	<ui:define name="titulo">#{cadastroTribunalBean.editando ? 'Edição de tribunal' : 'Cadastro de tribunal'}</ui:define>
 
 	<ui:define name="corpo">
-		<h:form>
-			<h1>Cadastro de tribunal</h1>
+		<h:form acceptcharset="ISO-8859-1">
+			<h1>#{cadastroTribunalBean.editando ? 'Edição de tribunal' : 'Cadastro de tribunal'}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
@@ -55,19 +55,19 @@
 							value="#{cadastroTribunalBean.tribunal.cep}" />
 
 						<p:outputLabel value="UF: " for="uf" />
-						<p:selectOneMenu id="uf"
-							value="#{cadastroTribunalBean.tribunal.uf}">
-							<f:selectItem itemLabel="--Selecione--" />
-							<f:selectItem itemLabel="RJ" itemValue="RJ" />
+						<p:selectOneMenu id="uf" value="#{cadastroTribunalBean.tribunal.uf}" filter="true" filterMatchMode="startsWith">
+							<p:ajax event="change" process="@this" update="cidadeTribunal"
+				        			listener="#{cadastroTribunalBean.carregarCidades}" /> 
+				
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{carregarEstadosBean.estados}" var="estado" itemValue="#{estado.uf}" itemLabel="#{estado.uf}"/>
 						</p:selectOneMenu>
 
-						<p:outputLabel value="Cidade: " for="cidade" />
-						<p:selectOneMenu id="cidade"
+						<p:outputLabel value="Cidade: " for="cidadeTribunal" />
+						<p:selectOneMenu id="cidadeTribunal" filter="true" filterMatchMode="startsWith" converter="stringer"
 							value="#{cadastroTribunalBean.tribunal.cidade}">
-							<f:selectItem itemLabel="--Selecione--" />
-							<f:selectItem itemLabel="Rio de Janeiro"
-								itemValue="Rio de Janeiro" />
-							<f:selectItem itemLabel="Nova Iguaçu" itemValue="Nova Iguaçu" />
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{cadastroTribunalBean.cidades}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade.nome}"/>
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Bairro: " for="bairro" />
